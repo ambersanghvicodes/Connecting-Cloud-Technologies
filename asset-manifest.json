@@ -6,12 +6,12 @@
     "runtime-main.js": "/static/js/runtime-main.5987361b.js",
     "runtime-main.js.map": "/static/js/runtime-main.5987361b.js.map",
     "static/css/2.0148c401.chunk.css": "/static/css/2.0148c401.chunk.css",
-    "static/js/2.8d834da4.chunk.js": "/static/js/2.8d834da4.chunk.js",
-    "static/js/2.8d834da4.chunk.js.map": "/static/js/2.8d834da4.chunk.js.map",
+    "static/js/2.7fd7b1b3.chunk.js": "/static/js/2.7fd7b1b3.chunk.js",
+    "static/js/2.7fd7b1b3.chunk.js.map": "/static/js/2.7fd7b1b3.chunk.js.map",
     "index.html": "/index.html",
     "static/css/2.0148c401.chunk.css.map": "/static/css/2.0148c401.chunk.css.map",
     "static/css/main.e2970092.chunk.css.map": "/static/css/main.e2970092.chunk.css.map",
-    "static/js/2.8d834da4.chunk.js.LICENSE.txt": "/static/js/2.8d834da4.chunk.js.LICENSE.txt",
+    "static/js/2.7fd7b1b3.chunk.js.LICENSE.txt": "/static/js/2.7fd7b1b3.chunk.js.LICENSE.txt",
     "static/media/2408_banner.a2bd7017.png": "/static/media/2408_banner.a2bd7017.png",
     "static/media/LandingPageHero.css": "/static/media/LandingBackground.85ea1e7c.jpg",
     "static/media/arrow-right-icon.2e1ca516.svg": "/static/media/arrow-right-icon.2e1ca516.svg",
@@ -41,7 +41,7 @@
   "entrypoints": [
     "static/js/runtime-main.5987361b.js",
     "static/css/2.0148c401.chunk.css",
-    "static/js/2.8d834da4.chunk.js",
+    "static/js/2.7fd7b1b3.chunk.js",
     "static/css/main.e2970092.chunk.css",
     "static/js/main.f0c7b353.chunk.js"
   ]
