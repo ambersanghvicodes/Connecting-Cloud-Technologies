@@ -5,26 +5,34 @@ import Footer from "components/footers/MiniCenteredFooter";
 import "../styles/blog_detail.css";
 import Loading from "./Loading";
 import MetaTags from "react-meta-tags";
+import { blogData } from "./BlogData";
 
 export default class BlogDetail extends Component {
   state = {
     loading: true,
+    posts: blogData,
     blog: [],
   };
   componentDidMount = () => {
     console.log(this.props.match.params.title);
     const { title } = this.props.match.params;
-    API.get(`/api_view/blogs/${title}/`)
-      .then((res) =>
-        this.setState({
-          blog: res.data,
-          loading: false,
-        })
-      )
-      .catch((err) => console.error(err.data));
+    // API.get(`/api_view/blogs/${title}/`)
+    //   .then((res) =>
+    //     this.setState({
+    //       blog: res.data,
+    //       loading: false,
+    //     })
+    //   )
+    //   .catch((err) => console.error(err.data));
+    const blog = this.state.posts.filter((post) => post.slug === title)[0];
+    console.log("blog", blog);
+    this.setState({
+      blog: blog,
+      loading: false,
+    });
   };
   render() {
-    const { blog } = this.state.blog;
+    const blog = this.state.blog;
     return this.state.loading ? (
       <>
         <Loading />
@@ -33,6 +41,7 @@ export default class BlogDetail extends Component {
       <div>
         <Header />
         <MetaTags>
+          {console.log("blog1", blog)}
           <title>{blog.title}</title>
           <meta name="description" content={blog.description} />
           <meta name="keywords" content={blog.tags} />
@@ -44,19 +53,21 @@ export default class BlogDetail extends Component {
             <div>
               <h1 className="blog-title">{blog.title}</h1>
               <h1 className="blog-subheading">{blog.subheading}</h1>
+              <img src={blog.imageSrc} alt={blog.title} className="blog-image" />
+
               <div className="blog-details">
-                <div className="blog-author">
+                {/* <div className="blog-author">
                   <span style={{ fontWeight: "bold" }}>Author :</span>{" "}
                   {blog.author}
-                </div>
+                </div> */}
                 {/* <div className="blog-tag">
                   <span style={{ fontWeight: "bold" }}>Category :</span>{" "}
                   {blog.tags}
                 </div> */}
-                <div className="blog-date">
+                {/* <div className="blog-date">
                   <span style={{ fontWeight: "bold" }}>Date: </span>
                   {blog.date_time.split("T")[0]}
-                </div>
+                </div> */}
               </div>
 
               {console.log(blog)}

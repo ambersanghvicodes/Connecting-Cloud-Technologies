@@ -11,6 +11,10 @@ import { SectionHeading } from "components/misc/Headings";
 import { PrimaryButton } from "components/misc/Buttons";
 import "../styles/blogs.scss";
 import Loading from "./Loading";
+
+import { blogData } from "./BlogData";
+
+
 const HeadingRow = tw.div`flex`;
 const Heading = tw(SectionHeading)`text-gray-900 p-5`;
 const Posts = tw.div`mt-6 sm:-mr-8 flex flex-wrap`;
@@ -53,37 +57,7 @@ const LoadMoreButton = tw(PrimaryButton)`mt-16 mx-auto`;
 //eslint-disable-next-line
 export default ({
   headingText = "Blog Posts",
-  posts = [
-    {
-      imageSrc:
-        "https://images.unsplash.com/photo-1499678329028-101435549a4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1024&q=80",
-      category: "Travel Tips",
-      date: "April 21, 2020",
-      title: "Safely Travel in Foreign Countries",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-      url: "https://timerse.com",
-      featured: true,
-    },
-    getPlaceholderPost(),
-    getPlaceholderPost(),
-    getPlaceholderPost(),
-    getPlaceholderPost(),
-    getPlaceholderPost(),
-    getPlaceholderPost(),
-    getPlaceholderPost(),
-    getPlaceholderPost(),
-    getPlaceholderPost(),
-    getPlaceholderPost(),
-    getPlaceholderPost(),
-    getPlaceholderPost(),
-    getPlaceholderPost(),
-    getPlaceholderPost(),
-    getPlaceholderPost(),
-    getPlaceholderPost(),
-    getPlaceholderPost(),
-    getPlaceholderPost(),
-  ],
+  posts = blogData,
 }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -99,9 +73,9 @@ export default ({
   };
   const getData = async () => {
     console.log("IN");
-    const response = await API.get("/api_view/blogs/");
-    const data = await response.data;
-    setData(data);
+    // const response = await API.get("/api_view/blogs/");
+    // const data = await response.data;
+    setData(posts);
     setLoading(false);
     console.log("data");
   };
@@ -130,13 +104,13 @@ export default ({
                     className="thumb"
                     style={{
                       backgroundImage:
-                        `url(${post.image})`,
+                        `url(${post.imageSrc})`,
                     }}
                   ></div>
                   <article>
-                    <h1 style={{fontWeight : 'bold'}}  dangerouslySetInnerHTML={{ __html: post.title }} />
+                    <h1 style={{ fontWeight: 'bold' }} dangerouslySetInnerHTML={{ __html: post.title }} />
                     <span>{post.author}</span>
-                    <span className="date">{post.date_time.split('T')[0]}</span>
+                    {/* <span className="date">{post.date_time.split('T')[0]}</span> */}
                   </article>
                 </a>
               </div>

@@ -60,7 +60,7 @@ export default function Footer() {
             </SocialLink>
           </SocialLinksContainer>
           <CopyrightText>
-            &copy; Copyright 2021, Connecting Cloud Technologies Private Limited. All Rights
+            &copy; Copyright 2026, Connecting Cloud Technologies Private Limited. All Rights
             Reserved.
           </CopyrightText>
         </Row>
