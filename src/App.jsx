@@ -11,6 +11,7 @@ import {
   Cloud, Database, Cpu, Zap, LayoutGrid, ChevronRight, Link, TrendingUp,
   Wallet, Receipt, ShoppingCart, UserCheck, Activity, Shield, Terminal, Sparkles, ArrowLeft
 } from 'lucide-react';
+import { FaLinkedinIn} from "react-icons/fa";
 // --- DATA ---
 const INSIGHTS_ARTICLES = [
   {
@@ -886,9 +887,7 @@ export default function App() {
               </div>
               <p className="text-slate-400 text-sm leading-relaxed mb-8">Architecting the future of enterprise configuration and Lead-to-Cash orchestration.</p>
               <div className="flex gap-4">
-                {/* <Linkedin size={20} className="text-slate-500 hover:text-white cursor-pointer" /> */}
-                {/* <Github size={20} className="text-slate-500 hover:text-white cursor-pointer" /> */}
-                {/* <Twitter size={20} className="text-slate-500 hover:text-white cursor-pointer" /> */}
+                <FaLinkedinIn size={20} href='https://www.linkedin.com/company/connectingcloud' className="text-slate-500 hover:text-white cursor-pointer" />
               </div>
             </div>
             <div>
@@ -910,14 +909,13 @@ export default function App() {
             <div>
               <h5 className="font-black text-[10px] uppercase tracking-widest text-blue-500 mb-8">Contact</h5>
               <ul className="space-y-4 text-slate-400 text-sm font-bold">
-                <li>Innovation Hub, SF</li>
                 <li>info@connectingcloud.co</li>
-                <li>+1 (800) CLOUD-TECH</li>
+                <li>+91 9052477277</li>
               </ul>
             </div>
           </div>
           <div className="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between gap-6 text-[10px] font-black uppercase tracking-widest text-slate-600">
-            <p>© 2024 Connecting Cloud Technologies. All rights reserved.</p>
+            <p>© 2026 Connecting Cloud Technologies. All rights reserved.</p>
             <div className="flex gap-8">
               <span className="hover:text-white cursor-pointer">Privacy Policy</span>
               <span className="hover:text-white cursor-pointer">Terms of Service</span>
