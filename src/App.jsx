@@ -994,53 +994,15 @@ export default function App() {
         {activePage === 'insights' && <InsightsView />}
       </main>
 
-      <footer className="bg-slate-950 text-white py-24">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid md:grid-cols-4 gap-12 mb-20">
-            <div className="col-span-1 md:col-span-1">
-              <div className="flex items-center gap-3 mb-8">
-                <Logo className="h-8 w-8 text-blue-600" />
-                <span className="font-black uppercase tracking-tighter">Connecting Cloud</span>
-              </div>
-              <p className="text-slate-400 text-sm leading-relaxed mb-8">Architecting the future of enterprise configuration and Lead-to-Cash orchestration.</p>
-              <div className="flex gap-4">
-                {/* <Linkedin size={20} className="text-slate-500 hover:text-white cursor-pointer" /> */}
-                {/* <Github size={20} className="text-slate-500 hover:text-white cursor-pointer" /> */}
-                {/* <Twitter size={20} className="text-slate-500 hover:text-white cursor-pointer" /> */}
-              </div>
-            </div>
-            <div>
-              <h5 className="font-black text-[10px] uppercase tracking-widest text-blue-500 mb-8">Solutions</h5>
-              <ul className="space-y-4 text-slate-400 text-sm font-bold">
-                {EXPERTISE_ITEMS.map(item => (
-                  <li key={item.id} onClick={() => selectCapability(item.id)} className="hover:text-white cursor-pointer">{item.title}</li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h5 className="font-black text-[10px] uppercase tracking-widest text-blue-500 mb-8">Company</h5>
-              <ul className="space-y-4 text-slate-400 text-sm font-bold">
-                <li onClick={() => navigateTo('process')} className="hover:text-white cursor-pointer">The CCT Method</li>
-                <li onClick={() => navigateTo('cases')} className="hover:text-white cursor-pointer">Case Studies</li>
-                <li onClick={() => navigateTo('insights')} className="hover:text-white cursor-pointer">Insights</li>
-              </ul>
-            </div>
-            <div>
-              <h5 className="font-black text-[10px] uppercase tracking-widest text-blue-500 mb-8">Contact</h5>
-              <ul className="space-y-4 text-slate-400 text-sm font-bold">
-                <li>Innovation Hub, SF</li>
-                <li>info@connectingcloud.co</li>
-                <li>+1 (800) CLOUD-TECH</li>
-              </ul>
-            </div>
+      <footer className="bg-slate-950 text-white py-12">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <Logo className="h-8 w-8 text-blue-600" />
+            <span className="font-black uppercase tracking-tighter">Connecting Cloud</span>
           </div>
-          <div className="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between gap-6 text-[10px] font-black uppercase tracking-widest text-slate-600">
-            <p>© 2024 Connecting Cloud Technologies. All rights reserved.</p>
-            <div className="flex gap-8">
-              <span className="hover:text-white cursor-pointer">Privacy Policy</span>
-              <span className="hover:text-white cursor-pointer">Terms of Service</span>
-            </div>
-          </div>
+          <p className="text-slate-400 text-sm mb-4">Architecting the future of enterprise configuration and Lead-to-Cash orchestration.</p>
+          <p className="text-slate-400 text-sm mb-4">Contact: <a href="mailto:info@connectingcloud.co" className="text-blue-600 hover:text-blue-400">info@connectingcloud.co</a></p>
+          <p className="text-[10px] font-black uppercase tracking-widest text-slate-600">© 2026 Connecting Cloud Technologies. All rights reserved.</p>
         </div>
       </footer>
 
