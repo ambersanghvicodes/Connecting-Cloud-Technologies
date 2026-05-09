@@ -323,6 +323,50 @@ const EXPERTISE_ITEMS = [
   { id: 'btp', title: 'BTP & CPI Orchestration', icon: <Share2 size={16}/>, desc: 'Enterprise middleware' }
 ];
 
+const PAGE_ROUTES = {
+  home: '/',
+  cases: '/cases',
+  l2c: '/l2c',
+  process: '/methodology',
+  insights: '/insights',
+};
+
+const ROUTE_PAGES = Object.fromEntries(Object.entries(PAGE_ROUTES).map(([page, route]) => [route, page]));
+const CAPABILITY_IDS = new Set(EXPERTISE_ITEMS.map((item) => item.id));
+
+const normalizeHashPath = (hash) => {
+  const rawPath = decodeURIComponent((hash || '').replace(/^#/, ''));
+  const path = rawPath.startsWith('/') ? rawPath : `/${rawPath}`;
+  const cleanPath = path.replace(/\/+$/, '');
+
+  return cleanPath || '/';
+};
+
+const parseHashRoute = () => {
+  const path = normalizeHashPath(window.location.hash);
+  const [, section, capability] = path.split('/');
+
+  if (section === 'architecture') {
+    return {
+      page: 'architecture',
+      capability: CAPABILITY_IDS.has(capability) ? capability : 'avc',
+    };
+  }
+
+  return {
+    page: ROUTE_PAGES[path] || 'home',
+    capability: 'avc',
+  };
+};
+
+const getHashForPage = (page, capability = 'avc') => {
+  if (page === 'architecture') {
+    return `#/architecture/${CAPABILITY_IDS.has(capability) ? capability : 'avc'}`;
+  }
+
+  return `#${PAGE_ROUTES[page] || PAGE_ROUTES.home}`;
+};
+
 const PERFORMANCE_CHART = [
   { name: 'Legacy', value: 45, fill: '#cbd5e1' },
   { name: 'CCT Method', value: 92, fill: '#2563eb' },
@@ -337,8 +381,9 @@ const Logo = ({ className }) => (
 // --- MAIN APP ---
 
 export default function App() {
-  const [activePage, setActivePage] = useState('home');
-  const [capabilityType, setCapabilityType] = useState('avc');
+  const initialRoute = parseHashRoute();
+  const [activePage, setActivePage] = useState(initialRoute.page);
+  const [capabilityType, setCapabilityType] = useState(initialRoute.capability);
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [expertiseOpen, setExpertiseOpen] = useState(false);
@@ -356,21 +401,48 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    const syncRoute = () => {
+      const route = parseHashRoute();
+      setActivePage(route.page);
+      setCapabilityType(route.capability);
+      setMobileMenuOpen(false);
+      setExpertiseOpen(false);
+      setReadingArticle(null);
+    };
+
+    window.addEventListener('hashchange', syncRoute);
+    syncRoute();
+
+    return () => window.removeEventListener('hashchange', syncRoute);
+  }, []);
+
+  useEffect(() => {
     if (!readingArticle) {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }, [activePage, capabilityType, readingArticle]);
 
   const navigateTo = (pageId) => {
-    setActivePage(pageId);
+    const nextHash = getHashForPage(pageId);
+    if (window.location.hash === nextHash) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      window.location.hash = nextHash;
+    }
+
     setMobileMenuOpen(false);
     setExpertiseOpen(false);
     setReadingArticle(null);
   };
 
   const selectCapability = (type) => {
-    setCapabilityType(type);
-    setActivePage('architecture');
+    const nextHash = getHashForPage('architecture', type);
+    if (window.location.hash === nextHash) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      window.location.hash = nextHash;
+    }
+
     setMobileMenuOpen(false);
     setExpertiseOpen(false);
     setReadingArticle(null);

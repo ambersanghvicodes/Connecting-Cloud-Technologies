@@ -94,6 +94,24 @@ VITE_BRIEFING_SCRIPT_URL=https://script.google.com/macros/s/your_deployment_id/e
 
 Then deploy the generated `dist` folder as usual.
 
+## GitHub Pages Routing
+
+This site uses hash-based client routing so page links work on GitHub Pages without server rewrites.
+
+Supported URLs:
+
+```text
+/#/
+/#/cases
+/#/l2c
+/#/methodology
+/#/insights
+/#/architecture/avc
+/#/architecture/sf
+/#/architecture/cpq
+/#/architecture/btp
+```
+
 Currently, two official plugins are available:
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
