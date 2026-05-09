@@ -970,17 +970,81 @@ export default function App() {
       </nav>
 
       {/* Mobile Menu */}
-      <div className={`lg:hidden fixed inset-0 bg-white z-[110] transition-transform duration-500 ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-        <div className="p-8 space-y-8 h-full overflow-y-auto">
-          <button onClick={() => setMobileMenuOpen(false)} className="absolute top-6 right-6 p-2"><X size={28}/></button>
-          {NAV_LINKS.map((link) => (
-            <button key={link.id} onClick={() => navigateTo(link.id)} className="block w-full text-left text-4xl font-black text-slate-900 hover:text-blue-600 transition-colors">{link.label}</button>
-          ))}
-          <div className="pt-8 border-t border-slate-100">
-            <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-6">Capabilities</p>
-            {EXPERTISE_ITEMS.map((item) => (
-              <button key={item.id} onClick={() => selectCapability(item.id)} className="block w-full text-left text-2xl font-black text-slate-600 mb-6 hover:text-blue-600 transition-colors">{item.title}</button>
-            ))}
+      <div
+        className={`lg:hidden fixed inset-0 z-[110] bg-slate-950/70 backdrop-blur-sm transition-opacity duration-300 ${mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+        onClick={() => setMobileMenuOpen(false)}
+      >
+        <div
+          className={`absolute right-0 top-0 h-full w-full max-w-[360px] bg-white shadow-2xl border-l border-slate-200 transition-transform duration-300 ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="relative h-full flex flex-col px-6 py-6 overflow-y-auto">
+            <div className="flex items-center justify-between gap-4 mb-8">
+              <div>
+                <div className="inline-flex items-center gap-2">
+                  <Logo className="h-8 w-8" />
+                  <span className="text-base font-black uppercase tracking-[0.3em] text-slate-900">Menu</span>
+                </div>
+                <p className="text-sm text-slate-500 mt-2">Fast access to pages and capabilities.</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen(false)}
+                className="p-2 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors"
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            <div className="space-y-3">
+              {NAV_LINKS.map((link) => (
+                <button
+                  key={link.id}
+                  type="button"
+                  onClick={() => navigateTo(link.id)}
+                  className={`w-full text-left px-4 py-4 rounded-3xl transition-colors duration-200 ${activePage === link.id ? 'bg-blue-50 text-blue-700' : 'bg-slate-50 text-slate-800 hover:bg-blue-50 hover:text-blue-700'}`}
+                >
+                  <span className="block text-lg font-black">{link.label}</span>
+                  <span className="text-sm text-slate-500">Go to {link.label}</span>
+                </button>
+              ))}
+            </div>
+
+            <div className="mt-8 border-t border-slate-200 pt-8">
+              <div className="flex items-center justify-between mb-4">
+                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Capabilities</p>
+                <span className="text-sm text-slate-500">{EXPERTISE_ITEMS.length} tracks</span>
+              </div>
+              <div className="space-y-3">
+                {EXPERTISE_ITEMS.map((item) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => selectCapability(item.id)}
+                    className="w-full rounded-3xl border border-slate-200 px-4 py-4 text-left transition-colors duration-200 hover:border-blue-200 hover:bg-blue-50"
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="text-base font-black text-slate-900">{item.title}</span>
+                      <ChevronRight size={18} className="text-slate-400" />
+                    </div>
+                    <p className="mt-1 text-sm text-slate-500">{item.desc}</p>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-auto pt-8 border-t border-slate-200">
+              <button
+                type="button"
+                onClick={() => {
+                  setShowContactModal(true);
+                  setMobileMenuOpen(false);
+                }}
+                className="w-full rounded-full bg-slate-900 px-6 py-3 text-sm font-black uppercase tracking-widest text-white hover:bg-blue-600 transition-colors"
+              >
+                Connect Now
+              </button>
+            </div>
           </div>
         </div>
       </div>
