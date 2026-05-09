@@ -9,9 +9,8 @@ import {
   Share2, Settings, ChevronDown, Menu, Globe, Box, Layers, 
   Mail, Phone, MapPin, Search, Clock, ShieldCheck, Send,
   Cloud, Database, Cpu, Zap, LayoutGrid, ChevronRight, Link, TrendingUp,
-  Wallet, Receipt, ShoppingCart, UserCheck, Activity, Shield, Terminal, Sparkles, ArrowLeft
+  Wallet, Receipt, ShoppingCart, UserCheck, Activity, Shield, Terminal, Sparkles, ArrowLeft, Workflow, Network, ClipboardCheck
 } from 'lucide-react';
-import { FaLinkedinIn} from "react-icons/fa";
 // --- DATA ---
 const INSIGHTS_ARTICLES = [
   {
@@ -406,9 +405,12 @@ export default function App() {
   const HomeView = () => (
     <>
       <Hero onCaseClick={() => navigateTo('cases')} onContactClick={() => setShowContactModal(true)} />
-      <EnterpriseSystems onCapSelect={selectCapability} />
-      <PerformanceSection />
-      <ProcessTeaser onMoreClick={() => navigateTo('process')} />
+        <IntegrationEcosystem />
+        <Capabilities />
+        <AVCMasteryView />
+      {/* <EnterpriseSystems onCapSelect={selectCapability} /> */}
+      {/* <PerformanceSection /> */}
+      {/* <ProcessTeaser onMoreClick={() => navigateTo('process')} /> */}
     </>
   );
 
@@ -606,6 +608,121 @@ export default function App() {
       </div>
     </div>
   );
+
+  const Capabilities = () => {
+  const capabilitiesData = [
+    {
+      icon: <Settings className="text-blue-600" />,
+      title: "SAP CPQ Engineering & Optimization",
+      desc: "We build systems that handle real-world enterprise complexity at scale.",
+      points: ["Complex product configuration", "Advanced pricing logic", "Quote automation workflows", "Approval hierarchies", "Performance tuning"],
+      outcome: "Faster quoting, higher accuracy, and scalable CPQ performance."
+    },
+    {
+      icon: <Workflow className="text-indigo-600" />,
+      title: "SAP Sales Cloud → CPQ Integration",
+      desc: "We enable seamless opportunity-to-quote execution.",
+      points: ["Opportunity data synchronization", "Quote triggers from Sales Cloud", "Bidirectional data flow", "Sales workflow automation"],
+      outcome: "Sales teams generate accurate quotes directly from CRM without friction."
+    },
+    {
+      icon: <TrendingUp className="text-emerald-600" />,
+      title: "SAP S/4HANA Pricing Orchestration",
+      desc: "We ensure one source of truth for pricing across systems.",
+      points: ["Real-time pricing calls (CPQ to S/4)", "Pricing condition mapping", "Complex discount structures", "Tax & regional logic", "Validation frameworks"],
+      outcome: "Zero pricing mismatch between quote and order."
+    },
+    {
+      icon: <Cpu className="text-purple-600" />,
+      title: "SAP Variant Configuration (VC) Mastery",
+      desc: "High-performance configuration models for complex manufacturing.",
+      points: ["Class & characteristic modeling", "Dependency logic (Constraints)", "Multi-level BOM configuration", "VC performance optimization", "CPQ + VC hybrid architecture"],
+      outcome: "Accurate product configurations with reduced system latency."
+    },
+    {
+      icon: <Network className="text-blue-500" />,
+      title: "Integration Architecture (CPI / APIs)",
+      desc: "We build resilient, enterprise-grade SAP integration layers.",
+      points: ["SAP CPI iFlow design", "API-first architecture", "Event-driven patterns", "Error handling & monitoring", "Secure data exchange"],
+      outcome: "Reliable, scalable, and maintainable integrations."
+    },
+    {
+      icon: <ClipboardCheck className="text-orange-600" />,
+      title: "Quote-to-Cash Process Engineering",
+      desc: "Designing end-to-end revenue workflows beyond systems.",
+      points: ["Lead → Opportunity → Order flow", "Approval & exception handling", "Sales operations workflows", "Revenue leakage points", "Process automation"],
+      outcome: "A streamlined revenue engine—not disconnected systems."
+    }
+  ];
+
+  return (
+    <section id="capabilities" className="py-24 bg-white">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="mb-16">
+          <h2 className="text-sm font-black text-blue-600 uppercase tracking-widest mb-4">Deep SAP Revenue Architecture</h2>
+          <h3 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">Capabilities</h3>
+          <p className="text-xl text-slate-600 text-center">
+            We don't offer generic SAP consulting. We bring <span className="text-slate-900 font-bold">specialized, system-level capabilities</span> across the entire Quote-to-Cash stack.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {capabilitiesData.map((item, i) => (
+            <div key={i} className="group flex flex-col bg-slate-50 rounded-3xl p-8 border border-slate-100 hover:border-blue-200 hover:bg-white hover:shadow-xl transition-all duration-300">
+              <div className="p-3 bg-white rounded-2xl w-fit mb-6 shadow-sm border border-slate-100 group-hover:scale-110 transition-transform">
+                {item.icon}
+              </div>
+              <h4 className="text-xl font-bold text-slate-900 mb-4">{item.title}</h4>
+              <p className="text-slate-600 text-sm mb-6 leading-relaxed">{item.desc}</p>
+              
+              <ul className="space-y-3 mb-8 flex-grow">
+                {item.points.map((pt, idx) => (
+                  <li key={idx} className="flex items-start text-xs font-medium text-slate-500">
+                    <CheckCircle2 size={14} className="text-blue-500 mr-2 mt-0.5 shrink-0" />
+                    {pt}
+                  </li>
+                ))}
+              </ul>
+
+              <div className="pt-6 border-t border-slate-200">
+                <div className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-2">Outcome</div>
+                <div className="text-sm font-bold text-slate-800 leading-snug">{item.outcome}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+  };
+
+  const AVCMasteryView = () => {
+    return (
+      <section id="avc" className="py-24 bg-slate-900 text-white overflow-hidden relative">
+          <div className="absolute right-0 top-0 w-1/2 h-full bg-blue-600/10 -skew-x-12 translate-x-1/4"></div>
+          <div className="max-w-7xl mx-auto px-6 relative z-10">
+            <div className="max-w-3xl mb-16">
+              <h2 className="text-sm font-black text-blue-400 uppercase tracking-widest mb-4 text-left">Foundation</h2>
+              <h3 className="text-4xl md:text-5xl font-bold mb-6 italic text-blue-100 text-left">SAP AVC Mastery.</h3>
+              <p className="text-slate-400 text-lg text-left">Modernize your configuration architecture. We lead enterprise transitions from legacy VC to high-velocity, S/4HANA Advanced Variant Configuration.</p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-8">
+              {[
+                { icon: <Cpu />, title: "VC to AVC Migration", tag: "Process Optimization" },
+                { icon: <Database />, title: "Master Data Harmonization", tag: "System Integrity" },
+                { icon: <Layers />, title: "Integration Architecture", tag: "BTP Hub" }
+              ].map((item, i) => (
+                <div key={i} className="bg-slate-800/50 p-8 rounded-3xl border border-slate-700 backdrop-blur-sm hover:border-blue-500/50 transition-colors cursor-pointer group">
+                  <div className="p-3 bg-blue-600/20 rounded-xl text-blue-400 w-fit mb-6 group-hover:bg-blue-600 group-hover:text-white transition-all">{item.icon}</div>
+                  <h4 className="text-xl font-bold mb-4">{item.title}</h4>
+                  <div className="text-xs font-bold text-blue-400 uppercase tracking-widest">{item.tag}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+    );
+  }
 
   const L2CExplorerView = () => {
     const [activeStage, setActiveStage] = useState(L2C_STAGES[0]);
@@ -887,7 +1004,9 @@ export default function App() {
               </div>
               <p className="text-slate-400 text-sm leading-relaxed mb-8">Architecting the future of enterprise configuration and Lead-to-Cash orchestration.</p>
               <div className="flex gap-4">
-                <FaLinkedinIn size={20} href='https://www.linkedin.com/company/connectingcloud' className="text-slate-500 hover:text-white cursor-pointer" />
+                {/* <Linkedin size={20} className="text-slate-500 hover:text-white cursor-pointer" /> */}
+                {/* <Github size={20} className="text-slate-500 hover:text-white cursor-pointer" /> */}
+                {/* <Twitter size={20} className="text-slate-500 hover:text-white cursor-pointer" /> */}
               </div>
             </div>
             <div>
@@ -909,13 +1028,14 @@ export default function App() {
             <div>
               <h5 className="font-black text-[10px] uppercase tracking-widest text-blue-500 mb-8">Contact</h5>
               <ul className="space-y-4 text-slate-400 text-sm font-bold">
+                <li>Innovation Hub, SF</li>
                 <li>info@connectingcloud.co</li>
-                <li>+91 9052477277</li>
+                <li>+1 (800) CLOUD-TECH</li>
               </ul>
             </div>
           </div>
           <div className="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between gap-6 text-[10px] font-black uppercase tracking-widest text-slate-600">
-            <p>© 2026 Connecting Cloud Technologies. All rights reserved.</p>
+            <p>© 2024 Connecting Cloud Technologies. All rights reserved.</p>
             <div className="flex gap-8">
               <span className="hover:text-white cursor-pointer">Privacy Policy</span>
               <span className="hover:text-white cursor-pointer">Terms of Service</span>
@@ -1038,7 +1158,7 @@ function Hero({ onCaseClick, onContactClick }) {
               </button>
             </div>
 
-            <div className="grid gap-3 sm:grid-cols-3">
+            {/* <div className="grid gap-3 sm:grid-cols-3">
               <div className="rounded-2xl border border-slate-200 bg-white p-4">
                 <p className="text-2xl font-black text-slate-900">92%</p>
                 <p className="text-[10px] font-black uppercase tracking-widest text-slate-500">Automation Rate</p>
@@ -1051,10 +1171,10 @@ function Hero({ onCaseClick, onContactClick }) {
                 <p className="text-2xl font-black text-slate-900">99.9%</p>
                 <p className="text-[10px] font-black uppercase tracking-widest text-slate-500">Data Integrity</p>
               </div>
-            </div>
+            </div> */}
           </div>
 
-          <div className="rounded-[2.5rem] border border-slate-200 bg-white p-8 shadow-2xl shadow-slate-200/70">
+          {/* <div className="rounded-[2.5rem] border border-slate-200 bg-white p-8 shadow-2xl shadow-slate-200/70">
             <p className="mb-5 text-[10px] font-black uppercase tracking-[0.3em] text-blue-600">What You Get</p>
             <h3 className="mb-6 text-3xl font-black leading-tight text-slate-900">
               Architecture built for performance and clean-core scale.
@@ -1078,12 +1198,100 @@ function Hero({ onCaseClick, onContactClick }) {
                 Teams usually cut quote-to-order latency from days to hours in the first phase rollout.
               </p>
             </div>
+          </div> */}
+          <div className="relative">
+            <div className="bg-white p-6 md:p-8 rounded-[2.5rem] shadow-2xl border border-slate-100 relative z-10">
+              <div className="flex items-center justify-between mb-8 pb-4 border-b">
+                <span className="font-bold text-slate-400 text-xs tracking-widest uppercase">Enterprise Revenue Orchestration</span>
+                <div className="flex space-x-1">
+                  <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
+                  <div className="w-2 h-2 rounded-full bg-slate-200"></div>
+                </div>
+              </div>
+              
+              <div className="space-y-6">
+                <div className="flex items-center justify-between p-4 bg-blue-50 rounded-2xl border border-blue-100">
+                  <div className="flex items-center space-x-4">
+                    <div className="p-3 bg-blue-600 rounded-xl text-white"><Zap size={20}/></div>
+                    <div>
+                      <div className="text-sm font-bold text-slate-900">Cycle Time Reduction</div>
+                      <div className="text-xs text-blue-600 font-medium italic">High-Velocity Quoting</div>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-lg font-black text-blue-600">-65%</div>
+                    <div className="text-[10px] uppercase font-bold text-slate-400">Process Friction</div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                    <span className="text-[10px] font-black text-slate-400 uppercase">Pricing Controls</span>
+                    <div className="text-sm font-bold text-slate-800">Margin Integrity</div>
+                    <div className="mt-2 h-1.5 w-full bg-slate-200 rounded-full overflow-hidden">
+                      <div className="h-full bg-green-500 w-[100%]"></div>
+                    </div>
+                  </div>
+                  <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                    <span className="text-[10px] font-black text-slate-400 uppercase">Architecture</span>
+                    <div className="text-sm font-bold text-slate-800">Clean Core Stability</div>
+                    <div className="mt-2 h-1.5 w-full bg-slate-200 rounded-full overflow-hidden">
+                      <div className="h-full bg-blue-500 w-[98%]"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="absolute -top-6 -right-6 bg-white p-4 rounded-2xl shadow-xl border border-slate-100 z-20 animate-bounce-slow">
+              <div className="text-blue-600 font-black text-xl leading-none">99.9%</div>
+              <div className="text-[10px] font-bold text-slate-500 uppercase">Quote Accuracy</div>
+            </div>
           </div>
         </div>
       </div>
     </section>
   );
 }
+
+const IntegrationEcosystem = () => {
+  const logos = [
+    { name: 'SAP S/4HANA', url: 'https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg', isSap: true },
+    { name: 'SAP VC', url: 'https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg', isSap: true },
+    { name: 'SAP AVC', url: 'https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg', isSap: true },
+    { name: 'Salesforce', url: 'https://upload.wikimedia.org/wikipedia/commons/f/f9/Salesforce.com_logo.svg', isSap: false },
+    { name: 'DocuSign', url: 'https://cdn.prod.website-files.com/67d160f23e7ffa1df49339fc/67dcd2c2202a4f1f69625b75_logo%20vertical.svg', isSap: false },
+    { name: 'Adobe Acrobat Sign', url: 'https://helpx.adobe.com/content/dam/help/mnemonics/sign_app_RGB_2017.svg', isSap: false }
+  ];
+
+  return (
+    <section id="integrations" className="py-24 bg-white overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 text-center mb-16">
+        <h2 className="text-sm font-black text-blue-600 uppercase tracking-widest mb-4">CPQ SOFTWARE</h2>
+        <h3 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6">CPQ Integration Platform</h3>
+        <p className="text-lg text-slate-600 max-w-4xl mx-auto leading-relaxed">
+          Connecting Cloud Technologies has been successfully delivering best-of-breed SAP solutions to our global client base for years. 
+          Our innovative and high-tech solutions can simplify the complete integration process of <strong className="text-blue-600">SAP CPQ</strong> with <strong className="text-blue-600">SAP Contract Lifecycle Management</strong> and other leading platforms.
+        </p>
+      </div>
+
+      <div className="relative w-full flex overflow-hidden border-y border-slate-100 bg-slate-50/30">
+        <div className="py-12 flex whitespace-nowrap animate-marquee group-hover:pause-animation">
+          {/* We repeat the logos multiple times to ensure the track is long enough to loop seamlessly */}
+          {[...logos, ...logos, ...logos, ...logos].map((logo, i) => (
+            <div key={i} className="group flex items-center px-12 opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-default">
+              <img src={logo.url} alt={logo.name} className={`h-12`} />
+              <span className="text-3xl font-black tracking-tighter text-slate-800 group-hover:text-black">{logo.name}</span>
+            </div>
+          ))}
+        </div>
+        
+        {/* Gradient overlays for smooth fading at edges */}
+        <div className="absolute top-0 left-0 w-48 h-full bg-gradient-to-r from-white via-white/80 to-transparent z-10 pointer-events-none"></div>
+        <div className="absolute top-0 right-0 w-48 h-full bg-gradient-to-l from-white via-white/80 to-transparent z-10 pointer-events-none"></div>
+      </div>
+    </section>
+  );
+};
 
 function EnterpriseSystems({ onCapSelect }) {
   const SYSTEMS = [
