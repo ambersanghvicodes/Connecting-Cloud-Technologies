@@ -1,0 +1,57 @@
+.dropdown-menu {
+  background-image: url("../../images/bg/drp-bg-1.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 70vw;
+  height: 50vh;
+  z-index: 1;
+  position: absolute;
+  left: 20%;
+  list-style: none;
+  box-shadow: -1px 5px 21px 4px rgba(0, 0, 0, 0.54);
+  -webkit-box-shadow: -1px 5px 21px 4px rgba(0, 0, 0, 0.54);
+  -moz-box-shadow: -1px 5px 21px 4px rgba(0, 0, 0, 0.54);
+  /* text-align: start; */
+}
+.dropdown-flex {
+  height: 100%;
+  display: flex;
+  width: 100%;
+  flex-flow: row nowrap;
+  justify-items: stretch;
+  /* border: black 1px groove; */
+}
+.dropdown-header {
+  /* background: #030097; */
+  cursor: pointer;
+  border-bottom: dashed rgb(199, 23, 23) 1px;
+  border-radius: 5vw;
+}
+
+.dropdown-header:hover {
+  background: #5cabff;
+}
+
+.dropdown-menu.clicked {
+  display: none;
+}
+
+.dropdown-link {
+  display: block;
+  flex: 2;
+  width: 23vw;
+  text-align: center;
+  align-content: center;
+  justify-content: content;
+  /* height: 100%; */
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  padding: 16px;
+}
+
+@media screen and (max-width: 960px) {
+  .fa-caret-down {
+    display: none;
+  }
+}

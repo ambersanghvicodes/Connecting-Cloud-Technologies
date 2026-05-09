@@ -1,0 +1,59 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+.hero {
+  height: 100vh;
+  background: url(../images/hero-image.jpg);
+  background-position: center;
+  padding:  1.5rem 4rem 2.5rem 4rem;
+}
+.home-qcs {
+  min-height: 110vh;
+  padding-top: 5rem;
+  max-height: fit-content;
+}
+.subheading_home{
+    /* color : red; */
+    font-size: 1.5rem;
+}
+.heading_home{
+    color: rgb(51, 45, 105);
+    font-size: 3.6rem;
+}
+.slanted_home {
+  position: absolute;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  height: 5.5rem;
+  width: 50rem;
+  background: white;
+  
+  -moz-transform: skew(-12deg);
+  -webkit-transform: skew(-12deg);
+  transform: skew(-12deg); 
+}
+.h_home{
+  position: absolute;
+  color: #0000fe;
+  width: max-content;
+  padding: 0.5rem 1rem;
+  text-shadow: 2px 2px 2px #c9b8b8;
+}
+.sh_home{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1.6rem;
+  line-height: 2.5rem;
+  font-weight:bolder;
+  text-align: left;
+  text-shadow: 4px 4px 4px #000000;
+}
+@media screen and (max-width: 600px) {
+  .hero {
+    padding: 1rem 1rem;
+  }
+}
+/* 
+  border-bottom: 2px solid red;
+  border-right: 2px solid red;
+  -moz-transform: skew(-45deg);
+  -webkit-transform: skew(-45deg);
+  transform: skew(-45deg); */

@@ -1,35 +1,59 @@
 {
-  "name": "cct",
+  "homepage": "https://connectingcloud.co",
+  "name": "treact",
+  "version": "0.1.0",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview",
-    "deploy": "gh-pages -d dist"
-  },
   "dependencies": {
-    "@emailjs/browser": "^4.4.1",
-    "lucide-react": "^1.8.0",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
-    "recharts": "^3.8.1"
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "axios": "^0.21.4",
+    "emailjs-com": "^3.2.0",
+    "feather-icons": "^4.26.0",
+    "firebase": "^8.3.1",
+    "framer-motion": "^1.11.1",
+    "gh-pages": "^3.1.0",
+    "react": "^16.13.1",
+    "react-anchor-link-smooth-scroll": "^1.0.12",
+    "react-awesome-slider": "^4.1.0",
+    "react-backdrop-filter": "^2.1.0",
+    "react-dom": "^16.13.1",
+    "react-elastic-carousel": "^0.11.5",
+    "react-lottie": "^1.2.3",
+    "react-meta-tags": "^1.0.1",
+    "react-modal": "^3.11.2",
+    "react-rnd": "^10.1.9",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "^4.0.3",
+    "react-slick": "^0.25.2",
+    "sass": "^1.98.0",
+    "slick-carousel": "^1.8.1",
+    "styled-components": "^5.0.1",
+    "tailwindcss": "^2.1.2",
+    "twin.macro": "^2.4.2",
+    "use-in-view": "^1.0.15"
   },
-  "devDependencies": {
-    "@eslint/js": "^9.39.4",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^6.0.1",
-    "autoprefixer": "^10.4.19",
-    "eslint": "^9.39.4",
-    "eslint-plugin-react-hooks": "^7.0.1",
-    "eslint-plugin-react-refresh": "^0.5.2",
-    "gh-pages": "^6.3.0",
-    "globals": "^17.4.0",
-    "postcss": "^8.4.35",
-    "tailwindcss": "^3.4.4",
-    "vite": "^8.0.4"
+  "scripts": {
+    "pre-deploy": "npm run build",
+    "deploy": "gh-pages -d build",
+    "start": "set NODE_OPTIONS=--openssl-legacy-provider && react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

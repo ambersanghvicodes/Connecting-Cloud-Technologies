@@ -1,0 +1,44 @@
+.contact-us-container {
+  display: flex;
+  flex-direction: row;
+  width: 80vw;
+  height: 80vh;
+  justify-content: center;
+  margin: 1.5rem;
+  margin-top: 3.5rem;
+  margin-bottom: 4rem;
+  border: gray 1px solid;
+  border-radius: 25px;
+  background-color: rgb(243, 238, 231);
+  box-shadow: -1px 4px 32px 0px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: -1px 4px 32px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: -1px 4px 32px 0px rgba(0, 0, 0, 0.75);
+  /* border: red 2px solid; */
+}
+
+.contact-us-left {
+  /* border: 2px red solid; */
+  /* flex: 1; */
+  background-image: url("https://img.freepik.com/free-vector/elegant-white-background-with-shiny-lines_1017-17580.jpg?size=626&ext=jpg");
+  /* border: rgb(129, 51, 255) 2px solid; */
+  width: 25vw;
+  /* display: flex; */
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+  padding: 1rem;
+  background-color: rgb(221, 221, 221);
+}
+.contact-us-right {
+  /* flex: 2; */
+  /* border: rgb(0, 0, 0) 2px solid; */
+  width: 55vw;
+  /* background-color: rgb(1, 0, 3); */
+}
+
+.loc-add {
+  height: 20vh;
+}
+
+/* .social-links {
+  align-self: flex-end;
+} */

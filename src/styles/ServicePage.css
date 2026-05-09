@@ -1,0 +1,77 @@
+.spg-container {
+  position: relative;
+  background-color: #2a2a72;
+  /* background-image: linear-gradient(315deg, #2a2a72 0%, #009ffd 74%); */
+  /* background-image: linear-gradient(to right, #8360c3, #2ebf91); */
+  /* background-image: linear-gradient(to right, #0f0c29, #302b63, #24243e); */
+  /* background-image: linear-gradient( 109.6deg, rgba(156,252,248,1) 11.2%, rgba(110,123,251,1) 91.1% ); */
+  /* background-image: linear-gradient(to right bottom, #073d8f, #0074c5, #00a5bd, #00ce7d, #a8eb12); */
+  /* background-image: linear-gradient(to right bottom, #99ff50, #00f99f, #00eade, #00d5ff, #00bcff, #00a9ff, #0094ff, #277bff, #0068ff, #0053ff, #0039ff, #1f00ff); */
+  /* background-image: linear-gradient(
+    to right bottom,
+    #7067d3,
+    #6865db,
+    #5e63e3,
+    #5161ec,
+    #3f5ff4,
+    #335af8,
+    #2254fb,
+    #004fff,
+    #0043ff,
+    #0036ff,
+    #0e24ff,
+    #1f00ff
+  ); */
+}
+.sfs-main {
+  background-image: linear-gradient(to right bottom, #073d8f, #0074c5, #00a5bd, #00ce7d, #a8eb12);
+
+}
+.sap-main {
+    /* background-image: linear-gradient(315deg, #2a2a72 0%, #009ffd 74%); */
+  /* background-image: linear-gradient(to right, #8360c3, #2ebf91); */
+  /* background-image: linear-gradient(to right, #0f0c29, #302b63, #24243e); */
+  /* background-image: linear-gradient( 109.6deg, rgba(156,252,248,1) 11.2%, rgba(110,123,251,1) 91.1% ); */
+  background: rgb(2,0,36);
+background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 0%, rgba(255,255,255,1) 100%);
+}
+
+.spg-inner {
+  position: relative;
+  height: 130vh;
+  width: 100vw;
+  overflow: hidden;
+  z-index: 20;
+}
+
+.spg-inner-flex {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 130vh;
+  justify-content: space-evenly;
+}
+.spg-head {
+  color: white;
+  font: white bolder;
+  font-size: 4rem;
+  margin: 0vh;
+}
+.spg-img {
+  max-width: 30vw;
+  width: auto;
+  height: auto;
+  -webkit-filter: drop-shadow(8px 8px 10px #222);
+  filter: drop-shadow(8px 8px 10px #222);
+  /* padding-top: 50%; */
+  /* width: ; */
+}
+.spg-img-sap {
+  max-width: 20vw;
+  width: auto;
+  height: auto;
+  -webkit-filter: drop-shadow(8px 8px 10px #222);
+  filter: drop-shadow(8px 8px 10px #222);
+  /* padding-top: 50%; */
+  /* width: ; */
+}

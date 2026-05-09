@@ -1,0 +1,25 @@
+.outerbox {
+  height: 100vh;
+  background: url("../images/LandingBackground.jpg");
+}
+.innerbox {
+  margin: 0 2rem;
+}
+
+.slanted {
+  color: #0000fe;
+  margin: 0;
+  background: white;
+  
+  transform: skew(-10deg);
+}
+.slanted ::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    background: #000;
+    transform: skew(-30deg);
+    transform-origin:top;
+}
