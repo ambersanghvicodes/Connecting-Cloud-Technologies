@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import emailjs from '@emailjs/browser';
 import cctLogo from './assets/cct-logo.png';
 import { 
   BarChart, Bar, ResponsiveContainer, Tooltip, XAxis, YAxis, LineChart, Line, AreaChart, Area
@@ -382,20 +381,26 @@ export default function App() {
     setContactError('');
 
     try {
-      await emailjs.sendForm(
-        'YOUR_SERVICE_ID',    // replace with your EmailJS service ID
-        'YOUR_TEMPLATE_ID',   // replace with your EmailJS template ID
-        e.target,
-        'YOUR_PUBLIC_KEY'     // replace with your EmailJS public key
-      );
+      const endpoint = import.meta.env.VITE_BRIEFING_SCRIPT_URL;
+
+      if (!endpoint) {
+        throw new Error('Missing VITE_BRIEFING_SCRIPT_URL');
+      }
+
+      await fetch(endpoint, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: new FormData(e.currentTarget),
+      });
 
       setFormSubmitted(true);
+      e.currentTarget.reset();
       setTimeout(() => {
         setFormSubmitted(false);
         setShowContactModal(false);
       }, 3000);
     } catch (err) {
-      console.error('EmailJS error', err);
+      console.error('Briefing submit error', err);
       setContactError('There was a problem sending your briefing. Please try again in a moment.');
     }
   };

@@ -55,12 +55,6 @@ export default function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    if (!mobileMenuOpen) {
-      setCapabilitiesOpen(false);
-    }
-  }, [mobileMenuOpen]);
-
   const scrollToSection = (sectionId) => {
     if (sectionId === 'home') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -70,6 +64,14 @@ export default function Navigation() {
 
     setMobileMenuOpen(false);
     setCapabilitiesOpen(false);
+  };
+
+  const toggleMobileMenu = () => {
+    if (mobileMenuOpen) {
+      setCapabilitiesOpen(false);
+    }
+
+    setMobileMenuOpen((open) => !open);
   };
 
   return (
@@ -158,7 +160,7 @@ export default function Navigation() {
               </button>
               <button
                 type="button"
-                onClick={() => setMobileMenuOpen((open) => !open)}
+                onClick={toggleMobileMenu}
                 className="rounded-full p-2 text-slate-900 lg:hidden"
                 aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
               >
