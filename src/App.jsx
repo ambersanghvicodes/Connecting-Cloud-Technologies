@@ -164,7 +164,7 @@ const L2C_STAGES = [
   {
     id: "Lead",
     title: "Demand Generation",
-    platform: "Salesforce / CRM",
+    platform: "SAP Sales Cloud C4C CCV2 / Salesforce",
     icon: <Target size={24} />,
     color: "bg-rose-500",
     description: "Capturing customer intent and qualifying opportunities with rich behavioral data to ensure sales teams focus on the right deals.",
