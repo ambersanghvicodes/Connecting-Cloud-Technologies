@@ -1851,6 +1851,16 @@ function Hero({ onCaseClick, onContactClick }) {
     logo: "https://commons.wikimedia.org/wiki/Special:FilePath/Infosys%20logo.svg",
     width: "w-24",
   },
+  {
+    name: "NMLK",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/5/5c/NLMK_Logo.svg",
+    width: "w-24",
+  },
+  {
+    name: "EY",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/3/34/EY_logo_2019.svg",
+    width: "w-24",
+  },
   // {
   //   name: "Deloitte",
   //   logo: "https://commons.wikimedia.org/wiki/Special:FilePath/Logo_of_Deloitte.svg",
