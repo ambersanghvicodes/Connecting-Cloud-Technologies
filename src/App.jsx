@@ -456,6 +456,15 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [mobileMenuOpen]);
+
+  useEffect(() => {
     const syncRoute = () => {
       const route = parseHashRoute();
       setActivePage(route.page);
@@ -681,23 +690,23 @@ export default function App() {
 ];
 
   return (
-    <section className="bg-slate-950 py-24 relative overflow-hidden" id="cpq-migration">
+    <section className="bg-slate-950 py-16 sm:py-24 relative overflow-hidden" id="cpq-migration">
       {/* Decorative background elements */}
       <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
         <div className="absolute top-1/4 -left-20 w-96 h-96 bg-blue-600 rounded-full blur-[120px]" />
       </div>
 
-      <div className="mx-auto max-w-7xl px-6 lg:px-12 relative z-10">
-        <div className="mb-16">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-12 relative z-10">
+        <div className="mb-12 sm:mb-16">
           <div className="inline-flex items-center gap-2 rounded-full bg-blue-500/10 px-4 py-2 text-[10px] font-bold text-blue-400 uppercase tracking-[0.2em] mb-6 border border-blue-500/20">
             <Shield size={14} /> Migration Strategic Window
           </div>
-          <h2 className="text-4xl font-black tracking-tight text-white md:text-6xl leading-tight">
+          <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-white md:text-6xl leading-tight">
             The CPQ Quote 1.0 <ArrowRight className="inline mx-2 text-blue-500" /> 2.0 <br/>
             <span className="text-slate-500 italic">Critical Transition Period</span>
           </h2>
-          <div className="mt-8 grid lg:grid-cols-3 gap-12">
-            <p className="lg:col-span-2 text-xl text-slate-400 leading-relaxed">
+          <div className="mt-8 grid lg:grid-cols-3 gap-8 lg:gap-12">
+            <p className="lg:col-span-2 text-base sm:text-xl text-slate-400 leading-relaxed">
               SAP is no longer issuing new Quote 1.0 licences. With <span className="text-blue-400 font-bold">90% of new features</span> being 2.0-exclusive, staying on legacy architecture means falling behind on innovation, performance, and S/4HANA readiness.
             </p>
             <div className="flex items-center">
@@ -710,12 +719,12 @@ export default function App() {
         </div>
 
         {/* Stats Row */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-20">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 sm:mb-20">
           {migStats.map((stat, i) => (
-            <div key={i} className="group p-8 rounded-[2.5rem] bg-slate-900/40 border border-white/5 hover:border-blue-500/30 transition-all">
+            <div key={i} className="group p-5 sm:p-8 rounded-[1.5rem] sm:rounded-[2.5rem] bg-slate-900/40 border border-white/5 hover:border-blue-500/30 transition-all">
               <div className="mb-4">{stat.icon}</div>
-              <div className="text-4xl font-black text-white mb-2 tracking-tighter">{stat.n}</div>
-              <div className="text-[11px] font-bold text-slate-500 uppercase tracking-widest leading-relaxed">{stat.l}</div>
+              <div className="text-2xl sm:text-4xl font-black text-white mb-2 tracking-tighter">{stat.n}</div>
+              <div className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase tracking-widest leading-relaxed">{stat.l}</div>
             </div>
           ))}
         </div>
@@ -817,16 +826,16 @@ export default function App() {
 
 const ReadyToConnectSection = ({ onContactClick }) => {
   return (
-    <section className="bg-[#020617] py-24 px-6 lg:px-12 relative overflow-hidden">
+    <section className="bg-[#020617] py-16 sm:py-24 px-4 sm:px-6 lg:px-12 relative overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.05)_0%,transparent_70%)] pointer-events-none" />
 
       <div className="mx-auto max-w-5xl relative z-10">
-        <div className="bg-gradient-to-br from-blue-600 via-blue-500 to-indigo-600 rounded-[3rem] p-8 md:p-16 text-center shadow-2xl shadow-blue-900/40 border border-white/10 group">
+        <div className="bg-gradient-to-br from-blue-600 via-blue-500 to-indigo-600 rounded-[2rem] sm:rounded-[3rem] p-8 sm:p-12 md:p-16 text-center shadow-2xl shadow-blue-900/40 border border-white/10 group">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-md mb-8 group-hover:scale-110 transition-transform duration-500 border border-white/20">
             <MessageSquare className="text-white" size={32} />
           </div>
           
-          <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter mb-6 leading-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-6xl font-black text-white tracking-tighter mb-6 leading-tight">
             Ready to <span className="text-blue-100">Connect?</span>
           </h2>
           
@@ -877,11 +886,11 @@ const ReadyToConnectSection = ({ onContactClick }) => {
           </div>
         </div>
 
-        <article className="max-w-4xl mx-auto px-6 pt-16 pb-32">
-          <div className="mb-12">
+        <article className="max-w-4xl mx-auto px-4 sm:px-6 pt-10 sm:pt-16 pb-16 sm:pb-32">
+          <div className="mb-8 sm:mb-12">
             <span className="px-4 py-1 bg-blue-100 text-blue-600 text-[10px] font-black uppercase tracking-widest rounded-full">{readingArticle.category}</span>
-            <h1 className="text-5xl font-black text-slate-900 mt-6 leading-tight tracking-tight">{readingArticle.title}</h1>
-            <div className="flex items-center gap-6 mt-8 pb-8 border-b border-slate-100">
+            <h1 className="text-3xl sm:text-5xl font-black text-slate-900 mt-6 leading-tight tracking-tight">{readingArticle.title}</h1>
+            <div className="flex flex-wrap items-center gap-4 sm:gap-6 mt-6 sm:mt-8 pb-6 sm:pb-8 border-b border-slate-100">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white"><UserCheck size={18}/></div>
                 <div>
@@ -889,7 +898,7 @@ const ReadyToConnectSection = ({ onContactClick }) => {
                   <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">{readingArticle.date}</p>
                 </div>
               </div>
-              <div className="h-6 w-px bg-slate-200" />
+              <div className="hidden sm:block h-6 w-px bg-slate-200" />
               <div className="flex items-center gap-2 text-slate-400 text-xs font-bold">
                 <Clock size={14}/> {readingArticle.readTime}
               </div>
@@ -900,10 +909,10 @@ const ReadyToConnectSection = ({ onContactClick }) => {
             {readingArticle.content}
           </div>
 
-          <div className="mt-20 p-10 bg-slate-50 rounded-[2.5rem] border border-slate-100">
+          <div className="mt-12 sm:mt-20 p-6 sm:p-10 bg-slate-50 rounded-[2rem] sm:rounded-[2.5rem] border border-slate-100">
             <h5 className="text-xl font-black text-slate-900 mb-4">Interested in implementing this?</h5>
-            <p className="text-slate-600 font-medium mb-8">Our architects have implemented similar strategies for Fortune 500 manufacturers. Get a custom technical assessment today.</p>
-            <button onClick={() => setShowContactModal(true)} className="px-8 py-4 bg-blue-600 text-white font-black rounded-2xl text-[10px] uppercase tracking-widest hover:bg-blue-700 transition-colors">
+            <p className="text-slate-600 font-medium mb-6 sm:mb-8">Our architects have implemented similar strategies for Fortune 500 manufacturers. Get a custom technical assessment today.</p>
+            <button onClick={() => setShowContactModal(true)} className="w-full sm:w-auto px-8 py-4 bg-blue-600 text-white font-black rounded-2xl text-[10px] uppercase tracking-widest hover:bg-blue-700 transition-colors">
               Schedule Architecture Briefing
             </button>
           </div>
@@ -913,30 +922,30 @@ const ReadyToConnectSection = ({ onContactClick }) => {
   };
 
   const InsightsView = () => (
-    <div className="bg-white min-h-screen pt-32 pb-24">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col md:flex-row items-baseline justify-between gap-4 mb-16">
+    <div className="bg-white min-h-screen pt-20 sm:pt-32 pb-16 sm:pb-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="flex flex-col md:flex-row items-baseline justify-between gap-4 mb-10 sm:mb-16">
           <div>
             <h2 className="text-blue-600 font-black uppercase tracking-[0.4em] text-[10px] mb-4">Intellectual Property</h2>
-            <h1 className="text-5xl font-black text-slate-900 tracking-tight">Cloud Insights</h1>
+            <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">Cloud Insights</h1>
           </div>
           <p className="text-slate-500 font-medium max-w-md">Our architects share technical breakthroughs, architectural blueprints, and emerging trends in the Lead-to-Cash ecosystem.</p>
         </div>
 
         {/* Featured Radar */}
-        <div className="grid lg:grid-cols-12 gap-12 mb-24">
-          <div className="lg:col-span-8 grid gap-8">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 mb-16 sm:mb-24">
+          <div className="lg:col-span-8 grid gap-6 sm:gap-8">
             {INSIGHTS_ARTICLES.map((article) => (
-              <div key={article.id} className="group bg-slate-50 border border-slate-100 p-8 rounded-[2.5rem] hover:bg-white hover:shadow-2xl transition-all duration-500">
+              <div key={article.id} className="group bg-slate-50 border border-slate-100 p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] hover:bg-white hover:shadow-2xl transition-all duration-500">
                 <div className="flex flex-wrap items-center gap-4 mb-6">
                   <span className="px-4 py-1 bg-blue-100 text-blue-600 text-[10px] font-black uppercase tracking-widest rounded-full">{article.category}</span>
                   <span className="text-slate-400 text-[10px] font-bold">{article.date}</span>
                   <div className="h-4 w-px bg-slate-200" />
                   <span className="text-slate-400 text-[10px] font-bold flex items-center gap-1"><Clock size={12}/> {article.readTime}</span>
                 </div>
-                <h3 className="text-2xl font-black text-slate-900 mb-4 group-hover:text-blue-600 transition-colors">{article.title}</h3>
-                <p className="text-slate-600 mb-8 leading-relaxed font-medium">{article.excerpt}</p>
-                <div className="flex items-center justify-between">
+                <h3 className="text-xl sm:text-2xl font-black text-slate-900 mb-4 group-hover:text-blue-600 transition-colors">{article.title}</h3>
+                <p className="text-slate-600 mb-6 sm:mb-8 leading-relaxed font-medium">{article.excerpt}</p>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 bg-slate-200 rounded-full flex items-center justify-center"><UserCheck size={14} className="text-slate-500" /></div>
                     <span className="text-xs font-bold text-slate-900">{article.author}</span>
@@ -953,12 +962,12 @@ const ReadyToConnectSection = ({ onContactClick }) => {
           </div>
           
           <div className="lg:col-span-4">
-            <div className="bg-slate-900 text-white rounded-[2.5rem] p-10 sticky top-32">
-              <div className="flex items-center gap-3 mb-10">
+            <div className="bg-slate-900 text-white rounded-[2rem] sm:rounded-[2.5rem] p-7 sm:p-10 lg:sticky lg:top-32">
+              <div className="flex items-center gap-3 mb-8 sm:mb-10">
                 <TrendingUp size={24} className="text-blue-400" />
                 <h4 className="text-xl font-black">Trend Radar</h4>
               </div>
-              <div className="space-y-8">
+              <div className="space-y-6 sm:space-y-8">
                 {TREND_RADAR.map((trend) => (
                   <div key={trend.topic}>
                     <div className="flex justify-between items-center mb-3">
@@ -991,14 +1000,14 @@ const ReadyToConnectSection = ({ onContactClick }) => {
 
   const MethodologyView = () => (
     <div className="bg-slate-950 text-white min-h-screen">
-      <div className="pt-32 pb-24 max-w-7xl mx-auto px-6">
-        <div className="mb-24 flex flex-col md:flex-row md:items-end justify-between gap-8">
+      <div className="pt-20 sm:pt-32 pb-16 sm:pb-24 max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="mb-16 sm:mb-24 flex flex-col md:flex-row md:items-end justify-between gap-8">
           <div className="max-w-3xl">
             <h2 className="text-blue-400 font-black uppercase tracking-[0.4em] text-xs mb-6">Execution Framework</h2>
-            <h1 className="text-5xl md:text-7xl font-black mb-8 leading-none tracking-tighter">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black mb-8 leading-none tracking-tighter">
               The CCT <span className="text-slate-500">Methodology.</span>
             </h1>
-            <p className="text-xl text-slate-400 font-medium leading-relaxed">
+            <p className="text-base sm:text-xl text-slate-400 font-medium leading-relaxed">
               We don't just implement software. We architect end-to-end ecosystems where data integrity and quote-to-cash velocity are the primary objectives.
             </p>
           </div>
@@ -1011,22 +1020,22 @@ const ReadyToConnectSection = ({ onContactClick }) => {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-px bg-white/10 border border-white/10 rounded-[3rem] overflow-hidden shadow-2xl">
+        <div className="grid md:grid-cols-2 gap-px bg-white/10 border border-white/10 rounded-[2rem] sm:rounded-[3rem] overflow-hidden shadow-2xl">
           {METHODOLOGY_STEPS.map((step, idx) => (
-            <div key={idx} className={`group relative p-12 bg-slate-950 hover:bg-slate-900 transition-all duration-500`}>
+            <div key={idx} className={`group relative p-8 sm:p-12 bg-slate-950 hover:bg-slate-900 transition-all duration-500`}>
               <div className={`absolute inset-0 bg-gradient-to-br ${step.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
               
               <div className="relative z-10">
-                <div className="flex justify-between items-start mb-12">
+                <div className="flex justify-between items-start mb-8 sm:mb-12">
                   <div className={`w-14 h-14 rounded-2xl bg-white/5 border ${step.border} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform`}>
                     {step.icon}
                   </div>
-                  <span className="text-6xl font-black text-white/5 group-hover:text-white/10 transition-colors uppercase italic">{step.id}</span>
+                  <span className="text-4xl sm:text-6xl font-black text-white/5 group-hover:text-white/10 transition-colors uppercase italic">{step.id}</span>
                 </div>
                 
                 <h3 className="text-[10px] font-black text-blue-400 uppercase tracking-[0.3em] mb-4">{step.tag}</h3>
-                <h4 className="text-3xl font-black mb-6 text-white group-hover:translate-x-2 transition-transform">{step.title}</h4>
-                <p className="text-slate-400 text-lg leading-relaxed font-medium mb-10">
+                <h4 className="text-2xl sm:text-3xl font-black mb-4 sm:mb-6 text-white group-hover:translate-x-2 transition-transform">{step.title}</h4>
+                <p className="text-slate-400 text-base sm:text-lg leading-relaxed font-medium mb-8 sm:mb-10">
                   {step.desc}
                 </p>
                 
@@ -1040,12 +1049,12 @@ const ReadyToConnectSection = ({ onContactClick }) => {
           ))}
         </div>
 
-        <div className="mt-24 p-12 rounded-[3rem] bg-blue-600 text-white flex flex-col md:flex-row items-center justify-between gap-12">
+        <div className="mt-16 sm:mt-24 p-8 sm:p-12 rounded-[2rem] sm:rounded-[3rem] bg-blue-600 text-white flex flex-col md:flex-row items-center justify-between gap-8 sm:gap-12">
           <div className="max-w-xl">
-            <h5 className="text-3xl font-black mb-4">Ready for a Technical Deep-Dive?</h5>
+            <h5 className="text-2xl sm:text-3xl font-black mb-4">Ready for a Technical Deep-Dive?</h5>
             <p className="text-blue-100 font-medium opacity-80">Our architects are ready to review your existing Lead-to-Cash landscape and provide a preliminary gap analysis with delivery risks, quick wins, and modernization options.</p>
           </div>
-          <button onClick={() => setShowContactModal(true)} className="px-12 py-5 bg-white text-blue-600 font-black rounded-3xl text-sm uppercase tracking-widest hover:scale-105 transition-transform shadow-xl">
+          <button onClick={() => setShowContactModal(true)} className="w-full sm:w-auto px-10 sm:px-12 py-5 bg-white text-blue-600 font-black rounded-3xl text-sm uppercase tracking-widest hover:scale-105 transition-transform shadow-xl">
             Schedule Briefing
           </button>
         </div>
@@ -1100,12 +1109,12 @@ const ReadyToConnectSection = ({ onContactClick }) => {
   ];
 
   return (
-    <section id="capabilities" className="py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="mb-16">
+    <section id="capabilities" className="py-16 sm:py-24 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="mb-12 sm:mb-16">
           <h2 className="text-sm font-black text-blue-600 uppercase tracking-widest mb-4">Deep SAP Revenue Architecture</h2>
-          <h3 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">Capabilities tied to business outcomes.</h3>
-          <p className="text-xl text-slate-600 max-w-4xl leading-relaxed">
+          <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 mb-6">Capabilities tied to business outcomes.</h3>
+          <p className="text-base sm:text-xl text-slate-600 max-w-4xl leading-relaxed">
             We don't offer generic SAP consulting. We bring <span className="text-slate-900 font-bold">specialized, system-level capabilities</span> across the entire Quote-to-Cash stack, then measure success in quote speed, pricing accuracy, integration reliability, and reduced manual work.
           </p>
         </div>
@@ -1171,18 +1180,18 @@ const ReadyToConnectSection = ({ onContactClick }) => {
   const L2CExplorerView = () => {
     const [activeStage, setActiveStage] = useState(L2C_STAGES[0]);
     return (
-      <section id="process" className="pt-32 pb-24 bg-white overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="mb-16">
-            <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6 tracking-tight">
+      <section id="process" className="pt-20 sm:pt-32 pb-16 sm:pb-24 bg-white overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="mb-12 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 mb-6 tracking-tight">
               The Integrated Lead-to-Cash Journey
             </h2>
-            <p className="text-xl text-slate-600 max-w-3xl leading-relaxed">
+            <p className="text-base sm:text-xl text-slate-600 max-w-3xl leading-relaxed">
               Stop treating sales and finance as silos. We engineer a single, fluid data stream from the first touchpoint to the final bank deposit.
             </p>
           </div>
 
-          <div className="flex flex-col lg:flex-row gap-12">
+          <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
             <div className="lg:w-1/3 relative">
               <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-slate-100 hidden lg:block"></div>
               <div className="space-y-6 relative">
@@ -1257,20 +1266,20 @@ const ReadyToConnectSection = ({ onContactClick }) => {
   const ArchitectureView = () => {
     const data = EXPERTISE_DATA[capabilityType];
     return (
-      <div className="pt-32 pb-24 max-w-7xl mx-auto px-6">
-        <div className="mb-20 text-center max-w-3xl mx-auto">
+      <div className="pt-20 sm:pt-32 pb-16 sm:pb-24 max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="mb-12 sm:mb-20 text-center max-w-3xl mx-auto">
           <p className="text-blue-600 font-black uppercase tracking-[0.3em] text-[10px] mb-4">{data.subtitle}</p>
-          <h1 className="text-5xl text-black font-black mb-6">{data.title}</h1>
-          <p className="text-xl text-slate-500 font-medium leading-relaxed">
+          <h1 className="text-3xl sm:text-5xl text-black font-black mb-6">{data.title}</h1>
+          <p className="text-base sm:text-xl text-slate-500 font-medium leading-relaxed">
             {data.description}
           </p>
         </div>
-        <div className="grid lg:grid-cols-2 gap-12">
-          <div className="bg-slate-50 p-12 rounded-[3rem] border border-slate-100">
+        <div className="grid lg:grid-cols-2 gap-6 sm:gap-12">
+          <div className="bg-slate-50 p-8 sm:p-12 rounded-[2rem] sm:rounded-[3rem] border border-slate-100">
             <div className="bg-blue-600 w-16 h-16 rounded-2xl flex items-center justify-center text-white mb-8 shadow-lg shadow-blue-600/20">
               {data.leftCard.icon}
             </div>
-            <h2 className="text-3xl text-black mb-6">{data.leftCard.title}</h2>
+            <h2 className="text-2xl sm:text-3xl text-black mb-6">{data.leftCard.title}</h2>
             <p className="text-slate-600 mb-8 leading-relaxed">
               {data.leftCard.desc}
             </p>
@@ -1282,11 +1291,11 @@ const ReadyToConnectSection = ({ onContactClick }) => {
               ))}
             </ul>
           </div>
-          <div className="bg-slate-900 text-white p-12 rounded-[3rem]">
+          <div className="bg-slate-900 text-white p-8 sm:p-12 rounded-[2rem] sm:rounded-[3rem]">
             <div className="bg-white/10 w-16 h-16 rounded-2xl flex items-center justify-center mb-8">
               {data.rightCard.icon}
             </div>
-            <h2 className="text-3xl text-white mb-6">{data.rightCard.title}</h2>
+            <h2 className="text-2xl sm:text-3xl text-white mb-6">{data.rightCard.title}</h2>
             <p className="text-slate-400 mb-8 leading-relaxed">
               {data.rightCard.desc}
             </p>
@@ -1321,24 +1330,24 @@ const ReadyToConnectSection = ({ onContactClick }) => {
     ];
 
     return (
-      <section className="pt-32 pb-32 bg-gradient-to-b from-white via-slate-50/30 to-white">
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="pt-20 sm:pt-32 pb-16 sm:pb-32 bg-gradient-to-b from-white via-slate-50/30 to-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           {/* Header Section */}
-          <div className="mb-20 text-center max-w-4xl mx-auto">
+          <div className="mb-12 sm:mb-20 text-center max-w-4xl mx-auto">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-100 border border-blue-200 mb-6">
               <Award size={14} className="text-blue-600" />
               <span className="text-xs font-black uppercase tracking-[0.2em] text-blue-600">Implementation Briefs</span>
             </div>
-            <h1 className="text-5xl md:text-6xl font-black text-slate-950 mb-6 leading-[1.1]">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-black text-slate-950 mb-6 leading-[1.1]">
               Enterprise Success Stories
             </h1>
-            <p className="text-xl font-medium leading-relaxed text-slate-600">
+            <p className="text-base sm:text-xl font-medium leading-relaxed text-slate-600">
               Real outcomes from complex SAP and Salesforce integrations. Each case demonstrates how we transform operational challenges into measurable business advantages.
             </p>
           </div>
 
           {/* Case Studies Grid */}
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4 mb-20">
+          <div className="grid gap-6 sm:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mb-12 sm:mb-20">
             {CASE_STUDIES.map((study, idx) => {
               const colors = caseColors[idx];
               return (
@@ -1391,45 +1400,45 @@ const ReadyToConnectSection = ({ onContactClick }) => {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,rgba(59,130,246,0.15),transparent_50%)]" />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_80%,rgba(37,99,235,0.1),transparent_50%)]" />
 
-            <div className="relative backdrop-blur-sm p-8 md:p-16">
-              <div className="grid gap-12 lg:grid-cols-[1fr_auto] lg:items-start">
+            <div className="relative backdrop-blur-sm p-6 sm:p-8 md:p-16">
+              <div className="grid gap-8 lg:gap-12 lg:grid-cols-[1fr_auto] lg:items-start">
                 <div>
-                  <div className="mb-8">
+                  <div className="mb-6 sm:mb-8">
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 border border-blue-400/50 mb-4">
                       <TrendingUp size={14} className="text-blue-300" />
                       <span className="text-xs font-black uppercase tracking-[0.15em] text-blue-200">{activeCase.tag}</span>
                     </div>
-                    <h2 className="text-4xl md:text-5xl font-black text-white mb-4 leading-tight">{activeCase.client}</h2>
-                    <p className="text-blue-50/90 font-medium leading-relaxed text-lg max-w-2xl">
+                    <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-white mb-4 leading-tight">{activeCase.client}</h2>
+                    <p className="text-blue-50/90 font-medium leading-relaxed text-base sm:text-lg max-w-2xl">
                       A Fortune 500 manufacturer facing critical operational bottlenecks, transformed through strategic SAP and Salesforce integration.
                     </p>
                   </div>
 
-                  <div className="grid gap-8 md:grid-cols-3 mb-12">
-                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+                  <div className="grid gap-4 sm:gap-8 grid-cols-1 sm:grid-cols-3 mb-8 sm:mb-12">
+                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-white/20">
                       <h4 className="text-sm font-black uppercase tracking-widest text-blue-200 mb-3">The Challenge</h4>
                       <p className="text-white/90 font-medium leading-relaxed">{activeCase.challenge}</p>
                     </div>
-                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-white/20">
                       <h4 className="text-sm font-black uppercase tracking-widest text-blue-200 mb-3">Our Solution</h4>
                       <p className="text-white/90 font-medium leading-relaxed">{activeCase.solution}</p>
                     </div>
-                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-white/20">
                       <h4 className="text-sm font-black uppercase tracking-widest text-blue-200 mb-3">Architecture</h4>
                       <p className="text-white/90 font-medium leading-relaxed">{activeCase.architecture}</p>
                     </div>
                   </div>
 
-                  <div className="grid gap-6 md:grid-cols-3 mb-12">
+                  <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-3 mb-8 sm:mb-12">
                     {activeCase.results.map((result) => (
-                      <div key={result.label} className="bg-white rounded-2xl p-6 shadow-lg border border-slate-100">
-                        <p className="text-3xl font-black text-slate-900 mb-2">{result.value}</p>
+                      <div key={result.label} className="bg-white rounded-2xl p-4 sm:p-6 shadow-lg border border-slate-100">
+                        <p className="text-2xl sm:text-3xl font-black text-slate-900 mb-2">{result.value}</p>
                         <p className="text-sm font-bold text-slate-600 uppercase tracking-wider">{result.label}</p>
                       </div>
                     ))}
                   </div>
 
-                  <div className="bg-blue-600/20 backdrop-blur-sm rounded-2xl p-8 border border-blue-400/30">
+                  <div className="bg-blue-600/20 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-blue-400/30">
                     <h4 className="text-sm font-black uppercase tracking-widest text-blue-200 mb-3">Key Takeaway</h4>
                     <p className="text-white font-medium leading-relaxed">
                       This implementation demonstrates our ability to deliver enterprise-grade solutions that reduce operational friction while maintaining clean, scalable architectures. The result: faster time-to-market, improved data integrity, and measurable ROI within months.
@@ -1440,7 +1449,7 @@ const ReadyToConnectSection = ({ onContactClick }) => {
                 <div className="lg:ml-8">
                   <button
                     onClick={() => setShowContactModal(true)}
-                    className="group relative inline-flex items-center justify-center gap-2 rounded-2xl bg-white px-8 py-4 text-sm font-black uppercase tracking-widest text-slate-950 transition-all hover:shadow-xl hover:shadow-blue-950/40 hover:-translate-y-1 whitespace-nowrap"
+                    className="w-full sm:w-auto group relative inline-flex items-center justify-center gap-2 rounded-2xl bg-white px-8 py-4 text-sm font-black uppercase tracking-widest text-slate-950 transition-all hover:shadow-xl hover:shadow-blue-950/40 hover:-translate-y-1 whitespace-nowrap"
                   >
                     Discuss Similar Project
                     <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
@@ -1722,7 +1731,7 @@ const ReadyToConnectSection = ({ onContactClick }) => {
       </main>
 
       <footer className="bg-slate-950 text-white py-12">
-        <div className="max-w-7xl mx-auto px-6 text-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
           <div className="flex items-center justify-center gap-3 mb-4">
             <Logo className="h-8 w-8 text-blue-600" />
             <span className="font-black uppercase tracking-tighter">Connecting Cloud</span>
@@ -1734,8 +1743,8 @@ const ReadyToConnectSection = ({ onContactClick }) => {
       </footer>
 
       {showContactModal && (
-        <div className="fixed inset-0 z-[1100] flex items-center justify-center p-6 bg-slate-950/60 backdrop-blur-md">
-          <div className="bg-white w-full max-w-5xl rounded-[3rem] overflow-hidden flex flex-col md:flex-row relative shadow-2xl">
+        <div className="fixed inset-0 z-[1100] flex items-center justify-center p-4 sm:p-6 bg-slate-950/60 backdrop-blur-md overflow-y-auto">
+          <div className="bg-white w-full max-w-5xl rounded-[2rem] sm:rounded-[3rem] overflow-hidden flex flex-col md:flex-row relative shadow-2xl my-auto">
             <button
               onClick={() => {
                 setShowContactModal(false);
@@ -1745,14 +1754,14 @@ const ReadyToConnectSection = ({ onContactClick }) => {
             >
               <X size={20}/>
             </button>
-            <div className="bg-slate-900 text-white p-12 md:w-2/5">
+            <div className="bg-slate-900 text-white p-8 sm:p-12 md:w-2/5">
               <h3 className="text-3xl font-black mb-6">Start Your Architecture Briefing.</h3>
               <p className="text-slate-400 mb-12">Tell us your goals, systems, and bottlenecks. We'll map the right modernization approach for your business.</p>
               <div className="space-y-6">
                 <div className="flex items-center gap-4"><Mail className="text-blue-500" size={18}/> <span className="text-sm font-bold">info@connectingcloud.co</span></div>
               </div>
             </div>
-            <div className="p-12 md:w-3/5">
+            <div className="p-8 sm:p-12 md:w-3/5">
               {formSubmitted ? (
                 <div className="h-full flex flex-col items-center justify-center text-center">
                   <CheckCircle2 size={40} className="text-emerald-500 mb-4" />
@@ -1765,7 +1774,7 @@ const ReadyToConnectSection = ({ onContactClick }) => {
                       {contactError}
                     </div>
                   ) : null}
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <input
                       required
                       name="name"
@@ -1894,7 +1903,7 @@ function Hero({ onCaseClick, onContactClick }) {
 ];
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-white to-blue-50/40 pt-24 pb-16">
+    <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-white to-blue-50/40 pt-20 sm:pt-24 pb-12 sm:pb-16">
       
       {/* Background */}
       <div className="absolute inset-0 bg-[radial-gradient(#dbeafe_1px,transparent_1px)] [background-size:30px_30px] opacity-60" />
@@ -1903,7 +1912,7 @@ function Hero({ onCaseClick, onContactClick }) {
 
       <div className="absolute right-0 top-0 h-[28rem] w-[28rem] rounded-full bg-indigo-200/20 blur-3xl" />
 
-      <div className="relative text-left mx-auto grid max-w-7xl items-center gap-16 px-6 lg:grid-cols-[1.05fr_0.95fr]">
+      <div className="relative text-left mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 pt-8 lg:pt-0">
         
         {/* LEFT CONTENT */}
         <div>
@@ -1920,7 +1929,9 @@ function Hero({ onCaseClick, onContactClick }) {
     mt-6
     max-w-[720px]
     font-['Cabinet_Grotesk']
-    text-[4.6rem]
+    text-[2.8rem]
+    sm:text-[3.6rem]
+    lg:text-[4.6rem]
     font-extrabold
     leading-[1]
     text-slate-950
@@ -2063,7 +2074,7 @@ function Hero({ onCaseClick, onContactClick }) {
         </div>
 
         {/* RIGHT STACK */}
-        <div className="relative mx-auto w-full max-w-[460px]">
+        <div className="relative mx-auto w-full max-w-[460px] lg:max-w-none">
   
   {/* Glow */}
   <div className="absolute inset-0 rounded-[34px] bg-blue-200/20 blur-xl" />
@@ -2188,27 +2199,27 @@ const ExpertiseGridSection = () => {
   ];
 
   return (
-    <section className="bg-[#0b1219] py-28 px-6 lg:px-12 relative overflow-hidden">
+    <section className="bg-[#0b1219] py-16 sm:py-24 lg:py-28 px-4 sm:px-6 lg:px-12 relative overflow-hidden">
       {/* Decorative subtle pulse */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[120px] animate-pulse" />
 
       <div className="mx-auto max-w-7xl relative z-10">
-        <div className="mb-20">
+        <div className="mb-12 sm:mb-20">
           <div className="flex items-center gap-4 mb-6">
             <div className="h-[1px] w-8 bg-blue-400" />
             <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-blue-400">Why ConnectingCloud</span>
           </div>
-          <h2 className="text-4xl lg:text-7xl font-black text-white tracking-tighter mb-8 italic">
+          <h2 className="text-3xl sm:text-4xl lg:text-7xl font-black text-white tracking-tighter mb-8 italic">
             Specialist. Proven. Independent.
           </h2>
-          <p className=" text-lg text-slate-400 leading-relaxed font-medium">
+          <p className="text-base sm:text-lg text-slate-400 leading-relaxed font-medium">
             We're not a generalist SAP house that does CPQ on the side. Configuration-to-quote is all we do — which means faster time-to-value, fewer surprises, and deeper expertise than you'll find inside a large SI practice.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           {points.map((p, i) => (
-            <div key={i} className="bg-[#151d26] border border-white/5 rounded-3xl p-10 group hover:border-blue-500/30 transition-all duration-500 hover:-translate-y-2">
+            <div key={i} className="bg-[#151d26] border border-white/5 rounded-3xl p-7 sm:p-10 group hover:border-blue-500/30 transition-all duration-500 hover:-translate-y-2">
               <div className="text-4xl font-black text-white/4 mb-6 group-hover:text-blue-500 transition-colors">
                 {p.n}
               </div>
@@ -2229,12 +2240,12 @@ function Stats() {
     { value: "10+", label: "SAP Products Covered End-to-End" },
     { value: "6+", label: "VC-to-AVC Migrations Completed" },
   ];
-  return (<section className="bg-slate-800 py-16">
-        <div className="mx-auto max-w-7xl px-6 lg:px-12">
-          <div className="grid grid-cols-2 gap-y-12 md:grid-cols-4 md:gap-x-8">
+  return (<section className="bg-slate-800 py-12 sm:py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-12">
+          <div className="grid grid-cols-2 gap-y-10 sm:gap-y-12 md:grid-cols-4 md:gap-x-8">
             {stats.map((stat, idx) => (
               <div key={idx} className="flex flex-col items-center text-center">
-                <span className="text-5xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-emerald-300 via-cyan-400 to-blue-500 md:text-6xl">
+                <span className="text-4xl sm:text-5xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-emerald-300 via-cyan-400 to-blue-500 md:text-6xl">
                   {stat.value}
                 </span>
                 <p className="mt-4 max-w-[160px] text-[11px] font-bold uppercase tracking-[0.1em] text-slate-400 leading-relaxed">
@@ -2249,8 +2260,8 @@ function Stats() {
 
 function TrustSignals({ onCaseClick }) {
   return (
-    <section className="border-y border-slate-100 bg-white py-16">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="border-y border-slate-100 bg-white py-12 sm:py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <div>
             <p className="mb-3 text-[10px] font-black uppercase tracking-[0.35em] text-blue-600">Proof early</p>
@@ -2363,13 +2374,13 @@ function ServicesSection() {
   ];
 
   return (
-    <section className="relative overflow-hidden bg-[#f8fafc] py-20">
+    <section className="relative overflow-hidden bg-[#f8fafc] py-16 sm:py-20">
   {/* Background */}
   <div className="absolute inset-0 bg-[radial-gradient(#dbeafe_1px,transparent_1px)] [background-size:28px_28px] opacity-50" />
   <div className="absolute left-0 top-0 h-[420px] w-[420px] rounded-full bg-blue-100/40 blur-3xl" />
   <div className="absolute right-0 bottom-0 h-[420px] w-[420px] rounded-full bg-cyan-100/40 blur-3xl" />
 
-  <div className="relative mx-auto max-w-6xl px-6">
+  <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
     
     {/* Header */}
 <div className="mx-auto max-w-3xl text-center">
@@ -2581,14 +2592,14 @@ function ServicesSection() {
   );
 }
 const WorkingModelsSection = ({ onContactClick }) => (
-  <section className="bg-slate-950 pb-24 pt-12">
-    <div className="mx-auto max-w-7xl px-6 lg:px-12">
+  <section className="bg-slate-950 pb-16 sm:pb-24 pt-10 sm:pt-12">
+    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-12">
       <div className="mb-16">
         <div className="flex items-center gap-3">
           <div className="h-[1px] w-8 bg-emerald-500/50" />
           <span className="text-[11px] font-bold uppercase tracking-[0.3em] text-emerald-500">Who We Work With</span>
         </div>
-        <h2 className="mt-6 text-4xl font-black tracking-tight text-white md:text-5xl lg:text-6xl">Two Ways We Work With You</h2>
+        <h2 className="mt-6 text-3xl sm:text-4xl font-black tracking-tight text-white md:text-5xl lg:text-6xl">Two Ways We Work With You</h2>
         <p className="mt-6 text-lg leading-relaxed text-slate-400">
           Whether you're an SAP consulting partner looking to extend your CPQ and VC/AVC practice, or an enterprise running SAP and ready to transform your configure-to-quote process.
         </p>
@@ -2608,7 +2619,7 @@ const WorkingModelsSection = ({ onContactClick }) => (
               </li>
             ))}
           </ul>
-          <button onClick={onContactClick} className="mt-12 flex h-12 items-center justify-center rounded-xl bg-blue-600 px-8 text-sm font-bold text-white transition-all hover:bg-blue-700 active:scale-95">Partner With Us —&gt;</button>
+          <button onClick={onContactClick} className="mt-10 sm:mt-12 w-full sm:w-auto flex h-12 items-center justify-center rounded-xl bg-blue-600 px-8 text-sm font-bold text-white transition-all hover:bg-blue-700 active:scale-95">Partner With Us —&gt;</button>
         </div>
 
         {/* Enterprise Card */}
@@ -2624,7 +2635,7 @@ const WorkingModelsSection = ({ onContactClick }) => (
               </li>
             ))}
           </ul>
-          <button onClick={onContactClick} className="mt-12 flex h-12 items-center justify-center rounded-xl bg-orange-600 px-8 text-sm font-bold text-white transition-all hover:bg-orange-700 active:scale-95">Talk to a Specialist —&gt;</button>
+          <button onClick={onContactClick} className="mt-10 sm:mt-12 w-full sm:w-auto flex h-12 items-center justify-center rounded-xl bg-orange-600 px-8 text-sm font-bold text-white transition-all hover:bg-orange-700 active:scale-95">Talk to a Specialist —&gt;</button>
         </div>
       </div>
     </div>
@@ -2645,7 +2656,7 @@ const LandscapeSection = () => {
   ];
 
   return (
-    <section className="relative flex min-h-screen flex-col items-center justify-center bg-slate-50/30 px-6 py-20 lg:h-screen lg:px-12">
+    <section className="relative flex min-h-screen flex-col items-center justify-center bg-slate-50/30 px-4 sm:px-6 py-16 sm:py-20 lg:px-12">
       <div className="mx-auto w-full max-w-7xl">
         {/* Header matching image_09839e.png */}
         <div className="mb-12 flex flex-col items-start lg:mb-16">
@@ -2653,7 +2664,7 @@ const LandscapeSection = () => {
             <div className="h-[2px] w-8 bg-blue-600" />
             <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-blue-600">Full Landscape</span>
           </div>
-          <h2 className="mt-8 text-4xl font-black tracking-tight text-slate-900 md:text-6xl">
+          <h2 className="mt-8 text-3xl sm:text-4xl font-black tracking-tight text-slate-900 md:text-6xl">
             10 SAP Products. One Practice.
           </h2>
           <p className="mt-6 max-w-3xl text-base font-bold text-left leading-relaxed text-slate-500">
@@ -2708,14 +2719,14 @@ const AIInnovationSection = () => {
   ];
 
   return (
-    <section className="bg-[#020617] px-6 py-24 lg:px-12">
+    <section className="bg-[#020617] px-4 sm:px-6 py-16 sm:py-24 lg:px-12">
       <div className="mx-auto max-w-7xl">
         <div className="mb-16">
           <div className="flex items-center gap-3">
             <div className="h-[2px] w-8 bg-emerald-500" />
             <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-emerald-500">AI & INNOVATION</span>
           </div>
-          <h2 className="mt-8 text-4xl font-black tracking-tight text-white md:text-6xl">
+          <h2 className="mt-8 text-3xl sm:text-4xl font-black tracking-tight text-white md:text-6xl">
             AI-Powered Configuration & Quoting
           </h2>
           <p className="mt-6 max-w-3xl text-lg text-slate-400">
@@ -2798,7 +2809,7 @@ const MigrationSection = ({ onContactClick }) => {
   ];
 
   return (
-    <section className="relative flex min-h-screen flex-col items-center border-t border-slate-500 justify-center bg-slate-950 px-6 py-12 lg:h-screen lg:min-h-[850px] lg:max-h-[1100px] lg:px-12">
+    <section className="relative flex flex-col items-center border-t border-slate-500 justify-center bg-slate-950 px-4 sm:px-6 py-12 lg:px-12" id="avc-migration">
       {/* Background Ambience */}
       <div className="absolute top-1/2 left-1/2 -z-10 h-[300px] w-[300px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/10 blur-[120px] pointer-events-none md:h-[600px] md:w-[800px]" />
 
@@ -2908,11 +2919,11 @@ const IntegrationEcosystem = () => {
   ];
 
   return (
-    <section id="integrations" className="py-20 bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 text-center mb-16">
+    <section id="integrations" className="py-16 sm:py-20 bg-white overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center mb-12 sm:mb-16">
         <h2 className="text-sm font-black text-blue-600 uppercase tracking-widest mb-4">Integration ecosystem</h2>
-        <h3 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6">Connect the platforms revenue teams already depend on.</h3>
-        <p className="text-lg text-slate-600 max-w-4xl mx-auto leading-relaxed">
+        <h3 className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 mb-6">Connect the platforms revenue teams already depend on.</h3>
+        <p className="text-base sm:text-lg text-slate-600 max-w-4xl mx-auto leading-relaxed">
           We translate platform complexity into reliable business outcomes: cleaner handoffs, fewer pricing mismatches, faster quote approvals, and stronger integration observability across <strong className="text-blue-600">SAP CPQ</strong>, <strong className="text-blue-600">S/4HANA</strong>, Salesforce, CPI/BTP, contract workflows, and signing tools.
         </p>
       </div>
@@ -2943,12 +2954,12 @@ function EnterpriseSystems({ onCapSelect }) {
     { name: 'ERP', role: 'Digital Core', targetId: 'avc', icon: <LayoutGrid size={22} />, desc: 'Configuration backbone for industrial leaders in SAP S/4HANA.' },
   ];
   return (
-    <section className="py-24 bg-slate-50 border-y border-slate-200">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="py-16 sm:py-24 bg-slate-50 border-y border-slate-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="grid gap-6 grid-cols-1 md:grid-cols-3">
           {SYSTEMS.map((item, idx) => (
-            <div key={idx} onClick={() => onCapSelect(item.targetId)} className="group cursor-pointer rounded-[2.5rem] border border-slate-200 bg-white p-8 hover:border-blue-300 hover:shadow-xl transition-all">
-              <div className="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 group-hover:text-blue-600 transition-all mb-8">{item.icon}</div>
+            <div key={idx} onClick={() => onCapSelect(item.targetId)} className="group cursor-pointer rounded-[2rem] sm:rounded-[2.5rem] border border-slate-200 bg-white p-6 sm:p-8 hover:border-blue-300 hover:shadow-xl transition-all">
+              <div className="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 group-hover:text-blue-600 transition-all mb-6 sm:mb-8">{item.icon}</div>
               <h4 className="font-black text-2xl text-slate-900 mb-2">{item.name}</h4>
               <p className="text-slate-500 font-medium text-sm leading-relaxed">{item.desc}</p>
             </div>
@@ -2961,12 +2972,12 @@ function EnterpriseSystems({ onCapSelect }) {
 
 function PerformanceSection() {
   return (
-    <section className="py-24 bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid lg:grid-cols-2 gap-20 items-center">
+    <section className="py-16 sm:py-24 bg-white overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="grid lg:grid-cols-2 gap-10 sm:gap-20 items-center">
           <div>
             <h2 className="text-xs font-black text-blue-600 uppercase tracking-[0.4em] mb-4">Architecture Efficacy</h2>
-            <h3 className="text-5xl font-black text-slate-950 mb-8 leading-tight">Quantifying the <br/>Cloud Advantage</h3>
+            <h3 className="text-3xl sm:text-5xl font-black text-slate-950 mb-8 leading-tight">Quantifying the <br/>Cloud Advantage</h3>
             <div className="h-[300px] w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={PERFORMANCE_CHART} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
@@ -2977,10 +2988,10 @@ function PerformanceSection() {
               </ResponsiveContainer>
             </div>
           </div>
-          <div className="bg-blue-600 rounded-[3rem] p-12 text-white shadow-2xl shadow-blue-600/20">
+          <div className="bg-blue-600 rounded-[2rem] sm:rounded-[3rem] p-8 sm:p-12 text-white shadow-2xl shadow-blue-600/20">
             <Zap className="mb-8" size={40} />
-            <h4 className="text-3xl font-black mb-6">92% Operational Efficiency</h4>
-            <p className="text-blue-100 text-lg leading-relaxed font-medium mb-8">
+            <h4 className="text-2xl sm:text-3xl font-black mb-6">92% Operational Efficiency</h4>
+            <p className="text-blue-100 text-base sm:text-lg leading-relaxed font-medium mb-8">
               By replacing legacy point-to-point integrations with a clean-core architectural model, our clients see an average 92% reduction in data synchronization failures.
             </p>
             <div className="flex items-center gap-4 p-4 bg-white/10 rounded-2xl">
@@ -3010,13 +3021,13 @@ function WhyUs({ onContactClick }) {
   ];
 
   return (
-    <section className="bg-white py-28">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="bg-white py-16 sm:py-24 lg:py-28">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Header Section */}
-        <div className="mb-20 grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+        <div className="mb-12 sm:mb-20 grid gap-8 sm:gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
           <div>
             <p className="mb-4 text-xs font-black uppercase tracking-[0.35em] text-blue-600">Why Connecting Cloud</p>
-            <h2 className="text-5xl font-black tracking-tight text-slate-950 md:text-6xl leading-[1.1]">
+            <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-slate-950 md:text-6xl leading-[1.1]">
               Enterprise quality, specialist focus.
             </h2>
           </div>
@@ -3146,8 +3157,8 @@ function IndustryFocus({ onContactClick }) {
   ];
 
   return (
-    <section className="bg-gradient-to-b from-white via-slate-50/50 to-white py-32">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="bg-gradient-to-b from-white via-slate-50/50 to-white py-16 sm:py-24 lg:py-32">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Header Section */}
         <div className="mb-20">
           <div className="max-w-3xl">
@@ -3155,7 +3166,7 @@ function IndustryFocus({ onContactClick }) {
               <Sparkles size={14} className="text-blue-600" />
               <span className="text-xs font-black uppercase tracking-[0.2em] text-blue-600">SEO-Ready focus areas</span>
             </div>
-            <h2 className="text-5xl font-black text-middle tracking-tight text-slate-950 md:text-6xl leading-[1.1] mb-6">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-middle tracking-tight text-slate-950 md:text-6xl leading-[1.1] mb-6">
               Service tracks buyers search for.
             </h2>
             <p className="text-lg font-medium leading-relaxed text-slate-600">
@@ -3269,16 +3280,16 @@ function IndustryFocus({ onContactClick }) {
 
 function ProcessTeaser({ onMoreClick, onContactClick }) {
   return (
-    <section className="pb-32 bg-white">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="bg-slate-950 rounded-[4rem] p-12 md:p-20 text-center relative overflow-hidden">
+    <section className="pb-16 sm:pb-24 lg:pb-32 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="bg-slate-950 rounded-[2rem] sm:rounded-[3rem] lg:rounded-[4rem] p-8 sm:p-12 md:p-16 lg:p-20 text-center relative overflow-hidden">
           <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/20 blur-[120px] rounded-full -mr-48 -mt-48" />
           <div className="relative z-10">
-            <h3 className="text-4xl md:text-6xl font-black text-white mb-8">Ready to reduce Quote-to-Cash risk?</h3>
-            <p className="text-slate-400 text-xl max-w-2xl mx-auto mb-12">Get a practical architecture review for SAP CPQ, S/4HANA AVC, CPI/BTP, Salesforce, or revenue workflow bottlenecks.</p>
-            <div className="flex flex-col sm:flex-row justify-center gap-6">
-              <button onClick={onMoreClick} className="px-10 py-5 bg-white text-slate-950 font-black rounded-3xl hover:bg-blue-50 transition-all uppercase tracking-widest text-[11px]">The CCT Methodology</button>
-              <button onClick={onContactClick} className="px-10 py-5 border border-white/20 text-white font-black rounded-3xl hover:bg-white/5 transition-all uppercase tracking-widest text-[11px]">Schedule Discovery Call</button>
+            <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 sm:mb-8">Ready to reduce Quote-to-Cash risk?</h3>
+            <p className="text-slate-400 text-base sm:text-xl max-w-2xl mx-auto mb-8 sm:mb-12">Get a practical architecture review for SAP CPQ, S/4HANA AVC, CPI/BTP, Salesforce, or revenue workflow bottlenecks.</p>
+            <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6">
+              <button onClick={onMoreClick} className="w-full sm:w-auto px-8 sm:px-10 py-4 sm:py-5 bg-white text-slate-950 font-black rounded-3xl hover:bg-blue-50 transition-all uppercase tracking-widest text-[11px]">The CCT Methodology</button>
+              <button onClick={onContactClick} className="w-full sm:w-auto px-8 sm:px-10 py-4 sm:py-5 border border-white/20 text-white font-black rounded-3xl hover:bg-white/5 transition-all uppercase tracking-widest text-[11px]">Schedule Discovery Call</button>
             </div>
           </div>
         </div>
