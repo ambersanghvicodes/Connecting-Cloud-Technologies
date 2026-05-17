@@ -2675,7 +2675,11 @@ const ReadyToConnectSection = ({ onContactClick }) => {
         <div className="hidden lg:flex items-center gap-1 xl:gap-2">
 
           {/* SERVICES MEGA-DROPDOWN */}
-          <div className="relative" onMouseEnter={()=>setServicesOpen(true)} onMouseLeave={()=>setServicesOpen(false)}>
+          <div className="relative" onMouseEnter={()=>setServicesOpen(true)} onMouseLeave={() => {
+    setTimeout(() => {
+      setServicesOpen(false);
+    }, 120);
+  }}>
             <button className={`whitespace-nowrap rounded-full px-3 xl:px-4 py-2.5 text-[11px] xl:text-[12px] font-black uppercase tracking-[0.14em] transition-all duration-300 inline-flex items-center gap-1.5
               ${['sap-cpq-implementation','sap-avc-implementation','sap-commissions-implementation','sap-vc-to-avc-migration','sap-cpq-quote-2-migration','ecc-to-s4hana-migration'].includes(activePage)
                 ? isScrolled ? 'bg-blue-50 text-blue-600' : 'text-white bg-white/10'
