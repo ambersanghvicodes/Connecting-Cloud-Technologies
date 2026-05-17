@@ -279,24 +279,59 @@ const INDUSTRY_FOCUS = [
 
 const NAV_LINKS = [
   { id: 'working-models', label: 'How We Work' },
-  { id: 'cpq-migration', label: 'Quote 1.0 → 2.0 Transition' },
-  { id: 'avc-migration', label: 'VC → AVC Migration' },
-  { id: 'services', label: 'Services' },
+  { id: 'cpq-migration', label: 'CPQ Migration' },
+  { id: 'avc-migration', label: 'AVC Migration' },
   { id: 'expertise', label: 'Why Us' },
-  // { id: 'ecosystem', label: 'Ecosystem' },
   { id: 'contact', label: 'Contact' },
 ];
-const scrollToSection = (id, setMobileMenuOpen) => {
-  const element = document.getElementById(id);
 
-  if (element) {
-    element.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-    });
-  }
-
+// Services pages shown in the dropdown mega-menu
+const SERVICES_NAV = [
+  {
+    group: 'Implementations',
+    color: '#2563eb',
+    items: [
+      { id: 'sap-cpq-implementation',        label: 'SAP CPQ Implementation',    desc: 'Quote 1.0 & 2.0, scripting, integrations' },
+      { id: 'sap-avc-implementation',         label: 'SAP VC & AVC Implementation', desc: 'KB design, BOM, CPS on BTP' },
+      { id: 'sap-commissions-implementation', label: 'SAP Commissions',           desc: 'ICM, territory, quota management' },
+    ],
+  },
+  {
+    group: 'Migrations',
+    color: '#0d9488',
+    items: [
+      { id: 'sap-cpq-quote-2-migration',   label: 'CPQ Quote 1.0 → 2.0',    desc: 'Scripts, Responsive UI, Business Partners' },
+      { id: 'sap-vc-to-avc-migration',     label: 'VC → AVC Migration',      desc: 'KB assessment, parallel validation, cutover' },
+      { id: 'ecc-to-s4hana-migration',     label: 'ECC → S/4HANA Migration', desc: 'Brownfield, Bluefield, Greenfield — 2027 deadline' },
+    ],
+  },
+];
+const scrollToSection = (id, setMobileMenuOpen, activePage, navigateTo) => {
   setMobileMenuOpen(false);
+
+  const doScroll = () => {
+    // Give the DOM a moment to render the home page before scrolling
+    setTimeout(() => {
+  const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
+  };
+
+  if (activePage !== 'home') {
+    // Navigate to home first, then scroll once the page renders
+    navigateTo('home');
+    // Wait a bit longer for the home page to mount
+    setTimeout(() => {
+      const element = document.getElementById(id);
+  if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+    }, 400);
+  } else {
+    doScroll();
+  }
 };
 
 const EXPERTISE_DATA = {
@@ -377,6 +412,20 @@ const EXPERTISE_ITEMS = [
   { id: 'btp', title: 'BTP & CPI Orchestration', icon: <Share2 size={16}/>, desc: 'Enterprise middleware' }
 ];
 
+// Pages whose hero/top section has a dark background — navbar text needs to be white when unscrolled
+const DARK_HERO_PAGES = [
+  'sap-cpq-implementation',
+  'sap-avc-implementation',
+  'sap-commissions-implementation',
+  'sap-vc-to-avc-migration',
+  'sap-cpq-quote-2-migration',
+  'ecc-to-s4hana-migration',
+  'insights',
+  'cases',
+  'l2c',
+  'process',
+];
+
 const PAGE_ROUTES = {
   home: '/',
   cases: '/cases',
@@ -384,6 +433,13 @@ const PAGE_ROUTES = {
   l2c: '/l2c',
   process: '/methodology',
   insights: '/insights',
+  // Service & Migration landing pages
+  'sap-cpq-implementation': '/sap-cpq-implementation',
+  'sap-avc-implementation': '/sap-avc-implementation',
+  'sap-commissions-implementation': '/sap-commissions-implementation',
+  'sap-vc-to-avc-migration': '/sap-vc-to-avc-migration',
+  'sap-cpq-quote-2-migration': '/sap-cpq-quote-2-migration',
+  'ecc-to-s4hana-migration': '/ecc-to-s4hana-migration',
 };
 
 const ROUTE_PAGES = Object.fromEntries(Object.entries(PAGE_ROUTES).map(([page, route]) => [route, page]));
@@ -442,12 +498,251 @@ export default function App() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [expertiseOpen, setExpertiseOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [showContactModal, setShowContactModal] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [contactError, setContactError] = useState('');
   
   // Article Reader State
   const [readingArticle, setReadingArticle] = useState(null);
+
+  // ─── SEO: Dynamic meta tags per page/capability ───────────────────────────
+  useEffect(() => {
+    const SEO_MAP = {
+      home: {
+        title: 'SAP CPQ & S/4HANA AVC Consulting | Connecting Cloud Technologies',
+        description:
+          'Expert SAP CPQ, S/4HANA Advanced Variant Configuration (AVC), BTP/CPI integration, and Quote-to-Cash consulting. Reduce your quote cycle by 85% and eliminate configuration errors.',
+        keywords:
+          'SAP CPQ, SAP CPQ consulting, SAP CPQ implementation, S/4HANA AVC, Advanced Variant Configuration, SAP BTP, CPI integration, Quote-to-Cash, configure price quote, CPQ migration',
+        canonical: 'https://www.connectingcloud.co/',
+      },
+      services: {
+        title: 'SAP CPQ Services & Quote-to-Cash Solutions | Connecting Cloud Technologies',
+        description:
+          'Full-service SAP CPQ engineering, S/4HANA AVC modeling, BTP/CPI orchestration, and Salesforce Revenue Cloud consulting. Architect-led delivery for enterprise manufacturers.',
+        keywords:
+          'SAP CPQ services, SAP CPQ engineer, CPQ implementation, SAP quote automation, S/4HANA integration, BTP CPI services, Salesforce CPQ',
+        canonical: 'https://www.connectingcloud.co/#/services',
+      },
+      cases: {
+        title: 'SAP CPQ & AVC Case Studies | Enterprise Results | Connecting Cloud Technologies',
+        description:
+          'Real outcomes from SAP CPQ, S/4HANA AVC, and BTP integration projects. See how we delivered 85% faster quoting, 99.9% configuration accuracy, and measurable ROI for Fortune 500 manufacturers.',
+        keywords:
+          'SAP CPQ case study, SAP AVC results, CPQ ROI, S/4HANA AVC implementation, SAP CPQ success story, quote-to-cash transformation',
+        canonical: 'https://www.connectingcloud.co/#/cases',
+      },
+      process: {
+        title: 'SAP CPQ Implementation Methodology | CCT Delivery Framework',
+        description:
+          'Our proven 5-step SAP CPQ and S/4HANA AVC delivery framework: Clean Core Audit, System Orchestration, Configuration Logic, Resilient Scaling, and Go-Live. Architect-led, outcome-first.',
+        keywords:
+          'SAP CPQ methodology, SAP CPQ project approach, AVC implementation framework, SAP CPQ go-live, CPQ discovery, SAP configuration architecture',
+        canonical: 'https://www.connectingcloud.co/#/methodology',
+      },
+      insights: {
+        title: 'SAP CPQ & AVC Technical Insights | Connecting Cloud Blog',
+        description:
+          'Technical deep-dives on SAP CPQ Python scripting, S/4HANA AVC migration, BTP headless CPQ, and enterprise configuration trends from CCT architects.',
+        keywords:
+          'SAP CPQ blog, SAP CPQ Python scripting, AVC migration guide, BTP headless CPQ, SAP CPQ tips, IronPython CPQ, S/4HANA AVC integration',
+        canonical: 'https://www.connectingcloud.co/#/insights',
+      },
+      l2c: {
+        title: 'Lead-to-Cash Automation with SAP CPQ & S/4HANA | Connecting Cloud Technologies',
+        description:
+          'End-to-end Lead-to-Cash process automation across SAP Sales Cloud, SAP CPQ, S/4HANA, and SAP BRIM. Eliminate revenue leakage and manual handoffs across your quote-to-revenue pipeline.',
+        keywords:
+          'lead to cash SAP, SAP CPQ lead to cash, S/4HANA revenue management, SAP BRIM, SAP billing automation, quote to cash workflow',
+        canonical: 'https://www.connectingcloud.co/#/l2c',
+      },
+      'sap-cpq-implementation': {
+        title: 'SAP CPQ Implementation Services | ConnectingCloud Technologies',
+        description: 'End-to-end SAP CPQ implementation — guided selling, IronPython scripting, Responsive UI, pricing engine, and CRM/ERP integration. Quote 1.0 & 2.0 specialists.',
+        keywords: 'SAP CPQ implementation, SAP configure price quote, SAP CPQ consultant, SAP CPQ partner, CPQ implementation services, IronPython CPQ, Responsive UI CPQ',
+        canonical: 'https://www.connectingcloud.co/sap-cpq-implementation',
+      },
+      'sap-avc-implementation': {
+        title: 'SAP Variant Configuration & AVC Implementation | ConnectingCloud Technologies',
+        description: 'SAP Variant Configuration (VC) and Advanced Variant Configuration (AVC) implementation. KB design, BOM explosion, CPS on BTP, CPQ integration. ConnectingCloud specialists.',
+        keywords: 'SAP AVC implementation, SAP variant configuration, SAP Advanced Variant Configuration, SAP VC AVC consultant, configure to order SAP, CPS BTP',
+        canonical: 'https://www.connectingcloud.co/sap-avc-implementation',
+      },
+      'sap-commissions-implementation': {
+        title: 'SAP Commissions Implementation Services | ConnectingCloud Technologies',
+        description: 'SAP Commissions (formerly Callidus) implementation — commission plan design, territory & quota management, real-time earnings visibility, and CPQ-to-Commissions integration.',
+        keywords: 'SAP Commissions implementation, SAP ICM, Callidus implementation, incentive compensation management, SAP sales commission, SAP Commissions consultant',
+        canonical: 'https://www.connectingcloud.co/sap-commissions-implementation',
+      },
+      'sap-vc-to-avc-migration': {
+        title: 'SAP VC to AVC Migration | ConnectingCloud Technologies',
+        description: 'Expert SAP Variant Configuration to Advanced Variant Configuration migration. KB assessment, parallel validation, CPS on BTP setup, and cutover. Most-requested complex migration.',
+        keywords: 'SAP VC to AVC migration, variant configuration migration, LO-VC to AVC, SAP AVC migration, VC migration consultant, SAP configuration migration',
+        canonical: 'https://www.connectingcloud.co/sap-vc-to-avc-migration',
+      },
+      'sap-cpq-quote-2-migration': {
+        title: 'SAP CPQ Quote 1.0 to Quote 2.0 Migration | ConnectingCloud Technologies',
+        description: 'SAP CPQ Quote 1.0 → 2.0 migration specialists. IronPython script adaptation, Responsive UI rebuild, Business Partners migration, and integration retesting. 6–12 week timeline.',
+        keywords: 'SAP CPQ Quote 2.0 migration, CPQ Quote 1 to 2, SAP CPQ upgrade, CPQ Responsive UI migration, IronPython migration, CPQ migration consultant',
+        canonical: 'https://www.connectingcloud.co/sap-cpq-quote-2-migration',
+      },
+      'ecc-to-s4hana-migration': {
+        title: 'SAP ECC to S/4HANA Migration | ConnectingCloud Technologies',
+        description: 'SAP ECC to S/4HANA migration for configure-to-order businesses. Brownfield, Bluefield, and Greenfield paths. VC-to-AVC migration run in parallel. Beat the 2027 ECC deadline.',
+        keywords: 'SAP ECC to S4HANA migration, ECC S4HANA upgrade, SAP S4HANA migration, ECC migration 2027, brownfield S4HANA, greenfield SAP migration',
+        canonical: 'https://www.connectingcloud.co/ecc-to-s4hana-migration',
+      },
+      architecture: {
+        avc: {
+          title: 'SAP S/4HANA Advanced Variant Configuration (AVC) | Connecting Cloud',
+          description:
+            'S/4HANA AVC constraint modeling, VC to AVC migration, Super BOM resolution, and routing automation. Enterprise-grade configuration architecture for complex manufacturers.',
+          keywords:
+            'SAP AVC, Advanced Variant Configuration, VC to AVC migration, S/4HANA configuration, SAP constraint modeling, Super BOM, SAP VC modernization',
+          canonical: 'https://www.connectingcloud.co/#/architecture/avc',
+        },
+        cpq: {
+          title: 'SAP CPQ Integration & Configuration Architecture | Connecting Cloud',
+          description:
+            'Scalable SAP CPQ implementation with Python scripting, multi-level configuration, document generation, and API-first headless architecture. Built for enterprise quoting velocity.',
+          keywords:
+            'SAP CPQ integration, SAP CPQ architecture, CPQ Python scripting, SAP CPQ REST API, headless CPQ, CPQ document generation, SAP CPQ performance',
+          canonical: 'https://www.connectingcloud.co/#/architecture/cpq',
+        },
+        sf: {
+          title: 'Salesforce Revenue Cloud & CPQ Integration | Connecting Cloud Technologies',
+          description:
+            'Salesforce CPQ and Revenue Cloud implementation: guided selling, dynamic pricing, subscription management, and revenue recognition. Bridging CRM and billing for global enterprises.',
+          keywords:
+            'Salesforce CPQ, Salesforce Revenue Cloud, Salesforce CPQ implementation, guided selling, subscription billing, revenue lifecycle management',
+          canonical: 'https://www.connectingcloud.co/#/architecture/sf',
+        },
+        btp: {
+          title: 'SAP BTP & CPI Integration Architecture | Connecting Cloud Technologies',
+          description:
+            'Event-driven SAP BTP/CPI middleware connecting CPQ, CRM, and ERP systems. iFlow design, API-first architecture, and enterprise integration patterns for real-time data orchestration.',
+          keywords:
+            'SAP BTP, SAP CPI, BTP integration, CPI iFlow, SAP Integration Suite, event-driven SAP, SAP middleware, SAP API management',
+          canonical: 'https://www.connectingcloud.co/#/architecture/btp',
+        },
+      },
+    };
+
+    // Resolve the correct SEO config for the current page/capability
+    let seo;
+    if (activePage === 'architecture') {
+      seo = SEO_MAP.architecture[capabilityType] || SEO_MAP.architecture.avc;
+    } else {
+      seo = SEO_MAP[activePage] || SEO_MAP.home;
+    }
+
+    // Helper to upsert a <meta> tag
+    const setMeta = (selector, attr, value) => {
+      let el = document.querySelector(selector);
+      if (!el) {
+        el = document.createElement('meta');
+        const [attrName, attrValue] = selector.match(/\[([^=]+)="([^"]+)"\]/)?.slice(1) || [];
+        if (attrName) el.setAttribute(attrName, attrValue);
+        document.head.appendChild(el);
+      }
+      el.setAttribute(attr, value);
+    };
+
+    // Helper to upsert a <link rel="canonical">
+    const setCanonical = (href) => {
+      let el = document.querySelector('link[rel="canonical"]');
+      if (!el) {
+        el = document.createElement('link');
+        el.setAttribute('rel', 'canonical');
+        document.head.appendChild(el);
+      }
+      el.setAttribute('href', href);
+    };
+
+    // Apply title
+    document.title = seo.title;
+
+    // Apply standard meta tags
+    setMeta('meta[name="description"]', 'content', seo.description);
+    setMeta('meta[name="keywords"]', 'content', seo.keywords);
+    setMeta('meta[name="robots"]', 'content', 'index, follow');
+    setCanonical(seo.canonical);
+
+    // Open Graph
+    setMeta('meta[property="og:title"]', 'content', seo.title);
+    setMeta('meta[property="og:description"]', 'content', seo.description);
+    setMeta('meta[property="og:type"]', 'content', 'website');
+    setMeta('meta[property="og:url"]', 'content', seo.canonical);
+    setMeta('meta[property="og:image"]', 'content', 'https://www.connectingcloud.co/og-image.png');
+    setMeta('meta[property="og:site_name"]', 'content', 'Connecting Cloud Technologies');
+
+    // Twitter Card
+    setMeta('meta[name="twitter:card"]', 'content', 'summary_large_image');
+    setMeta('meta[name="twitter:title"]', 'content', seo.title);
+    setMeta('meta[name="twitter:description"]', 'content', seo.description);
+    setMeta('meta[name="twitter:image"]', 'content', 'https://www.connectingcloud.co/og-image.png');
+
+    // JSON-LD Structured Data
+    const schemaId = 'cct-jsonld';
+    let schemaScript = document.getElementById(schemaId);
+    if (!schemaScript) {
+      schemaScript = document.createElement('script');
+      schemaScript.id = schemaId;
+      schemaScript.type = 'application/ld+json';
+      document.head.appendChild(schemaScript);
+    }
+
+    const structuredData = {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'ProfessionalService',
+          '@id': 'https://www.connectingcloud.co/#business',
+          name: 'Connecting Cloud Technologies',
+          url: 'https://www.connectingcloud.co',
+          logo: 'https://www.connectingcloud.co/src/assets/cct-logo.png',
+          description:
+            'Expert SAP CPQ, S/4HANA AVC, BTP/CPI, and Salesforce Revenue Cloud consulting for enterprise manufacturers.',
+          email: 'info@connectingcloud.co',
+          serviceType: [
+            'SAP CPQ Implementation',
+            'S/4HANA Advanced Variant Configuration',
+            'SAP BTP Integration',
+            'SAP CPI Orchestration',
+            'Salesforce Revenue Cloud',
+            'Quote-to-Cash Automation',
+            'VC to AVC Migration',
+          ],
+          areaServed: 'Worldwide',
+          knowsAbout: [
+            'SAP CPQ',
+            'S/4HANA AVC',
+            'SAP BTP',
+            'SAP CPI',
+            'Configure Price Quote',
+            'Advanced Variant Configuration',
+            'Salesforce CPQ',
+            'Lead-to-Cash',
+            'Quote-to-Cash',
+          ],
+        },
+        {
+          '@type': 'WebPage',
+          '@id': seo.canonical,
+          url: seo.canonical,
+          name: seo.title,
+          description: seo.description,
+          isPartOf: { '@id': 'https://www.connectingcloud.co/#business' },
+          inLanguage: 'en',
+        },
+      ],
+    };
+
+    schemaScript.textContent = JSON.stringify(structuredData, null, 2);
+  }, [activePage, capabilityType]);
+  // ─────────────────────────────────────────────────────────────────────────
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -1506,7 +1801,823 @@ const ReadyToConnectSection = ({ onContactClick }) => {
     );
   };
 
-  return (
+  // ─── Shared sub-components for landing pages ───────────────────────────────
+  // ─── SHARED DESIGN SYSTEM COMPONENTS ─────────────────────────────────────
+  // Accent palette per page
+  const PAGE_ACCENTS = {
+    'sap-cpq-implementation':      { primary:'#2563eb', soft:'rgba(37,99,235,.15)', border:'rgba(37,99,235,.35)', text:'#93C5FD', glow:'rgba(37,99,235,.25)' },
+    'sap-avc-implementation':      { primary:'#0d9488', soft:'rgba(13,148,136,.15)', border:'rgba(13,148,136,.35)', text:'#5ECECE', glow:'rgba(13,148,136,.25)' },
+    'sap-commissions-implementation':{ primary:'#d97706', soft:'rgba(217,119,6,.15)', border:'rgba(217,119,6,.35)', text:'#FCD34D', glow:'rgba(217,119,6,.25)' },
+    'sap-vc-to-avc-migration':     { primary:'#0d9488', soft:'rgba(13,148,136,.15)', border:'rgba(13,148,136,.35)', text:'#5ECECE', glow:'rgba(13,148,136,.25)' },
+    'sap-cpq-quote-2-migration':   { primary:'#2563eb', soft:'rgba(37,99,235,.15)', border:'rgba(37,99,235,.35)', text:'#93C5FD', glow:'rgba(37,99,235,.25)' },
+    'ecc-to-s4hana-migration':     { primary:'#e85d26', soft:'rgba(232,93,38,.15)', border:'rgba(232,93,38,.35)', text:'#FFA07A', glow:'rgba(232,93,38,.25)' },
+  };
+
+  const LPHero = ({ eyebrow, h1, sub, badges, accent, onContact, ctaLabel, secondaryCta }) => {
+    const a = accent || { primary:'#2563eb', soft:'rgba(37,99,235,.15)', border:'rgba(37,99,235,.35)', text:'#93C5FD', glow:'rgba(37,99,235,.25)' };
+    return (
+      <div className="relative overflow-hidden bg-slate-950 pt-28 sm:pt-32 pb-16 sm:pb-20 px-4 sm:px-6 lg:px-10">
+        {/* Grid texture */}
+        <div className="absolute inset-0 pointer-events-none opacity-[0.04]"
+          style={{backgroundImage:'linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px)',backgroundSize:'48px 48px'}}/>
+        {/* Glow blob */}
+        <div className="absolute -top-32 -left-32 w-[600px] h-[600px] rounded-full pointer-events-none blur-[120px]" style={{background:a.glow}}/>
+        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full pointer-events-none blur-[100px]" style={{background:a.soft}}/>
+
+        <div className="max-w-6xl mx-auto relative z-10">
+          {/* eyebrow */}
+          <div className="inline-flex items-center gap-2 rounded-full border px-4 py-1.5 mb-6 text-[11px] font-bold tracking-[.12em] uppercase" style={{background:a.soft,borderColor:a.border,color:a.text}}>
+            {eyebrow}
+          </div>
+
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white leading-[1.05] tracking-tight mb-5" style={{letterSpacing:'-.025em'}}>{h1}</h1>
+          <p className="text-base sm:text-xl text-white/50  leading-relaxed mb-8">{sub}</p>
+
+          {/* Badge pills */}
+          <div className="flex flex-wrap gap-2 mb-10">
+            {badges.map((b,i)=>(
+              <span key={i} className="inline-flex items-center gap-1.5 text-[11px] font-semibold px-3 py-1.5 rounded-full border" style={b.style}>
+                {b.icon && <span>{b.icon}</span>}{b.label}
+              </span>
+            ))}
+          </div>
+
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row gap-3">
+            <button onClick={onContact}
+              className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full font-black text-[12px] uppercase tracking-[.14em] text-white transition-all hover:scale-105 hover:shadow-xl"
+              style={{background:a.primary,boxShadow:`0 0 24px ${a.glow}`}}>
+              {ctaLabel || 'Book a Free Assessment'} <ArrowRight size={15}/>
+            </button>
+            {secondaryCta && (
+              <button onClick={secondaryCta.onClick}
+                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full font-black text-[12px] uppercase tracking-[.14em] text-white/70 border border-white/15 hover:border-white/30 hover:text-white transition-all">
+                {secondaryCta.label}
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // Stat bar under hero
+  const LPStats = ({ stats, accent }) => {
+    const a = accent || { primary:'#2563eb', text:'#93C5FD' };
+    return (
+      <div className="bg-slate-900 border-b border-white/[.06]">
+        <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4">
+          {stats.map((s,i)=>(
+            <div key={i} className={`py-6 px-5 sm:px-8 text-center ${i < stats.length-1 ? 'border-r border-white/[.06]' : ''}`}>
+              <div className="text-2xl sm:text-3xl font-black leading-none mb-1.5 tabular-nums" style={{color:s.color||a.text}}>{s.value}</div>
+              <div className="text-[11px] text-white/35 leading-snug">{s.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
+  // Section wrapper
+  const LPSection = ({ dark, tight, children }) => (
+    <section className={`${tight?'py-12 sm:py-16':'py-16 sm:py-24'} px-4 sm:px-6 lg:px-10 ${dark ? 'bg-slate-900' : 'bg-white'}`}>
+      <div className="max-w-6xl mx-auto">{children}</div>
+    </section>
+  );
+
+  // Section label
+  const LPEye = ({ color, children }) => (
+    <div className="inline-flex items-center gap-2 text-[10px] font-black tracking-[.18em] uppercase mb-3" style={{color}}>
+      <span className="w-5 h-0.5 rounded inline-block" style={{background:color}}/>
+      {children}
+    </div>
+  );
+
+  const LPH2 = ({ dark, children }) => (
+    <h2 className={`text-2xl sm:text-4xl font-black tracking-tight mb-3 leading-[1.1] ${dark?'text-white':'text-slate-900'}`} style={{letterSpacing:'-.02em'}}>{children}</h2>
+  );
+
+  const LPP = ({ dark, children }) => (
+    <p className={`text-base sm:text-lg leading-relaxed mb-10 ${dark?'text-white/50':'text-slate-500'}`}>{children}</p>
+  );
+
+  // Feature card
+  const LPCard = ({ children, accent, dark, className='' }) => (
+    <div className={`rounded-2xl border transition-all duration-200 hover:-translate-y-1 hover:shadow-xl overflow-hidden
+      ${dark ? 'bg-white/[.04] border-white/[.08] hover:border-white/20' : 'bg-white border-slate-200 hover:border-slate-300 shadow-sm'}
+      ${accent ? 'border-l-[3px]' : ''} ${className}`}
+      style={accent ? {borderLeftColor:accent} : {}}>
+      {children}
+    </div>
+  );
+
+  // Bullet item
+  const LPLi = ({ color, dark, children }) => (
+    <div className={`flex gap-3 text-sm leading-relaxed items-start ${dark?'text-white/65':'text-slate-600'}`}>
+      <CheckCircle2 size={15} className="mt-0.5 shrink-0" style={{color}}/>
+      <span>{children}</span>
+    </div>
+  );
+
+  // Numbered steps
+  const LPSteps = ({ steps, color, dark }) => (
+    <div className="relative mt-10">
+      <div className="hidden lg:block absolute top-[22px] left-[calc(10%+22px)] right-[calc(10%+22px)] h-px" style={{background:`linear-gradient(90deg,${color}40,${color})`}}/>
+      <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-5">
+        {steps.map((s,i)=>(
+          <div key={i} className="flex lg:flex-col items-start lg:items-center gap-4 relative z-10">
+            <div className={`w-11 h-11 shrink-0 rounded-full flex items-center justify-center text-[13px] font-black border-2 ${dark?'bg-slate-900':'bg-white'}`}
+              style={{color,borderColor:color}}>{s.n}</div>
+            <div className="lg:text-center">
+              <div className={`text-xs font-bold leading-tight mb-1 ${dark?'text-white':'text-slate-800'}`}>{s.t}</div>
+              <div className={`text-[11px] leading-snug ${dark?'text-white/40':'text-slate-500'}`}>{s.s}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+  // FAQ accordion
+  const LPFaq = ({ items, dark }) => {
+    const [open, setOpen] = React.useState(null);
+    return (
+      <div className="max-w-3xl space-y-2.5 mt-6">
+        {items.map((item,i)=>(
+          <div key={i} className={`rounded-2xl border overflow-hidden transition-all ${dark?'bg-white/[.04] border-white/[.08]':'bg-white border-slate-200'}`}>
+            <button onClick={()=>setOpen(open===i?null:i)}
+              className="w-full flex justify-between items-center gap-4 px-5 sm:px-6 py-4 sm:py-5 text-left group">
+              <span className={`text-sm font-semibold leading-snug ${dark?'text-white':'text-slate-900'}`}>{item.q}</span>
+              <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 transition-all ${open===i?'rotate-45':'rotate-0'} ${dark?'bg-white/10':'bg-slate-100'}`}>
+                <span className={`text-base font-bold ${dark?'text-white':'text-slate-600'}`}>+</span>
+              </div>
+            </button>
+            {open===i && <div className={`px-5 sm:px-6 pb-5 text-sm leading-relaxed ${dark?'text-white/55':'text-slate-600'}`}>{item.a}</div>}
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  // CTA block
+  const LPCTA = ({ heading, sub, ctaLabel, onContact, accent }) => {
+    const a = accent || { primary:'#2563eb', soft:'rgba(37,99,235,.1)', glow:'rgba(37,99,235,.3)' };
+    return (
+      <div className="relative rounded-[2rem] overflow-hidden">
+        <div className="absolute inset-0 bg-slate-950"/>
+        <div className="absolute inset-0" style={{background:`radial-gradient(ellipse 70% 60% at 30% 50%, ${a.soft}, transparent)`}}/>
+        <div className="relative px-8 sm:px-14 py-14 sm:py-20 text-center">
+          <h2 className="text-2xl sm:text-4xl font-black text-white mb-4 leading-tight" style={{letterSpacing:'-.02em'}}>{heading}</h2>
+          <p className="text-base sm:text-lg text-white/50 max-w-lg mx-auto mb-10">{sub}</p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <button onClick={onContact}
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-black text-[12px] uppercase tracking-[.14em] text-white transition-all hover:scale-105 hover:shadow-xl"
+              style={{background:a.primary,boxShadow:`0 8px 32px ${a.glow}`}}>
+              <Calendar size={15}/> {ctaLabel}
+            </button>
+            <a href="mailto:info@connectingcloud.co"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-black text-[12px] uppercase tracking-[.14em] text-white/60 border border-white/15 hover:border-white/30 hover:text-white transition-all">
+              <Mail size={14}/> info@connectingcloud.co
+            </a>
+          </div>
+          <p className="text-[11px] text-white/25 mt-6">No commitment · Available globally · Responds within 1 business day</p>
+        </div>
+      </div>
+    );
+  };
+
+  // Comparison card (dark-themed two column)
+  const LPCompareCard = ({ title, subtitle, items, color, dark }) => (
+    <div className={`rounded-2xl border p-6 sm:p-8 ${dark ? 'bg-white/[.04] border-white/10' : 'bg-white border-slate-200 shadow-sm'}`}
+      style={{borderTopWidth:3,borderTopColor:color}}>
+      <div className="text-xs font-black uppercase tracking-widest mb-1" style={{color}}>{title}</div>
+      {subtitle && <p className={`text-[11px] mb-5 ${dark?'text-white/40':'text-slate-500'}`}>{subtitle}</p>}
+      <div className="space-y-3">
+        {items.map((it,j)=><LPLi key={j} color={color} dark={dark}>{it}</LPLi>)}
+      </div>
+    </div>
+  );
+
+  // ─── 1. SAP CPQ Implementation ───────────────────────────────────────────
+  const SapCpqImplementationView = () => {
+    const ac = PAGE_ACCENTS['sap-cpq-implementation'];
+    return (
+      <div className="bg-white min-h-screen">
+        <LPHero
+          accent={ac}
+          eyebrow="SAP CPQ · New Implementation"
+          h1="SAP CPQ Implementation Services"
+          sub="Full configure-to-quote delivery — from product modelling and IronPython scripting to Responsive UI, pricing engine, and CRM/ERP integration. Quote 1.0 and Quote 2.0."
+          badges={[
+            {label:'Quote 1.0 & 2.0',style:{background:'rgba(37,99,235,.15)',borderColor:'rgba(37,99,235,.35)',color:'#93C5FD'}},
+            {label:'IronPython Scripting',style:{background:'rgba(13,148,136,.15)',borderColor:'rgba(13,148,136,.35)',color:'#5ECECE'}},
+            {label:'Responsive UI',style:{background:'rgba(37,99,235,.15)',borderColor:'rgba(37,99,235,.35)',color:'#93C5FD'}},
+            {label:'S/4HANA & ECC Integration',style:{background:'rgba(100,116,139,.15)',borderColor:'rgba(100,116,139,.35)',color:'#94A3B8'}},
+          ]}
+          onContact={()=>setShowContactModal(true)}
+          ctaLabel="Book a Free CPQ Scoping Call"
+          secondaryCta={{label:'View Case Studies', onClick:()=>navigateTo('cases')}}
+        />
+
+        <LPStats accent={ac} stats={[
+          {value:'50+', label:'CPQ implementations delivered', color:ac.text},
+          {value:'Q1.0 & Q2.0', label:'Both CPQ release models supported', color:'#5ECECE'},
+          {value:'6–16 wk', label:'Typical go-live timeline', color:ac.text},
+          {value:'Full stack', label:'CRM · ERP · Commerce integration', color:'#5ECECE'},
+        ]}/>
+
+        {/* Scope */}
+        <LPSection>
+          <LPEye color={ac.primary}>Scope</LPEye>
+          <LPH2>What a CCT CPQ Implementation Includes</LPH2>
+          <LPP>We cover every layer — from product model and pricing logic through IronPython scripting, Responsive UI, and the integrations that connect CPQ to your CRM and ERP.</LPP>
+          <div className="grid md:grid-cols-2 gap-5">
+            {[
+              {title:'Product & Pricing Model', items:['Product hierarchy, attribute definition, and option set configuration','Guided selling flows — conditional logic, dependency rules, intelligent defaults','Multi-tier pricing: list price, volume tiers, discounts, surcharges, margin floors','IronPython script development: calculation scripts, constraint logic, event-based automation','Approval workflow engine: routing by margin, discount depth, and deal value thresholds']},
+              {title:'UI, Documents & Integration', items:['Responsive UI template build: DealViewPage, Quote Custom Sections, product pages','Document generation: Responsive Design output templates, proposal branding','CRM integration: SAP Sales Cloud CCV2, Salesforce, Microsoft Dynamics via CPI','ERP integration: SAP S/4HANA or ECC — order creation, pricing conditions, material master','SAP Commerce Cloud: embedded configurator via CPS and REST API']},
+            ].map((card,i)=>(
+              <LPCard key={i} accent={ac.primary}>
+                <div className="p-6 sm:p-8">
+                  <h3 className="text-sm font-black mb-5" style={{color:ac.primary}}>{card.title}</h3>
+                  <div className="space-y-3">{card.items.map((it,j)=><LPLi key={j} color={ac.primary}>{it}</LPLi>)}</div>
+                </div>
+              </LPCard>
+            ))}
+          </div>
+        </LPSection>
+
+        {/* Quote 1 vs 2 */}
+        <LPSection dark>
+          <LPEye color={ac.text}>Platform</LPEye>
+          <LPH2 dark>Quote 1.0 vs Quote 2.0 — We Deliver Both</LPH2>
+          <LPP dark>SAP no longer issues new Quote 1.0 licences. All new implementations should target Quote 2.0, with its stateless architecture, Responsive UI, and native S/4HANA alignment.</LPP>
+          <div className="grid md:grid-cols-2 gap-5">
+            <LPCompareCard dark color="#2563eb" title="SAP CPQ Quote 2.0 — Strategic Release"
+              items={['Stateless, event-driven architecture — IronPython via context object API','Responsive Design UI — fully mobile-ready, replaces deprecated Classic Design','Business Partners (Sold-To, Bill-To, Ship-To) replacing flat Customer records','Solution Design for multi-section quotes with team assignments','Supports up to 100,000 line items — no memory degradation at scale']}/>
+            <LPCompareCard dark color="#64748b" title="SAP CPQ Quote 1.0 — Legacy Support"
+              items={['Stateful architecture — full quote loaded into memory on every click','Classic Design UI — deprecated, no new SAP investment','Customer-based data model — not aligned with S/4HANA Business Partner structure','Still in active use — CCT provides full support','Migration to Quote 2.0 available as a separate workstream']}/>
+          </div>
+        </LPSection>
+
+        {/* Methodology */}
+        <LPSection>
+          <LPEye color={ac.primary}>Methodology</LPEye>
+          <LPH2>CPQ Implementation Methodology</LPH2>
+          <LPP>Five phases from discovery to hypercare — designed to minimise risk and compress time-to-value.</LPP>
+          <LPSteps color={ac.primary} steps={[
+            {n:'01',t:'Discovery & Design',s:'Pricing model, product catalogue, integration landscape, approval rules'},
+            {n:'02',t:'Model Build',s:'Products, attributes, IronPython scripts, pricing engine, Responsive UI'},
+            {n:'03',t:'Integration Build',s:'CRM, ERP, Commerce Cloud via CPI — end-to-end data flows'},
+            {n:'04',t:'UAT & Training',s:'User acceptance testing, sales team enablement, document sign-off'},
+            {n:'05',t:'Go-Live & Hypercare',s:'Cutover, hypercare support, performance monitoring'},
+          ]}/>
+        </LPSection>
+
+        {/* FAQ */}
+        <LPSection>
+          <LPEye color="#64748b">FAQ</LPEye>
+          <LPH2>Frequently Asked Questions</LPH2>
+          <LPFaq items={[
+            {q:'How long does an SAP CPQ implementation take?',a:'A standard SAP CPQ Quote 2.0 implementation typically takes 8–16 weeks depending on product catalogue complexity, the number of IronPython scripts required, and integration scope. Simple deployments can go live in 6–8 weeks; complex ones with multi-level hierarchies and S/4HANA integration run 14–20 weeks.'},
+            {q:'What scripting language does SAP CPQ use?',a:'SAP CPQ uses IronPython for all scripting — calculation scripts, constraint logic, event handlers, and automation. In Quote 2.0, scripts fire on discrete events via the context object API rather than on every user click as in Quote 1.0.'},
+            {q:'What is the Responsive UI in SAP CPQ Quote 2.0?',a:'Responsive Design is the modern SAP CPQ UI framework used in Quote 2.0. It replaces the deprecated Classic Design (obsolete end of 2025), supports mobile/tablet natively, and uses a component-based template structure. All custom templates must be built on this framework.'},
+            {q:'Can SAP CPQ integrate with Salesforce or Microsoft Dynamics?',a:'Yes — SAP CPQ integrates with Salesforce CRM, Microsoft Dynamics, and SAP Sales Cloud CCV2 via pre-built connectors and custom CPI integration flows. ConnectingCloud uses SAP BTP Integration Suite as the integration middleware.'},
+            {q:'Do we need SAP AVC and CPS for CPQ to work?',a:'Not for basic functionality — CPQ can run with its own configuration engine. However, for complex manufacturing products modelled in AVC, connecting CPQ to AVC via CPS on BTP enables real-time BOM validation during quoting.'},
+          ]}/>
+        </LPSection>
+
+        <LPSection tight>
+          <LPCTA accent={ac} heading="Ready to Implement SAP CPQ?" sub="Book a free 30-minute scoping call. We'll review your product catalogue, pricing model, and integration landscape." ctaLabel="Book a Free CPQ Scoping Call" onContact={()=>setShowContactModal(true)}/>
+        </LPSection>
+      </div>
+    );
+  };
+
+  // ─── 2. SAP AVC Implementation ───────────────────────────────────────────
+  const SapAvcImplementationView = () => {
+    const ac = PAGE_ACCENTS['sap-avc-implementation'];
+    return (
+      <div className="bg-white min-h-screen">
+        <LPHero
+          accent={ac}
+          eyebrow="SAP VC · SAP AVC · SAP CPS · Priority Implementation"
+          h1="SAP Variant Configuration & Advanced Variant Configuration Implementation"
+          sub="Full implementation of SAP VC (LO-VC) in ECC/S4 and SAP AVC in S/4HANA 2020+ — including CPS setup on BTP for CPQ integration, BOM/routing explosion, and SD/PP configure-to-order."
+          badges={[
+            {label:'SAP AVC · S/4HANA 2020+',style:{background:ac.soft,borderColor:ac.border,color:ac.text}},
+            {label:'SAP VC · ECC & S/4HANA',style:{background:ac.soft,borderColor:ac.border,color:ac.text}},
+            {label:'SAP CPS on BTP',style:{background:'rgba(13,148,136,.15)',borderColor:'rgba(13,148,136,.35)',color:'#5ECECE'}},
+            {label:'CPQ Integration',style:{background:ac.soft,borderColor:ac.border,color:ac.text}},
+          ]}
+          onContact={()=>setShowContactModal(true)}
+          ctaLabel="Book a Free AVC Scoping Call"
+          secondaryCta={{label:'View Methodology', onClick:()=>navigateTo('process')}}
+        />
+
+        <LPStats accent={ac} stats={[
+          {value:'AVC + CPS', label:'Required for CPQ deep integration', color:ac.text},
+          {value:'S/4 2020+', label:'AVC available from this release', color:ac.text},
+          {value:'ECC & S/4', label:'VC supported on both platforms', color:ac.text},
+          {value:'Priority', label:'Our highest-demand specialism', color:ac.text},
+        ]}/>
+
+        {/* VC vs AVC */}
+        <LPSection>
+          <LPEye color={ac.primary}>Products</LPEye>
+          <LPH2>VC vs AVC — Understanding the Difference</LPH2>
+          <LPP>SAP VC and SAP AVC serve the same fundamental purpose — enabling complex product configuration in the ERP — but differ substantially in architecture, integration capability, and strategic direction.</LPP>
+          <div className="grid md:grid-cols-2 gap-5">
+            <LPCard accent="#64748b">
+              <div className="p-6 sm:p-8">
+                <h3 className="text-sm font-black text-slate-700 mb-1">SAP Variant Configuration (VC / LO-VC)</h3>
+                <p className="text-[11px] text-slate-400 mb-5">SAP ECC and S/4HANA · Back-End Configuration Engine</p>
+                <div className="space-y-3">
+                  <LPLi color="#64748b">Characteristic-value assignment with dependency rules: constraints, procedures, selection conditions</LPLi>
+                  <LPLi color="#64748b">BOM and routing explosion via Super-BOM — supports multi-level, engineer-to-order models</LPLi>
+                  <LPLi color="#64748b">Deep SD (sales order) and PP (production) integration for CTO and ETO manufacturing</LPLi>
+                  <LPLi color="#64748b">Knowledge Base (KB) managed via Classification System and VC workbench</LPLi>
+                </div>
+              </div>
+            </LPCard>
+            <LPCard accent={ac.primary}>
+              <div className="p-6 sm:p-8">
+                <h3 className="text-sm font-black mb-1" style={{color:ac.primary}}>SAP Advanced Variant Configuration (AVC)</h3>
+                <p className="text-[11px] text-slate-400 mb-5">S/4HANA 2020+ · Cloud-Ready · Strategic Next Generation</p>
+                <div className="space-y-3">
+                  <LPLi color={ac.primary}>Enhanced constraint modelling with BOL/BOPF architecture and SAP Fiori UI</LPLi>
+                  <LPLi color={ac.primary}>Full CPQ integration via CPS on BTP — real-time configuration validation during quoting</LPLi>
+                  <LPLi color={ac.primary}>API-first design for integration with Commerce Cloud and external portals</LPLi>
+                  <LPLi color={ac.primary}>High-volume, real-time performance — outperforms legacy VC at enterprise scale</LPLi>
+                  <LPLi color={ac.primary}>Strategic replacement for LO-VC in new S/4HANA deployments</LPLi>
+                </div>
+              </div>
+            </LPCard>
+          </div>
+        </LPSection>
+
+        {/* CPS */}
+        <LPSection dark>
+          <LPEye color={ac.text}>CPS</LPEye>
+          <LPH2 dark>SAP CPS — The Integration Bridge Between AVC and CPQ</LPH2>
+          <LPP dark>SAP Configuration, Pricing & Simulation (CPS) is a BTP-hosted microservice that exposes AVC configuration models as REST APIs — enabling SAP CPQ and Commerce Cloud to validate configurations and simulate pricing in real time.</LPP>
+          <div className="grid md:grid-cols-3 gap-5">
+            {[
+              {title:'AVC → CPQ', body:'CPS exposes AVC configuration models as REST APIs. When a sales rep configures a product in SAP CPQ, CPS validates the configuration against AVC rules and returns pricing in real time.'},
+              {title:'AVC → Commerce', body:'CPS enables B2B self-service configuration in SAP Commerce Cloud — customers configure complex products in the portal, validated against the same AVC model used by the sales team.'},
+              {title:'Session Management', body:'CPS manages configuration session state for complex multi-step, multi-user workflows — ensuring consistency across CPQ, Commerce, and S/4HANA without direct AVC coupling.'},
+            ].map((c,i)=>(
+              <div key={i} className="bg-white/[.04] rounded-2xl border border-white/[.08] p-6 hover:border-white/20 transition-all">
+                <div className="text-[11px] font-black uppercase tracking-widest mb-3" style={{color:ac.text}}>{c.title}</div>
+                <p className="text-sm text-white/55 leading-relaxed">{c.body}</p>
+              </div>
+            ))}
+          </div>
+        </LPSection>
+
+        <LPSection>
+          <LPEye color={ac.primary}>Methodology</LPEye>
+          <LPH2>AVC Implementation Methodology</LPH2>
+          <LPSteps color={ac.primary} steps={[
+            {n:'01',t:'Requirements & Model Design',s:'Product complexity, class hierarchy, constraint analysis'},
+            {n:'02',t:'AVC Model Build',s:'Classes, constraints, configuration profiles, variant pricing'},
+            {n:'03',t:'CPS Setup on BTP',s:'API configuration, session management, CPQ & Commerce mapping'},
+            {n:'04',t:'BOM & SD/PP Integration',s:'Routing explosion, sales order flow, production confirmation'},
+            {n:'05',t:'UAT & Go-Live',s:'Configure-to-order end-to-end validation and cutover'},
+          ]}/>
+        </LPSection>
+
+        <LPSection>
+          <LPEye color="#64748b">FAQ</LPEye>
+          <LPH2>Frequently Asked Questions</LPH2>
+          <LPFaq items={[
+            {q:'What is SAP Advanced Variant Configuration (AVC)?',a:'SAP AVC is the next-generation product configuration engine for SAP S/4HANA, replacing legacy LO-VC. It uses a class-based model with BOL/BOPF architecture, SAP Fiori UI, and API-first design enabling deep CPQ integration via CPS on BTP. Available from S/4HANA 2020 onwards.'},
+            {q:'What is the difference between SAP VC and SAP AVC?',a:'SAP VC (LO-VC) is the original ERP-embedded engine available in ECC and S/4HANA. AVC is the cloud-ready successor with modern architecture and REST APIs. AVC is required for full CPQ integration via CPS on BTP — VC alone cannot deliver real-time CPQ-to-ERP configuration validation.'},
+            {q:'Do I need CPS to use AVC with CPQ?',a:'Yes — SAP CPS (Configuration, Pricing & Simulation) is the required integration layer between AVC and SAP CPQ. CPS is deployed on BTP and exposes AVC models as REST APIs that CPQ consumes for real-time product validation and pricing simulation during quote creation.'},
+            {q:'Can SAP VC and AVC run in parallel during a migration?',a:'Yes — and parallel running is a key phase of every VC-to-AVC migration. During parallel validation, configured orders are processed through both VC and AVC to confirm correctness before cutover. This phase typically runs for 4–8 weeks.'},
+            {q:'Is AVC available on S/4HANA Cloud Public Edition?',a:'SAP AVC is supported on S/4HANA on-premise and Private Edition. Support on Public Edition is limited. If you are on Public Cloud, discuss your configuration requirements with ConnectingCloud before committing to an AVC implementation approach.'},
+          ]}/>
+        </LPSection>
+
+        <LPSection tight>
+          <LPCTA accent={ac} heading="Ready to Implement SAP AVC?" sub="Book a free scoping call. We'll assess your product complexity, BOM structure, and integration requirements." ctaLabel="Book a Free AVC Scoping Call" onContact={()=>setShowContactModal(true)}/>
+        </LPSection>
+      </div>
+    );
+  };
+
+  // ─── 3. SAP Commissions Implementation ───────────────────────────────────
+  const SapCommissionsImplementationView = () => {
+    const ac = PAGE_ACCENTS['sap-commissions-implementation'];
+    const features = [
+      {icon:'💰',title:'Incentive Plan Administration',body:'Define complex compensation plans with quotas, accelerators, draws, splits, clawbacks, and multi-currency payout rules.'},
+      {icon:'⚡',title:'Commission Calculation Engine',body:'Process millions of transactions at enterprise scale — eliminating spreadsheet errors and the shadow accounting that follows them.'},
+      {icon:'🗺',title:'Territory & Quota Management',body:'Align sales territories and quota distribution with business strategy — with versioning, approval workflows, and rep-level visibility.'},
+      {icon:'👁',title:'Real-Time Earnings Visibility',body:'Sales reps see projected and actual commissions live — reducing disputes, shadow accounting, and morale issues from comp uncertainty.'},
+      {icon:'🔄',title:'Dispute Management',body:'Structured workflow for payee disputes and inquiries — traceable back to the source transaction with full audit history.'},
+      {icon:'📊',title:'Analytics & Reporting',body:'Attainment dashboards, earnings projections, comp cost modelling, and pipeline performance — for reps, managers, and finance.'},
+    ];
+    return (
+      <div className="bg-white min-h-screen">
+        <LPHero
+          accent={ac}
+          eyebrow="SAP Commissions · Formerly Callidus Cloud · ICM"
+          h1="SAP Commissions Implementation Services"
+          sub="End-to-end SAP Commissions implementation — commission plan design, territory & quota management, real-time earnings visibility, and CPQ-to-Commissions integration via BTP and CPI."
+          badges={[
+            {label:'Incentive Compensation',style:{background:ac.soft,borderColor:ac.border,color:ac.text}},
+            {label:'Territory & Quota',style:{background:ac.soft,borderColor:ac.border,color:ac.text}},
+            {label:'CPQ Integration',style:{background:'rgba(13,148,136,.15)',borderColor:'rgba(13,148,136,.35)',color:'#5ECECE'}},
+            {label:'Acquired by SAP 2018',style:{background:ac.soft,borderColor:ac.border,color:ac.text}},
+          ]}
+          onContact={()=>setShowContactModal(true)}
+          ctaLabel="Book a Free Commissions Discovery Call"
+        />
+
+        <LPStats accent={ac} stats={[
+          {value:'#1', label:'Cloud ICM platform globally', color:ac.text},
+          {value:'2018', label:'SAP acquired Callidus for $2.4B', color:ac.text},
+          {value:'CPQ→Pay', label:'Full Quote-to-Commission workflow', color:'#5ECECE'},
+          {value:'Zero', label:'Manual comp entry — fully automated', color:ac.text},
+        ]}/>
+
+        <LPSection>
+          <LPEye color={ac.primary}>Platform</LPEye>
+          <LPH2>What is SAP Commissions?</LPH2>
+          <LPP>SAP Commissions (formerly Callidus Cloud) is the world's leading cloud-based Incentive Compensation Management platform — part of the SAP Sales Cloud and Customer Experience portfolio since the $2.4B acquisition in 2018.</LPP>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {features.map((c,i)=>(
+              <div key={i} className="bg-white rounded-2xl border border-slate-200 border-t-4 p-6 hover:-translate-y-1 hover:shadow-lg transition-all duration-200" style={{borderTopColor:ac.primary}}>
+                <div className="text-2xl mb-4">{c.icon}</div>
+                <h3 className="text-sm font-black mb-2" style={{color:ac.primary}}>{c.title}</h3>
+                <p className="text-xs text-slate-500 leading-relaxed">{c.body}</p>
+              </div>
+            ))}
+          </div>
+        </LPSection>
+
+        <LPSection dark>
+          <LPEye color={ac.text}>Integration</LPEye>
+          <LPH2 dark>SAP Commissions + SAP CPQ: Quote → Win → Pay</LPH2>
+          <LPP dark>ConnectingCloud connects SAP CPQ and SAP Commissions via BTP and CPI to create a fully automated Quote-to-Commission workflow — when a CPQ quote is approved and a sales order created, commission is calculated automatically.</LPP>
+          <div className="grid md:grid-cols-2 gap-5">
+            {[
+              {title:'How the integration works', items:['CPQ quote approved → sales order created in S/4HANA','CPI flow ingests deal data: product lines, revenue, discount, territory, rep/payee','SAP Commissions calculates commission based on active plan rules','Rep sees updated earnings projection in real time via Commissions portal','Finance sees comp cost vs forecast — no manual reconciliation']},
+              {title:'Business outcomes', items:['Zero manual commission entry — eliminated across the sales org','Disputes traced to exact CPQ quote and line items — fully auditable','Business Partners in CPQ map directly to Payees in Commissions','Commission calculations run in minutes, not month-end batch','Sales reps close deals faster — comp uncertainty no longer a distraction']},
+            ].map((card,i)=>(
+              <div key={i} className="bg-white/[.04] rounded-2xl border border-white/[.08] p-6 sm:p-8">
+                <h3 className="text-sm font-black mb-5" style={{color:ac.text}}>{card.title}</h3>
+                <div className="space-y-3">{card.items.map((it,j)=><LPLi key={j} color={ac.primary} dark>{it}</LPLi>)}</div>
+              </div>
+            ))}
+          </div>
+        </LPSection>
+
+        <LPSection>
+          <LPEye color={ac.primary}>Methodology</LPEye>
+          <LPH2>SAP Commissions Implementation Methodology</LPH2>
+          <LPSteps color={ac.primary} steps={[
+            {n:'01',t:'Plan Design Workshop',s:'Comp plan structure, quotas, accelerators, territory model'},
+            {n:'02',t:'Data Model Setup',s:'Payees, products, transaction types, credit rules'},
+            {n:'03',t:'Plan Build & T&Q',s:'Plan rules, formulas, quota distribution, territory hierarchy'},
+            {n:'04',t:'Integration (CPQ/CRM/ERP)',s:'CPI flows for transaction ingestion from CPQ and S/4HANA'},
+            {n:'05',t:'UAT & Parallel Calc',s:'Validate calculations vs manual comp — go-live enablement'},
+          ]}/>
+        </LPSection>
+
+        <LPSection>
+          <LPEye color="#64748b">FAQ</LPEye>
+          <LPH2>Frequently Asked Questions</LPH2>
+          <LPFaq items={[
+            {q:'What is SAP Commissions (formerly Callidus)?',a:'SAP Commissions is the enterprise Incentive Compensation Management platform in the SAP Sales Cloud portfolio. Originally Callidus Software (founded 1996), acquired by SAP in 2018 for ~$2.4B. It automates the full compensation lifecycle — plan design through calculation, dispute resolution, and analytics.'},
+            {q:'How does SAP Commissions integrate with SAP CPQ?',a:'When a CPQ quote is approved and converted to a sales order, SAP CPI on BTP ingests the deal data and passes it to SAP Commissions as a commission-eligible transaction. Commissions calculates payout based on the active comp plan and updates the rep\'s earnings portal in real time. Business Partners in CPQ map directly to Payees in Commissions.'},
+            {q:'Can SAP Commissions replace our spreadsheet-based comp process?',a:'Yes — and this is the most common driver for implementation. Spreadsheet-based compensation suffers from errors, disputes, and shadow accounting. SAP Commissions eliminates all three: calculations are automated and auditable, disputes trace to source transactions, and reps see earnings in real time.'},
+            {q:'How long does a SAP Commissions implementation take?',a:'A standard implementation typically takes 12–20 weeks, covering plan design, data model setup, plan build, integration, UAT with parallel calculation validation, and go-live. Timeline varies based on comp plan complexity, number of payees, and integration scope.'},
+            {q:'Can ConnectingCloud migrate our existing comp plans from Xactly or Anaplan?',a:'Yes — ConnectingCloud delivers implementations including migration from Xactly, Anaplan, Oracle ICM, and spreadsheets. The migration scope covers comp plan redesign, historical data migration for reporting continuity, and integration rewiring.'},
+          ]}/>
+        </LPSection>
+
+        <LPSection tight>
+          <LPCTA accent={ac} heading="Ready to Implement SAP Commissions?" sub="Book a free 30-minute discovery call. We'll review your comp plans, territory structure, and CPQ integration requirements." ctaLabel="Book a Free Commissions Discovery Call" onContact={()=>setShowContactModal(true)}/>
+        </LPSection>
+      </div>
+    );
+  };
+
+  // ─── 4. SAP VC to AVC Migration ──────────────────────────────────────────
+  const SapVcToAvcMigrationView = () => {
+    const ac = PAGE_ACCENTS['sap-vc-to-avc-migration'];
+    const drivers = [
+      {icon:<Flame size={20}/>, title:'2027 ECC Deadline', body:'SAP ECC mainstream maintenance ends December 2027. Every configure-to-order business on ECC must migrate VC — the question is whether to migrate to AVC at the same time or face a second major migration later.'},
+      {icon:<Cpu size={20}/>, title:'CPQ Integration Requires AVC', body:'SAP CPQ real-time configuration validation via CPS on BTP requires AVC. Legacy VC cannot deliver this capability — without AVC + CPS, CPQ cannot perform real-time ERP configuration validation during quoting.'},
+      {icon:<Sparkles size={20}/>, title:'AI & Joule Readiness', body:'SAP Joule and BTP AI Core configuration capabilities require AVC as the underlying engine. Customers on legacy VC are excluded from the configuration AI roadmap until they migrate.'},
+    ];
+    return (
+      <div className="bg-white min-h-screen">
+        <LPHero
+          accent={ac}
+          eyebrow="🔥 Most Requested · Highest Complexity"
+          h1="SAP Variant Configuration → Advanced Variant Configuration Migration"
+          sub="The #1 complex migration in the SAP configure-to-order space. CCT has migrated Super-BOM VC models with thousands of dependency rules — including models other teams declined to scope."
+          badges={[
+            {label:'VC / LO-VC → AVC',style:{background:ac.soft,borderColor:ac.border,color:ac.text}},
+            {label:'2027 ECC Deadline',style:{background:'rgba(232,93,38,.15)',borderColor:'rgba(232,93,38,.35)',color:'#FFA07A'}},
+            {label:'3–6 Month Timeline',style:{background:ac.soft,borderColor:ac.border,color:ac.text}},
+            {label:'CPS Setup Included',style:{background:ac.soft,borderColor:ac.border,color:ac.text}},
+          ]}
+          onContact={()=>setShowContactModal(true)}
+          ctaLabel="Book a Free VC Assessment"
+          secondaryCta={{label:'See ECC Migration', onClick:()=>navigateTo('ecc-to-s4hana-migration')}}
+        />
+
+        <LPStats accent={ac} stats={[
+          {value:'2027', label:'SAP ECC mainstream maintenance ends', color:'#FFA07A'},
+          {value:'3–6 mo', label:'Typical timeline for mid-complexity KB', color:ac.text},
+          {value:'AVC + CPS', label:'Required for SAP CPQ deep integration', color:ac.text},
+          {value:'AI-Ready', label:'AVC + BTP AI Core unlocks Joule', color:ac.text},
+        ]}/>
+
+        {/* Why migrate */}
+        <LPSection>
+          <LPEye color={ac.primary}>Why Migrate</LPEye>
+          <LPH2>Why the VC-to-AVC Migration Window is Open Right Now</LPH2>
+          <LPP>Three forces are converging to make VC-to-AVC migration the most commercially critical SAP decision for configure-to-order businesses in 2025–2027.</LPP>
+          <div className="grid md:grid-cols-3 gap-5">
+            {drivers.map((d,i)=>(
+              <div key={i} className="bg-white rounded-2xl border border-slate-200 border-t-4 p-6 hover:-translate-y-1 hover:shadow-lg transition-all" style={{borderTopColor:ac.primary}}>
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style={{background:ac.soft,color:ac.primary}}>{d.icon}</div>
+                <h3 className="text-sm font-black mb-2" style={{color:ac.primary}}>{d.title}</h3>
+                <p className="text-xs text-slate-500 leading-relaxed">{d.body}</p>
+              </div>
+            ))}
+          </div>
+        </LPSection>
+
+        {/* What we deliver */}
+        <LPSection dark>
+          <LPEye color={ac.text}>Scope</LPEye>
+          <LPH2 dark>What CCT Delivers in a VC to AVC Migration</LPH2>
+          <LPP dark>We scope, design, build, and validate the full migration — from Knowledge Base assessment through AVC model build, CPS setup, parallel validation, and production cutover.</LPP>
+          <div className="grid md:grid-cols-2 gap-5">
+            {[
+              {title:'Assessment & Strategy', items:['Full KB complexity assessment — classes, characteristics, dependency rules, procedures','Custom code identification: user exits, BADIs, Z-table lookups within dependency procedures','Migration path recommendation: lift-and-shift vs model redesign','Parallel validation plan and cutover risk assessment']},
+              {title:'Build & Go-Live', items:['AVC model build: class hierarchy, constraint nets, configuration profiles, variant pricing','CPS setup on BTP: REST API configuration, session management, CPQ & Commerce mapping','BOM rationalisation and Super-BOM validation in AVC','Parallel validation: AVC vs VC output matching for all configured scenarios','Production cutover and VC knowledge base archiving']},
+            ].map((card,i)=>(
+              <div key={i} className="bg-white/[.04] rounded-2xl border border-white/[.08] p-6 sm:p-8">
+                <h3 className="text-sm font-black mb-5" style={{color:ac.text}}>{card.title}</h3>
+                <div className="space-y-3">{card.items.map((it,j)=><LPLi key={j} color={ac.primary} dark>{it}</LPLi>)}</div>
+              </div>
+            ))}
+          </div>
+        </LPSection>
+
+        <LPSection>
+          <LPEye color={ac.primary}>Methodology</LPEye>
+          <LPH2>VC to AVC Migration Methodology</LPH2>
+          <LPSteps color={ac.primary} steps={[
+            {n:'01',t:'KB Assessment',s:'Complexity, custom code, dependency rule inventory'},
+            {n:'02',t:'Strategy & Design',s:'Lift-and-shift vs redesign, risk plan'},
+            {n:'03',t:'AVC Model Build',s:'Classes, CPS API setup, BOM validation'},
+            {n:'04',t:'Parallel Validation',s:'AVC vs VC output matching — all scenarios'},
+            {n:'05',t:'Cutover & Decom.',s:'Go-live, KB archiving, hypercare'},
+          ]}/>
+        </LPSection>
+
+        <LPSection>
+          <LPEye color="#64748b">FAQ</LPEye>
+          <LPH2>Frequently Asked Questions</LPH2>
+          <LPFaq items={[
+            {q:'What is the difference between SAP VC and AVC?',a:'SAP VC (LO-VC) is the classic configuration engine embedded in ECC and early S/4HANA. AVC is the next-generation engine with REST API-first design, Fiori UI, and superior performance. AVC is required for CPS on BTP which enables real-time SAP CPQ integration.'},
+            {q:'How long does a VC to AVC migration take?',a:'A mid-complexity Knowledge Base typically migrates in 3–6 months. Simple models (few characteristics, low dependency rule count) can complete in 6–8 weeks. Very complex Super-BOM models with thousands of dependencies can take 6–9 months. CCT provides a realistic scope after the initial KB assessment.'},
+            {q:'What is parallel validation in a VC to AVC migration?',a:'Parallel validation is the phase where configured orders are processed through both the legacy VC model and the new AVC model simultaneously. Output is compared to confirm that AVC produces identical configuration results and BOM explosions. This phase typically runs 4–8 weeks before production cutover.'},
+            {q:'Why does CPQ integration require AVC and not just VC?',a:'SAP CPQ\'s real-time configuration integration requires CPS on BTP, which exposes AVC models via REST API. Legacy VC does not have this API-first capability — without AVC + CPS, CPQ cannot perform real-time ERP configuration validation during quoting.'},
+            {q:'Can the VC to AVC migration run in parallel with an ECC to S/4HANA programme?',a:'Yes — and CCT strongly recommends this approach. Running both as a coordinated programme avoids a second major configuration migration on a live production S/4HANA system after ECC go-live. It also means you arrive at S/4HANA with CPS and CPQ integration ready from day one.'},
+          ]}/>
+        </LPSection>
+
+        <LPSection tight>
+          <LPCTA accent={ac} heading="Start Your VC to AVC Migration" sub="Book a free VC Assessment Call. We'll score your KB complexity, identify the hard problems early, and give you an honest migration scope." ctaLabel="Book a Free VC Assessment Call" onContact={()=>setShowContactModal(true)}/>
+        </LPSection>
+      </div>
+    );
+  };
+
+  // ─── 5. SAP CPQ Quote 2.0 Migration ──────────────────────────────────────
+  const SapCpqQuote2MigrationView = () => {
+    const ac = PAGE_ACCENTS['sap-cpq-quote-2-migration'];
+    const changes = [
+      {tag:'IronPython Scripts', body:'Event-based execution — rewrite required. Q2.0 scripts access the quote via the context object and fire only on discrete events — not on every click. Every existing script must be adapted.'},
+      {tag:'Responsive UI', body:'Classic Design → Responsive Design. Classic is deprecated (obsolete end of 2025). All custom page templates, DealViewPage layouts, Quote Custom Sections, and navigation must be rebuilt.'},
+      {tag:'Business Partners', body:'Customers replaced by Business Partners. Q2.0 adopts the S/4HANA Business Partner model. Sold-To, Bill-To, Ship-To, and Contact are all Involved Parties. Customer data migration is required.'},
+      {tag:'Architecture', body:'Stateless vs stateful. Q1.0 loads the entire quote into memory — performance degrades at scale. Q2.0 is stateless and supports up to 100,000 line items.'},
+      {tag:'Solution Design', body:'New collaboration model. Q2.0 introduces Solution Design — structuring quotes into sections with team assignments for parallel working. Unavailable in Q1.0.'},
+      {tag:'Document Generation', body:'Redesigned GenDoc engine. Q2.0 ships a new document generation preprocessor. Templates from Q1.0 are not supported and must be rebuilt for the responsive template engine.'},
+    ];
+    return (
+      <div className="bg-white min-h-screen">
+        <LPHero
+          accent={ac}
+          eyebrow="⚡ CPQ Platform Upgrade · No New 1.0 Licences · IronPython + Responsive UI"
+          h1="SAP CPQ Quote 1.0 → Quote 2.0 Migration"
+          sub="Both versions use IronPython — but the execution model changes fundamentally. Scripts must adapt to event-based firing via the context object API. Classic Design is deprecated. Responsive Design is mandatory."
+          badges={[
+            {label:'IronPython Event Model',style:{background:ac.soft,borderColor:ac.border,color:ac.text}},
+            {label:'Responsive UI Rebuild',style:{background:ac.soft,borderColor:ac.border,color:ac.text}},
+            {label:'Business Partners',style:{background:'rgba(13,148,136,.15)',borderColor:'rgba(13,148,136,.35)',color:'#5ECECE'}},
+            {label:'6–12 Week Timeline',style:{background:ac.soft,borderColor:ac.border,color:ac.text}},
+          ]}
+          onContact={()=>setShowContactModal(true)}
+          ctaLabel="Book a Free Quote 2.0 Assessment"
+          secondaryCta={{label:'CPQ Implementation', onClick:()=>navigateTo('sap-cpq-implementation')}}
+        />
+
+        <LPStats accent={ac} stats={[
+          {value:'90%', label:'Of new CPQ features are Quote 2.0-only', color:ac.text},
+          {value:'IronPython', label:'Both versions — but execution model changes', color:ac.text},
+          {value:'Responsive', label:'Classic Design deprecated — end of 2025', color:'#5ECECE'},
+          {value:'100K', label:'Max line items in Quote 2.0', color:ac.text},
+        ]}/>
+
+        {/* 6 changes */}
+        <LPSection>
+          <LPEye color={ac.primary}>Key Changes</LPEye>
+          <LPH2>What Actually Changes in Quote 2.0 — The Six Critical Differences</LPH2>
+          <LPP>The Quote 1.0 to 2.0 migration is not a cosmetic upgrade. Six areas require deliberate migration work — led by IronPython script adaptation and Responsive UI rebuild.</LPP>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {changes.map((c,i)=>(
+              <div key={i} className="bg-white rounded-2xl border border-slate-200 p-6 hover:-translate-y-1 hover:shadow-lg transition-all duration-200 group">
+                <div className="text-[11px] font-black uppercase tracking-widest mb-3 group-hover:opacity-100 transition-opacity" style={{color:ac.primary}}>{c.tag}</div>
+                <p className="text-sm text-slate-600 leading-relaxed">{c.body}</p>
+              </div>
+            ))}
+          </div>
+        </LPSection>
+
+        {/* Methodology */}
+        <LPSection dark>
+          <LPEye color={ac.text}>Methodology</LPEye>
+          <LPH2 dark>Quote 1.0 → 2.0 Migration Methodology</LPH2>
+          <LPSteps dark color={ac.primary} steps={[
+            {n:'01',t:'Readiness Assessment',s:'IronPython script inventory, Responsive UI gap, integration map'},
+            {n:'02',t:'Q2.0 Environment Setup',s:'Tenant config, Business Partners, Sales Area, feature flags'},
+            {n:'03',t:'IronPython Script Migration',s:'Adapt all scripts to event model and context object API'},
+            {n:'04',t:'Responsive UI & Doc Rebuild',s:'Templates, DealViewPage, GenDoc for responsive engine'},
+            {n:'05',t:'Integration Retest & Go-Live',s:'CRM, ERP, Commerce regression · UAT · Cutover · Enablement'},
+          ]}/>
+        </LPSection>
+
+        {/* Q1 vs Q2 comparison table */}
+        <LPSection>
+          <LPEye color={ac.primary}>Comparison</LPEye>
+          <LPH2>Quote 1.0 vs Quote 2.0 at a Glance</LPH2>
+          <div className="overflow-x-auto mt-6">
+            <table className="w-full text-sm border-collapse">
+              <thead>
+                <tr className="bg-slate-950 text-white">
+                  <th className="text-left px-5 py-4 text-[11px] font-black uppercase tracking-widest rounded-tl-xl w-1/3">Area</th>
+                  <th className="text-left px-5 py-4 text-[11px] font-black uppercase tracking-widest text-slate-400">Quote 1.0</th>
+                  <th className="text-left px-5 py-4 text-[11px] font-black uppercase tracking-widest rounded-tr-xl" style={{color:ac.text}}>Quote 2.0</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['Architecture','Stateful — full quote in memory on every click','Stateless — event-driven, scales to 100K line items'],
+                  ['UI Framework','Classic Design (deprecated end 2025)','Responsive Design (mandatory)'],
+                  ['Scripting API','Direct quote object access','Context object API — fires on discrete events only'],
+                  ['Customer Model','Flat Customer record','Business Partners (Sold-To, Bill-To, Ship-To)'],
+                  ['Collaboration','Single-user quote editing','Solution Design — multi-section, multi-user'],
+                  ['Document Engine','Legacy GenDoc preprocessor','Redesigned responsive document engine'],
+                  ['New licences','No longer issued by SAP','All new CPQ deployments'],
+                ].map(([area,q1,q2],i)=>(
+                  <tr key={i} className={`border-b border-slate-100 ${i%2===0?'bg-white':'bg-slate-50/50'}`}>
+                    <td className="px-5 py-4 font-semibold text-slate-700">{area}</td>
+                    <td className="px-5 py-4 text-slate-500">{q1}</td>
+                    <td className="px-5 py-4 font-medium" style={{color:ac.primary}}>{q2}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </LPSection>
+
+        <LPSection>
+          <LPEye color="#64748b">FAQ</LPEye>
+          <LPH2>Frequently Asked Questions</LPH2>
+          <LPFaq items={[
+            {q:'Do IronPython scripts work in SAP CPQ Quote 2.0?',a:'Yes — both versions use IronPython. However, the execution model changes fundamentally. In Q1.0, scripts fire on every click and access the quote object directly. In Q2.0, scripts fire only on discrete events and access the quote via the context object API. All existing scripts must be adapted — not rewritten from scratch, but updated for the new API and execution trigger model.'},
+            {q:'What is the Responsive UI in SAP CPQ Quote 2.0?',a:'Responsive Design is SAP CPQ\'s modern UI framework — the only one supported in Quote 2.0. It replaces Classic Design (deprecated, scheduled for removal end of 2025). All custom page templates must be rebuilt for Responsive Design during migration.'},
+            {q:'What is the context object in SAP CPQ Quote 2.0?',a:'The context object is the central API object in Quote 2.0\'s IronPython scripting model. It provides access to the quote data and the event that triggered the script — e.g., context.Quote, context.CurrentLineItem, context.Product. This is the core API change that requires every Q1.0 script to be adapted.'},
+            {q:'How long does Quote 1.0 to 2.0 migration take?',a:'A simple deployment with few custom scripts can migrate in 4–6 weeks. Mid-complexity deployments with 20–50 IronPython scripts typically take 8–12 weeks. Heavily customised deployments with 100+ scripts run to 14–20 weeks.'},
+            {q:'Does SAP still support Quote 1.0?',a:'SAP continues to maintain Quote 1.0 for existing customers but is no longer issuing new licences. ~90% of new SAP CPQ features released are exclusive to Quote 2.0. Classic Design is fully deprecated by end of 2025.'},
+          ]}/>
+        </LPSection>
+
+        <LPSection tight>
+          <LPCTA accent={ac} heading="Ready to Migrate to CPQ Quote 2.0?" sub="Book a free Quote 2.0 Readiness Assessment. We'll inventory your IronPython scripts, Responsive UI gap, and integration touchpoints." ctaLabel="Book a Free Quote 2.0 Assessment" onContact={()=>setShowContactModal(true)}/>
+        </LPSection>
+      </div>
+    );
+  };
+
+  // ─── 6. ECC to S/4HANA Migration ─────────────────────────────────────────
+  const EccToS4HanaMigrationView = () => {
+    const ac = PAGE_ACCENTS['ecc-to-s4hana-migration'];
+    const paths = [
+      {color:'#3A506B', title:'Brownfield (System Conversion)', desc:'Convert ECC to S/4HANA in-place. Existing VC KB and custom code are preserved — but must be remediated for S/4HANA compatibility. Fastest path, lowest data migration risk.', items:['VC KB migrates with the system — must be validated for AVC readiness','Custom code assessed via Readiness Check and ATC','Best for stable, low-customisation ECC landscapes']},
+      {color:'#0d9488', title:'Bluefield (Selective Data Transfer)', desc:'Selective migration of data and processes to a new S/4HANA system. Combines the speed of brownfield with the cleanliness of greenfield.', items:['VC KB can be selectively migrated and rationalised in the process','Opportunity to clean historical configured order data before transfer','Best for businesses with significant legacy data or org changes']},
+      {color:'#2563eb', title:'Greenfield (New Implementation)', desc:'Implement S/4HANA from scratch, migrating only required master data and open transactions. Maximum flexibility — highest implementation effort.', items:['VC model rebuilt as AVC from the start — clean slate advantage','No legacy customisation baggage — fit-to-standard approach possible','Best for significant business transformation or major process redesign']},
+    ];
+    return (
+      <div className="bg-white min-h-screen">
+        <LPHero
+          accent={ac}
+          eyebrow="⚠️ 2027 ECC Deadline · ERP Transformation · VC Must Migrate in Parallel"
+          h1="SAP ECC to S/4HANA Migration"
+          sub="SAP ECC mainstream maintenance ends 2027. For configure-to-order businesses, this is doubly complex — VC must move to AVC simultaneously, and every SD/PP custom enhancement needs assessment. CCT delivers both workstreams as a coordinated programme."
+          badges={[
+            {label:'2027 ECC Deadline',style:{background:ac.soft,borderColor:ac.border,color:ac.text}},
+            {label:'Brownfield · Bluefield · Greenfield',style:{background:'rgba(58,80,107,.15)',borderColor:'rgba(58,80,107,.35)',color:'#9BB4CC'}},
+            {label:'VC→AVC in Parallel',style:{background:'rgba(13,148,136,.15)',borderColor:'rgba(13,148,136,.35)',color:'#5ECECE'}},
+            {label:'18–36 Month Programme',style:{background:'rgba(58,80,107,.15)',borderColor:'rgba(58,80,107,.35)',color:'#9BB4CC'}},
+          ]}
+          onContact={()=>setShowContactModal(true)}
+          ctaLabel="Book a Free ECC Readiness Assessment"
+          secondaryCta={{label:'VC to AVC Migration', onClick:()=>navigateTo('sap-vc-to-avc-migration')}}
+        />
+
+        <LPStats accent={ac} stats={[
+          {value:'2027', label:'SAP ECC mainstream maintenance ends', color:ac.text},
+          {value:'18–36 mo', label:'Typical full programme duration', color:ac.text},
+          {value:'3 paths', label:'Brownfield · Bluefield · Greenfield', color:'#5ECECE'},
+          {value:'VC + S4', label:'Run VC→AVC migration from day one', color:'#5ECECE'},
+        ]}/>
+
+        {/* 3 paths */}
+        <LPSection>
+          <LPEye color={ac.primary}>Migration Paths</LPEye>
+          <LPH2>Three Migration Paths — Different VC Implications for Each</LPH2>
+          <LPP>The choice of migration path is the most consequential decision in an ECC-to-S/4HANA programme. Each path has fundamentally different implications for VC knowledge base migration, custom code, and data.</LPP>
+          <div className="grid md:grid-cols-3 gap-5">
+            {paths.map((c,i)=>(
+              <div key={i} className="bg-white rounded-2xl border border-slate-200 border-t-4 p-6 sm:p-8 hover:-translate-y-1 hover:shadow-lg transition-all" style={{borderTopColor:c.color}}>
+                <h3 className="text-sm font-black mb-2" style={{color:c.color}}>{c.title}</h3>
+                <p className="text-xs text-slate-500 mb-5 leading-relaxed">{c.desc}</p>
+                <div className="space-y-3">{c.items.map((it,j)=><LPLi key={j} color={c.color}>{it}</LPLi>)}</div>
+              </div>
+            ))}
+          </div>
+        </LPSection>
+
+        {/* Why run together */}
+        <LPSection dark>
+          <LPEye color={ac.text}>Why Both Together</LPEye>
+          <LPH2 dark>Why ECC-to-S/4 and VC-to-AVC Should Run as One Programme</LPH2>
+          <LPP dark>CCT strongly recommends planning the VC-to-AVC migration as a coordinated workstream within the ECC-to-S/4HANA programme — not as a separate project after the fact.</LPP>
+          <div className="grid md:grid-cols-2 gap-5">
+            {[
+              {title:'Programme risk & cost', items:['Avoid dual-migration overhead — running VC-to-AVC after S/4HANA go-live means a major configuration migration on a live production ERP','Arrive at S/4HANA AI-ready — customers who migrate VC to AVC within the programme are immediately ready for SAP Joule and BTP AI Core','Unlock CPQ integration from go-live — AVC + CPS is the prerequisite for SAP CPQ real-time integration']},
+              {title:'Delivery efficiency', items:['Custom code assessment covers both — Readiness Check and ATC analysis surfaces VC enhancements that need remediation for both workstreams','BOM rationalisation delivers value to both — data cleansing benefits both the S/4HANA data migration and the AVC model build','Single cutover event — a coordinated programme results in one go-live, not two separate, high-risk cutovers']},
+            ].map((card,i)=>(
+              <div key={i} className="bg-white/[.04] rounded-2xl border border-white/[.08] p-6 sm:p-8">
+                <h3 className="text-sm font-black mb-5" style={{color:ac.text}}>{card.title}</h3>
+                <div className="space-y-3">{card.items.map((it,j)=><LPLi key={j} color={ac.primary} dark>{it}</LPLi>)}</div>
+              </div>
+            ))}
+          </div>
+        </LPSection>
+
+        <LPSection>
+          <LPEye color={ac.primary}>Methodology</LPEye>
+          <LPH2>ECC-to-S/4HANA Migration Methodology</LPH2>
+          <LPSteps color={ac.primary} steps={[
+            {n:'01',t:'Readiness Assessment',s:'VC complexity, custom code, data volume, path selection'},
+            {n:'02',t:'Code Remediation',s:'ATC findings, deprecated APIs, VC enhancement rebuild'},
+            {n:'03',t:'AVC Build (Parallel)',s:'AVC model build, CPS setup, BOM rationalisation'},
+            {n:'04',t:'Data Migration & Testing',s:'Master data, open orders, SD-PP-CO integration testing'},
+            {n:'05',t:'Cutover & Hypercare',s:'Go-live, parallel run, ECC decommission'},
+          ]}/>
+        </LPSection>
+
+        <LPSection>
+          <LPEye color="#64748b">FAQ</LPEye>
+          <LPH2>Frequently Asked Questions</LPH2>
+          <LPFaq items={[
+            {q:'When does SAP ECC mainstream maintenance end?',a:'SAP ECC mainstream maintenance ends on December 31, 2027. After this date, SAP will no longer release standard support packages, legal change updates, or new functionality for ECC. Extended maintenance is available but at additional cost and with limitations.'},
+            {q:'What are the three ECC-to-S/4HANA migration paths?',a:'Brownfield (system conversion): converts the existing ECC system to S/4HANA in place — fastest, preserves customisations. Bluefield (selective data transfer): selectively migrates data and processes to a new S/4HANA system. Greenfield (new implementation): builds S/4HANA from scratch with master data migration only — maximum flexibility, highest effort.'},
+            {q:'Should VC-to-AVC migration happen at the same time as ECC-to-S/4HANA?',a:'Yes — CCT strongly recommends running VC-to-AVC as a parallel workstream. Arriving at S/4HANA with AVC means you are immediately ready for SAP CPQ real-time integration via CPS and for SAP Joule AI configuration capabilities.'},
+            {q:'What custom code issues arise for configure-to-order businesses?',a:'Configure-to-order ECC landscapes typically have significant custom code in the VC area: custom user exits and BADIs extending the Knowledge Base, Z-table lookups within dependency procedures, custom SD exits for configured pricing, and custom PP exits for production order handling.'},
+            {q:'How long does an ECC to S/4HANA migration take?',a:'A Brownfield migration for a mid-complexity configure-to-order system typically takes 18–24 months. Bluefield programmes run similarly. Greenfield implementations for complex environments often take 24–36 months. CCT\'s Readiness Assessment completes within 4–6 weeks and provides a reliable timeline estimate.'},
+          ]}/>
+        </LPSection>
+
+        <LPSection tight>
+          <LPCTA accent={ac} heading="Beat the 2027 Deadline. Start Now." sub="Book a free ECC Readiness Assessment. We'll score your VC complexity, custom code volume, and migration path options." ctaLabel="Book a Free ECC Readiness Assessment" onContact={()=>setShowContactModal(true)}/>
+        </LPSection>
+      </div>
+    );
+  };
+
+
+    return (
     <div className="min-h-screen bg-white font-sans selection:bg-blue-100 selection:text-blue-900 antialiased overflow-x-hidden">
       
       {/* Reader Mode Overlay */}
@@ -1543,11 +2654,15 @@ const ReadyToConnectSection = ({ onContactClick }) => {
         </div>
 
         <div className="hidden sm:block text-left leading-tight">
-          <p className="text-[11px] font-black uppercase tracking-[0.24em] text-slate-900 whitespace-nowrap">
+          <p className={`text-[11px] font-black uppercase tracking-[0.24em] whitespace-nowrap transition-colors duration-300 ${
+            !isScrolled && DARK_HERO_PAGES.includes(activePage) ? 'text-white' : 'text-slate-900'
+          }`}>
             Connecting Cloud
           </p>
 
-          <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.16em] text-blue-600 whitespace-nowrap">
+          <p className={`mt-1 text-[10px] font-bold uppercase tracking-[0.16em] whitespace-nowrap transition-colors duration-300 ${
+            !isScrolled && DARK_HERO_PAGES.includes(activePage) ? 'text-blue-300' : 'text-blue-600'
+          }`}>
             Technologies
           </p>
         </div>
@@ -1559,37 +2674,55 @@ const ReadyToConnectSection = ({ onContactClick }) => {
         {/* DESKTOP NAV */}
         <div className="hidden lg:flex items-center gap-1 xl:gap-2">
 
-          {/* EXISTING RESPONSIVE DROPDOWN / BREADCRUMB */}
-          {/* <div
-            className="relative"
-            onMouseEnter={() => setExpertiseOpen(true)}
-            onMouseLeave={() => setExpertiseOpen(false)}
-          >
-            ...
-          </div> */}
+          {/* SERVICES MEGA-DROPDOWN */}
+          <div className="relative" onMouseEnter={()=>setServicesOpen(true)} onMouseLeave={()=>setServicesOpen(false)}>
+            <button className={`whitespace-nowrap rounded-full px-3 xl:px-4 py-2.5 text-[11px] xl:text-[12px] font-black uppercase tracking-[0.14em] transition-all duration-300 inline-flex items-center gap-1.5
+              ${['sap-cpq-implementation','sap-avc-implementation','sap-commissions-implementation','sap-vc-to-avc-migration','sap-cpq-quote-2-migration','ecc-to-s4hana-migration'].includes(activePage)
+                ? isScrolled ? 'bg-blue-50 text-blue-600' : 'text-white bg-white/10'
+                : !isScrolled && DARK_HERO_PAGES.includes(activePage)
+                  ? 'text-white/80 hover:bg-white/10 hover:text-white'
+                  : 'text-slate-700 hover:bg-slate-100 hover:text-blue-600'}`}>
+              Services <ChevronDown size={12} className={`transition-transform duration-200 ${servicesOpen?'rotate-180':''}`}/>
+            </button>
+            {/* Dropdown panel */}
+            <div className={`absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[560px] bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden transition-all duration-200 z-50
+              ${servicesOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-2 pointer-events-none'}`}>
+              <div className="grid grid-cols-2 gap-0">
+                {SERVICES_NAV.map((group, gi) => (
+                  <div key={gi} className={`p-5 ${gi===0?'border-r border-slate-100':''}`}>
+                    <div className="text-[10px] font-black uppercase tracking-[.16em] mb-3" style={{color:group.color}}>{group.group}</div>
+                    <div className="space-y-1">
+                      {group.items.map((item) => (
+                        <button key={item.id} onClick={()=>{navigateTo(item.id);setServicesOpen(false);}}
+                          className={`w-full text-left px-3 py-2.5 rounded-xl transition-all group hover:bg-slate-50
+                            ${activePage===item.id?'bg-blue-50':''}`}>
+                          <div className={`text-[12px] font-bold leading-tight ${activePage===item.id?'text-blue-600':'text-slate-800 group-hover:text-blue-600'}`}>{item.label}</div>
+                          <div className="text-[11px] text-slate-400 mt-0.5 leading-snug">{item.desc}</div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="bg-slate-50 border-t border-slate-100 px-5 py-3 flex items-center justify-between">
+                <span className="text-[11px] text-slate-400">Architect-led delivery · Available globally</span>
+                <button onClick={()=>{setShowContactModal(true);setServicesOpen(false);}}
+                  className="text-[11px] font-black uppercase tracking-widest text-blue-600 hover:text-blue-700 transition-colors flex items-center gap-1">
+                  Get a Scoping Call <ArrowRight size={11}/>
+                </button>
+              </div>
+            </div>
+          </div>
 
           {NAV_LINKS.map((item) => (
             <button
               key={item.id}
-              onClick={() => scrollToSection(item.id, setMobileMenuOpen )}
-              className={`
-                whitespace-nowrap
-                rounded-full
-                px-3 xl:px-4
-                py-2.5
-                text-[11px] xl:text-[12px]
-                font-black
-                uppercase
-                tracking-[0.14em]
-                transition-all
-                duration-300
-                ${
-                  activePage === item.id
-                    ? 'bg-blue-50 text-blue-600'
-                    : 'text-slate-700 hover:bg-slate-100 hover:text-blue-600'
-                }
-              `}
-            >
+              onClick={() => scrollToSection(item.id, setMobileMenuOpen, activePage, navigateTo)}
+              className={`whitespace-nowrap rounded-full px-3 xl:px-4 py-2.5 text-[11px] xl:text-[12px] font-black uppercase tracking-[0.14em] transition-all duration-300
+                ${!isScrolled && DARK_HERO_PAGES.includes(activePage)
+                  ? 'text-white/80 hover:bg-white/10 hover:text-white'
+                  : activePage === item.id ? 'bg-blue-50 text-blue-600' : 'text-slate-700 hover:bg-slate-100 hover:text-blue-600'
+                }`}>
               {item.label}
             </button>
           ))}
@@ -1624,14 +2757,11 @@ const ReadyToConnectSection = ({ onContactClick }) => {
         {/* MOBILE MENU */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="
-            lg:hidden
-            rounded-xl
-            p-2
-            text-slate-900
-            transition-colors
-            hover:bg-slate-100
-          "
+          className={`lg:hidden rounded-xl p-2 transition-colors ${
+            !isScrolled && DARK_HERO_PAGES.includes(activePage)
+              ? 'text-white hover:bg-white/10'
+              : 'text-slate-900 hover:bg-slate-100'
+          }`}
         >
           {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
@@ -1672,37 +2802,44 @@ const ReadyToConnectSection = ({ onContactClick }) => {
                 <button
                   key={link.id}
                   type="button"
-                  onClick={() => scrollToSection(link.id, setMobileMenuOpen )}
+                  onClick={() => scrollToSection(link.id, setMobileMenuOpen, activePage, navigateTo)}
                   className={`w-full text-left px-4 py-4 rounded-3xl transition-colors duration-200 ${activePage === link.id ? 'bg-blue-50 text-blue-700' : 'bg-slate-50 text-slate-800 hover:bg-blue-50 hover:text-blue-700'}`}
                 >
                   <span className="block text-lg font-black">{link.label}</span>
-                  {/* <span className="text-sm text-slate-500">Go to {link.label}</span> */}
                 </button>
               ))}
             </div>
 
-            {/* <div className="mt-8 border-t border-slate-200 pt-8">
-              <div className="flex items-center justify-between mb-4">
-                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Capabilities</p>
-                <span className="text-sm text-slate-500">{EXPERTISE_ITEMS.length} tracks</span>
-              </div>
-              <div className="space-y-3">
-                {EXPERTISE_ITEMS.map((item) => (
-                  <button
-                    key={item.id}
-                    type="button"
-                    onClick={() => selectCapability(item.id)}
-                    className="w-full rounded-3xl border border-slate-200 px-4 py-4 text-left transition-colors duration-200 hover:border-blue-200 hover:bg-blue-50"
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="text-base font-black text-slate-900">{item.title}</span>
-                      <ChevronRight size={18} className="text-slate-400" />
+            {/* SERVICES ACCORDION (mobile) */}
+            <div className="mt-4 border-t border-slate-100 pt-4">
+              <button
+                type="button"
+                onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+                className="w-full flex items-center justify-between px-4 py-3.5 rounded-2xl bg-slate-50 text-slate-800 hover:bg-blue-50 hover:text-blue-700 transition-colors"
+              >
+                <span className="text-base font-black">Services & Migrations</span>
+                <ChevronDown size={16} className={`transition-transform duration-200 ${mobileServicesOpen ? 'rotate-180' : ''}`}/>
+              </button>
+              {mobileServicesOpen && (
+                <div className="mt-2 space-y-4 pl-2">
+                  {SERVICES_NAV.map((group, gi) => (
+                    <div key={gi}>
+                      <div className="text-[10px] font-black uppercase tracking-[.16em] px-3 mb-2" style={{color:group.color}}>{group.group}</div>
+                      <div className="space-y-1">
+                        {group.items.map((item) => (
+                          <button key={item.id} type="button"
+                            onClick={() => { navigateTo(item.id); setMobileMenuOpen(false); setMobileServicesOpen(false); }}
+                            className={`w-full text-left px-4 py-3 rounded-xl transition-colors ${activePage===item.id?'bg-blue-50 text-blue-700':'hover:bg-slate-50 text-slate-700'}`}>
+                            <div className="text-sm font-bold">{item.label}</div>
+                            <div className="text-xs text-slate-400 mt-0.5">{item.desc}</div>
+                          </button>
+                        ))}
+                      </div>
                     </div>
-                    <p className="mt-1 text-sm text-slate-500">{item.desc}</p>
-                  </button>
-                ))}
-              </div>
-            </div> */}
+                  ))}
+                </div>
+              )}
+            </div>
 
             <div className="mt-auto pt-8 border-t border-slate-200">
               <button
@@ -1728,17 +2865,58 @@ const ReadyToConnectSection = ({ onContactClick }) => {
         {activePage === 'l2c' && <L2CExplorerView />}
         {activePage === 'process' && <MethodologyView />}
         {activePage === 'insights' && <InsightsView />}
+        {activePage === 'sap-cpq-implementation' && <SapCpqImplementationView />}
+        {activePage === 'sap-avc-implementation' && <SapAvcImplementationView />}
+        {activePage === 'sap-commissions-implementation' && <SapCommissionsImplementationView />}
+        {activePage === 'sap-vc-to-avc-migration' && <SapVcToAvcMigrationView />}
+        {activePage === 'sap-cpq-quote-2-migration' && <SapCpqQuote2MigrationView />}
+        {activePage === 'ecc-to-s4hana-migration' && <EccToS4HanaMigrationView />}
       </main>
 
       <footer className="bg-slate-950 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <Logo className="h-8 w-8 text-blue-600" />
-            <span className="font-black uppercase tracking-tighter">Connecting Cloud</span>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-10 pb-10 border-b border-white/10">
+            <div>
+              <div className="flex items-center gap-2 mb-3">
+                <Logo className="h-8 w-8" />
+                <span className="font-black uppercase tracking-tighter text-sm">Connecting Cloud</span>
           </div>
-          <p className="text-slate-400 text-sm mb-4">Architecting the future of enterprise configuration and Lead-to-Cash orchestration.</p>
-          <p className="text-slate-400 text-sm mb-4">Contact: <a href="mailto:info@connectingcloud.co" className="text-blue-600 hover:text-blue-400">info@connectingcloud.co</a></p>
+              <p className="text-slate-400 text-xs leading-relaxed mb-4">SAP CPQ, Variant Configuration, AVC, and SAP Commissions specialists — implementation, migration, and integration.</p>
+              <a href="mailto:info@connectingcloud.co" className="text-xs text-blue-400 hover:text-blue-300 transition-colors">info@connectingcloud.co</a>
+            </div>
+            <div>
+              <h5 className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-4">Services</h5>
+              <ul className="space-y-2">
+                {[['sap-cpq-implementation','SAP CPQ Implementation'],['sap-avc-implementation','SAP VC & AVC Implementation'],['sap-commissions-implementation','SAP Commissions'],].map(([page,label])=>(
+                  <li key={page}><button onClick={()=>navigateTo(page)} className="text-xs text-slate-400 hover:text-blue-400 transition-colors text-left">{label}</button></li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h5 className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-4">Migrations</h5>
+              <ul className="space-y-2">
+                {[['sap-vc-to-avc-migration','VC to AVC Migration'],['sap-cpq-quote-2-migration','CPQ Quote 1.0 → 2.0'],['ecc-to-s4hana-migration','ECC to S/4HANA'],].map(([page,label])=>(
+                  <li key={page}><button onClick={()=>navigateTo(page)} className="text-xs text-slate-400 hover:text-blue-400 transition-colors text-left">{label}</button></li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h5 className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-4">Expertise</h5>
+              <ul className="space-y-2">
+                {[['insights','Cloud Insights'],['cases','Case Studies'],['process','Methodology'],['l2c','Lead-to-Cash'],].map(([page,label])=>(
+                  <li key={page}><button onClick={()=>navigateTo(page)} className="text-xs text-slate-400 hover:text-blue-400 transition-colors text-left">{label}</button></li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-[10px] font-black uppercase tracking-widest text-slate-600">© 2026 Connecting Cloud Technologies. All rights reserved.</p>
+            <div className="flex flex-wrap gap-2">
+              {['SAP CPQ','SAP AVC','SAP Commissions','S/4HANA','IronPython','BTP'].map(tag=>(
+                <span key={tag} className="text-[10px] px-2.5 py-1 rounded-full bg-white/5 text-white/30 border border-white/[.07]">{tag}</span>
+              ))}
+            </div>
+          </div>
         </div>
       </footer>
 

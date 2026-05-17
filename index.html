@@ -5,42 +5,241 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="/src/assets/cct-logo.png" />
 
-    <!-- Primary SEO -->
-    <title>Connecting Cloud Technologies | SAP CPQ, S/4HANA AVC & BTP Experts</title>
-    <meta name="description" content="CCT specializes in SAP CPQ, S/4HANA AVC, and BTP integration. We help manufacturers reduce quote-to-cash cycle time, eliminate configuration errors, and automate sales workflows." />
-    <meta name="keywords" content="SAP CPQ, S/4HANA AVC, BTP integration, Configure Price Quote, Advanced Variant Configuration, SAP CPI, quote-to-cash, SAP consultant" />
-    <meta name="robots" content="index, follow" />
+    <!-- ═══════════════════════════════════════════════
+         PRIMARY SEO
+    ═══════════════════════════════════════════════ -->
+    <title>SAP CPQ & S/4HANA AVC Consulting | Connecting Cloud Technologies</title>
+    <meta name="description" content="Expert SAP CPQ, S/4HANA Advanced Variant Configuration (AVC), and BTP/CPI integration consulting. Specialists in Quote 1.0 to Quote 2.0 migration, VC to AVC migration, and end-to-end Quote-to-Cash automation for manufacturers." />
+    <meta name="keywords" content="SAP CPQ, SAP CPQ consultant, SAP CPQ implementation, Quote 1.0 to Quote 2.0 migration, SAP CPQ migration, S/4HANA AVC, Advanced Variant Configuration, BTP integration, CPI integration, Quote-to-Cash, configure price quote, SAP CPQ partner, VC to AVC migration, SAP ECC to S4HANA, SAP CPQ Quote 2.0" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="author" content="Connecting Cloud Technologies" />
     <link rel="canonical" href="https://www.connectingcloud.co/" />
 
-    <!-- Open Graph (for Google rich previews & social sharing) -->
-    <meta property="og:title" content="Connecting Cloud Technologies | SAP CPQ & S/4HANA Experts" />
-    <meta property="og:description" content="Expert SAP CPQ, S/4HANA AVC, and BTP consulting. Cut your quote cycle by 85% and eliminate configuration errors." />
+    <!-- ═══════════════════════════════════════════════
+         OPEN GRAPH (LinkedIn, Google rich cards, social)
+    ═══════════════════════════════════════════════ -->
+    <meta property="og:title" content="SAP CPQ & S/4HANA AVC Consulting | Connecting Cloud Technologies" />
+    <meta property="og:description" content="Expert SAP CPQ, S/4HANA AVC, and BTP/CPI integration consulting. Quote 1.0 to Quote 2.0 migration specialists. Cut your quote cycle by 85% and eliminate configuration errors." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.connectingcloud.co/" />
-    <meta property="og:image" content="https://www.connectingcloud.co/src/assets/cct-logo.png" />
+    <meta property="og:image" content="https://www.connectingcloud.co/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Connecting Cloud Technologies — SAP CPQ & S/4HANA AVC Experts" />
+    <meta property="og:site_name" content="Connecting Cloud Technologies" />
+    <meta property="og:locale" content="en_US" />
 
-    <!-- Twitter Card -->
+    <!-- ═══════════════════════════════════════════════
+         TWITTER / X CARD
+    ═══════════════════════════════════════════════ -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Connecting Cloud Technologies | SAP CPQ Experts" />
-    <meta name="twitter:description" content="SAP CPQ, S/4HANA AVC, and BTP integration specialists." />
-    <meta name="twitter:image" content="https://www.connectingcloud.co/src/assets/cct-logo.png" />
+    <meta name="twitter:title" content="SAP CPQ & S/4HANA AVC Consulting | Connecting Cloud Technologies" />
+    <meta name="twitter:description" content="Quote 1.0 to Quote 2.0 migration, VC to AVC migration, BTP/CPI integration. Architect-led SAP CPQ & AVC consulting for enterprise manufacturers." />
+    <meta name="twitter:image" content="https://www.connectingcloud.co/og-image.png" />
+    <meta name="twitter:image:alt" content="Connecting Cloud Technologies — SAP CPQ Experts" />
 
-    <!-- Fonts -->
+    <!-- ═══════════════════════════════════════════════
+         FONTS (preconnect avoids render-blocking)
+    ═══════════════════════════════════════════════ -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet" />
 
-    <!-- Structured Data (tells Google what your business is) -->
+    <!-- ═══════════════════════════════════════════════
+         STRUCTURED DATA — JSON-LD (@graph)
+         Multiple node types maximise Google rich results:
+         Organization, ProfessionalService, WebSite, WebPage,
+         FAQPage (triggers rich snippets), ItemList (service cards)
+    ═══════════════════════════════════════════════ -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
+      "@graph": [
+
+        {
+          "@type": "Organization",
+          "@id": "https://www.connectingcloud.co/#organization",
+          "name": "Connecting Cloud Technologies",
+          "alternateName": "CCT",
+          "url": "https://www.connectingcloud.co",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.connectingcloud.co/src/assets/cct-logo.png",
+            "width": 200,
+            "height": 200
+          },
+          "description": "Connecting Cloud Technologies (CCT) is an architect-led SAP consulting firm specialising in SAP CPQ implementation, Quote 1.0 to Quote 2.0 migration, S/4HANA Advanced Variant Configuration (AVC), VC to AVC migration, BTP/CPI integration, and end-to-end Quote-to-Cash automation for enterprise manufacturers.",
+          "email": "info@connectingcloud.co",
+          "foundingDate": "2021",
+          "areaServed": {
+            "@type": "Place",
+            "name": "Worldwide"
+          },
+          "knowsAbout": [
+            "SAP CPQ",
+            "SAP CPQ Quote 2.0 migration",
+            "Quote 1.0 to Quote 2.0 migration",
+            "S/4HANA Advanced Variant Configuration",
+            "SAP Variant Configuration",
+            "VC to AVC migration",
+            "SAP BTP",
+            "SAP CPI",
+            "BTP Integration Suite",
+            "Salesforce Revenue Cloud",
+            "Lead-to-Cash automation",
+            "Quote-to-Cash",
+            "ECC to S/4HANA migration"
+          ],
+          "sameAs": [
+            "https://www.linkedin.com/company/connecting-cloud-technologies"
+          ]
+        },
+
+        {
       "@type": "ProfessionalService",
+          "@id": "https://www.connectingcloud.co/#business",
       "name": "Connecting Cloud Technologies",
       "url": "https://www.connectingcloud.co",
-      "logo": "https://www.connectingcloud.co/src/assets/cct-logo.png",
-      "description": "SAP CPQ, S/4HANA AVC, and BTP integration consulting.",
-      "serviceType": ["SAP CPQ", "S/4HANA AVC", "BTP Integration", "Quote-to-Cash"],
-      "areaServed": "Worldwide"
+          "parentOrganization": { "@id": "https://www.connectingcloud.co/#organization" },
+          "serviceType": [
+            "SAP CPQ Implementation",
+            "SAP CPQ Quote 1.0 to Quote 2.0 Migration",
+            "S/4HANA Advanced Variant Configuration",
+            "SAP VC to AVC Migration",
+            "SAP BTP Integration",
+            "SAP CPI Orchestration",
+            "Salesforce Revenue Cloud",
+            "Quote-to-Cash Automation",
+            "ECC to S/4HANA Migration"
+          ],
+          "areaServed": "Worldwide",
+          "priceRange": "Contact for pricing"
+        },
+
+        {
+          "@type": "WebSite",
+          "@id": "https://www.connectingcloud.co/#website",
+          "url": "https://www.connectingcloud.co",
+          "name": "Connecting Cloud Technologies",
+          "publisher": { "@id": "https://www.connectingcloud.co/#organization" },
+          "inLanguage": "en",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://www.connectingcloud.co/#/insights?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        },
+
+        {
+          "@type": "WebPage",
+          "@id": "https://www.connectingcloud.co/#homepage",
+          "url": "https://www.connectingcloud.co/",
+          "name": "SAP CPQ & S/4HANA AVC Consulting | Connecting Cloud Technologies",
+          "description": "Expert SAP CPQ, S/4HANA AVC, and BTP/CPI integration consulting. Quote 1.0 to Quote 2.0 migration specialists. Reduce your quote cycle by 85%.",
+          "isPartOf": { "@id": "https://www.connectingcloud.co/#website" },
+          "about": { "@id": "https://www.connectingcloud.co/#organization" },
+          "inLanguage": "en"
+        },
+
+        {
+          "@type": "FAQPage",
+          "@id": "https://www.connectingcloud.co/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What is SAP CPQ Quote 1.0 to Quote 2.0 migration?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "SAP CPQ Quote 1.0 to Quote 2.0 migration is the process of upgrading your SAP CPQ tenant from the legacy Quote 1.0 engine to the modern Quote 2.0 engine. It involves migrating customer records to Business Partners, adapting IronPython scripts to the event-based scripting model, rebuilding responsive UI templates, and retesting all integrations. SAP no longer issues new Quote 1.0 licences and approximately 90% of new features are exclusive to Quote 2.0. CCT specialises in end-to-end Quote 1.0 to 2.0 migration projects with a 6-12 week delivery timeline."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How long does a SAP CPQ Quote 2.0 migration take?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A typical SAP CPQ Quote 1.0 to Quote 2.0 migration takes 6 to 12 weeks depending on the complexity of your scripting, number of integrations, and volume of quote data to migrate. CCT's migration approach includes an initial assessment, Business Partner migration, script adaptation, UI rebuild, integration retesting, and a parallel validation phase before production cutover."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is SAP Advanced Variant Configuration (AVC)?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "SAP Advanced Variant Configuration (AVC) is the next-generation product configuration engine embedded in SAP S/4HANA, replacing the classic LO-VC (Variant Configuration). AVC runs natively within the S/4HANA digital core and supports high-level constraint modelling, BOM explosion, routing automation, and integration with SAP CPQ for configure-to-order manufacturing scenarios."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What does CCT specialise in for SAP CPQ?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Connecting Cloud Technologies (CCT) specialises in SAP CPQ implementation, Quote 1.0 to Quote 2.0 migration, CPQ scripting optimisation, BTP/CPI integration, SAP CPQ and S/4HANA AVC bridge architecture, and end-to-end Quote-to-Cash automation. Our architect-led delivery model gives clients direct access to senior SAP CPQ experts throughout the engagement."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Do I need to migrate from SAP CPQ Quote 1.0 to Quote 2.0?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. SAP has stopped issuing new Quote 1.0 licences and approximately 90% of new SAP CPQ features and integrations are exclusive to Quote 2.0. Remaining on Quote 1.0 means missing ongoing innovation and increasing risk as SAP phases out support. Migrating to Quote 2.0 also prepares your environment for future S/4HANA integration, as Quote 2.0 uses the Business Partner model required by S/4HANA."
+              }
+            }
+          ]
+        },
+
+        {
+          "@type": "ItemList",
+          "name": "SAP CPQ & AVC Services by Connecting Cloud Technologies",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "item": {
+                "@type": "Service",
+                "name": "SAP CPQ Quote 1.0 to Quote 2.0 Migration",
+                "url": "https://www.connectingcloud.co/#/sap-cpq-quote-2-migration",
+                "description": "End-to-end migration from SAP CPQ Quote 1.0 engine to Quote 2.0. Covers Business Partner migration, IronPython script adaptation, Responsive UI rebuild, and integration retesting. 6-12 week delivery.",
+                "provider": { "@id": "https://www.connectingcloud.co/#organization" }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "item": {
+                "@type": "Service",
+                "name": "SAP CPQ Implementation",
+                "url": "https://www.connectingcloud.co/#/sap-cpq-implementation",
+                "description": "Full SAP CPQ implementation including guided selling, pricing engine, document generation, CRM/ERP integration, and IronPython scripting for complex configure-to-order manufacturers.",
+                "provider": { "@id": "https://www.connectingcloud.co/#organization" }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "item": {
+                "@type": "Service",
+                "name": "SAP VC to AVC Migration",
+                "url": "https://www.connectingcloud.co/#/sap-vc-to-avc-migration",
+                "description": "Migration from SAP LO-VC to S/4HANA Advanced Variant Configuration (AVC). Includes KB assessment, constraint net rebuild, parallel validation, and CPS on BTP setup.",
+                "provider": { "@id": "https://www.connectingcloud.co/#organization" }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 4,
+              "item": {
+                "@type": "Service",
+                "name": "SAP BTP & CPI Integration",
+                "url": "https://www.connectingcloud.co/#/architecture/btp",
+                "description": "Event-driven SAP BTP Integration Suite and CPI iFlow design connecting CPQ, CRM, S/4HANA, and third-party systems in real time.",
+                "provider": { "@id": "https://www.connectingcloud.co/#organization" }
+              }
+            }
+          ]
+        }
+
+      ]
     }
     </script>
   </head>
