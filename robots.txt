@@ -1,4 +1,18 @@
+# robots.txt — connectingcloud.co
+# Generated for maximum SEO crawl coverage
+
 User-agent: *
 Allow: /
 
+# Block non-content paths from being indexed
+Disallow: /src/
+Disallow: /node_modules/
+Disallow: /*.json$
+
+# Prioritise Googlebot crawl budget on content
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 2
+
+# Sitemap location
 Sitemap: https://www.connectingcloud.co/sitemap.xml
