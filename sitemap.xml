@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://www.connectingcloud.co/</loc></url>
-  <url><loc>https://www.connectingcloud.co/sap</loc></url>
+  <url><loc>https://www.connectingcloud.co/services</loc></url>
+  <url><loc>https://www.connectingcloud.co/cases</loc></url>
+  <url><loc>https://www.connectingcloud.co/methodology</loc></url>
+  <url><loc>https://www.connectingcloud.co/insights</loc></url>
+  <url><loc>https://www.connectingcloud.co/l2c</loc></url>
   <url><loc>https://www.connectingcloud.co/sap-cpq-implementation</loc></url>
   <url><loc>https://www.connectingcloud.co/sap-avc-implementation</loc></url>
   <url><loc>https://www.connectingcloud.co/sap-commissions-implementation</loc></url>
   <url><loc>https://www.connectingcloud.co/sap-vc-to-avc-migration</loc></url>
   <url><loc>https://www.connectingcloud.co/sap-cpq-quote-2-migration</loc></url>
   <url><loc>https://www.connectingcloud.co/ecc-to-s4hana-migration</loc></url>
+  <url><loc>https://www.connectingcloud.co/architecture/avc</loc></url>
+  <url><loc>https://www.connectingcloud.co/architecture/cpq</loc></url>
+  <url><loc>https://www.connectingcloud.co/architecture/sf</loc></url>
+  <url><loc>https://www.connectingcloud.co/architecture/btp</loc></url>
+  <url><loc>https://www.connectingcloud.co/sap</loc></url>
   <url><loc>https://www.connectingcloud.co/salesforce</loc></url>
   <url><loc>https://www.connectingcloud.co/ai-automation</loc></url>
   <url><loc>https://www.connectingcloud.co/managed-services</loc></url>
+  <url><loc>https://www.connectingcloud.co/industries</loc></url>
+  <url><loc>https://www.connectingcloud.co/industries/industrial-manufacturing</loc></url>
   <url><loc>https://www.connectingcloud.co/industries/pharma</loc></url>
-  <url><loc>https://www.connectingcloud.co/approach</loc></url>
-  <url><loc>https://www.connectingcloud.co/erp-decision-sprint</loc></url>
-  <url><loc>https://www.connectingcloud.co/team</loc></url>
-  <url><loc>https://www.connectingcloud.co/insights</loc></url>
-  <url><loc>https://www.connectingcloud.co/contact</loc></url>
-  <url><loc>https://www.connectingcloud.co/privacy</loc></url>
-  <url><loc>https://www.connectingcloud.co/insights/python-scripting-in-sap-cpq</loc></url>
-  <url><loc>https://www.connectingcloud.co/insights/sap-cpq-and-s4hana-avc</loc></url>
-  <url><loc>https://www.connectingcloud.co/insights/headless-cpq-with-sap-btp</loc></url>
+  <url><loc>https://www.connectingcloud.co/industries/energy-engineering</loc></url>
+  <url><loc>https://www.connectingcloud.co/industries/consumer-process</loc></url>
+  <url><loc>https://www.connectingcloud.co/industries/technology-electronics</loc></url>
+  <url><loc>https://www.connectingcloud.co/industries/global-enterprise</loc></url>
 </urlset>
