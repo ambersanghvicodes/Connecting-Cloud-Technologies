@@ -3,9 +3,7 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { ARTICLE_META, ROUTE_META } from './src/data/routes.js'
-
-const SITE_URL = 'https://www.connectingcloud.co'
+import { ROUTE_META, SITE_URL } from './src/data/routes.js'
 
 const escape = (s) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;')
 
@@ -19,10 +17,7 @@ function staticRoutes() {
     closeBundle() {
       const dist = fileURLToPath(new URL('./dist', import.meta.url))
       const template = readFileSync(join(dist, 'index.html'), 'utf8')
-      const pages = {
-        ...ROUTE_META,
-        ...Object.fromEntries(Object.entries(ARTICLE_META).map(([slug, meta]) => [`/insights/${slug}`, meta])),
-      }
+      const pages = ROUTE_META
 
       const render = (path, { title, description }) => {
         const url = `${SITE_URL}${path === '/' ? '/' : path}`

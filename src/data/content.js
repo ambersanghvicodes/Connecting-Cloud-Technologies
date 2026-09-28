@@ -1,364 +1,307 @@
-// Site content. Sourced from the Enterprise Applications capabilities deck
-// (September 2026). Keep claims here traceable to something we can back up.
+// Content for the capability and industry pages. Keep claims here traceable
+// to real team experience.
 
-export const PRACTICES = [
+const ACCENTS = {
+  blue: { primary: '#2563eb', soft: 'rgba(37,99,235,.15)', border: 'rgba(37,99,235,.35)', text: '#93C5FD', glow: 'rgba(37,99,235,.25)' },
+  teal: { primary: '#0d9488', soft: 'rgba(13,148,136,.15)', border: 'rgba(13,148,136,.35)', text: '#5ECECE', glow: 'rgba(13,148,136,.25)' },
+  indigo: { primary: '#4f46e5', soft: 'rgba(79,70,229,.15)', border: 'rgba(79,70,229,.35)', text: '#A5B4FC', glow: 'rgba(79,70,229,.25)' },
+  amber: { primary: '#d97706', soft: 'rgba(217,119,6,.15)', border: 'rgba(217,119,6,.35)', text: '#FCD34D', glow: 'rgba(217,119,6,.25)' },
+  sky: { primary: '#0284c7', soft: 'rgba(2,132,199,.15)', border: 'rgba(2,132,199,.35)', text: '#7DD3FC', glow: 'rgba(2,132,199,.25)' },
+  orange: { primary: '#e85d26', soft: 'rgba(232,93,38,.15)', border: 'rgba(232,93,38,.35)', text: '#FFA07A', glow: 'rgba(232,93,38,.25)' },
+  emerald: { primary: '#059669', soft: 'rgba(5,150,105,.15)', border: 'rgba(5,150,105,.35)', text: '#6EE7B7', glow: 'rgba(5,150,105,.25)' },
+  violet: { primary: '#7c3aed', soft: 'rgba(124,58,237,.15)', border: 'rgba(124,58,237,.35)', text: '#C4B5FD', glow: 'rgba(124,58,237,.25)' },
+};
+
+// ─── Capabilities ───────────────────────────────────────────────────────────
+
+export const CAPABILITIES = [
   {
-    id: 'sap',
+    id: 'sap-s4hana',
     path: '/sap',
-    name: 'SAP',
-    tagline: 'S/4HANA, BTP, CPQ and VC/AVC',
-    summary: 'Greenfield and brownfield S/4HANA, rollouts, integration, data migration and cutover.',
+    name: 'SAP S/4HANA',
+    desc: 'Implementation, rollouts, finance & supply chain',
+    accent: ACCENTS.blue,
+    eyebrow: 'SAP S/4HANA · Implementation · Rollouts · Data Migration',
+    h1: 'SAP S/4HANA Implementation & Transformation',
+    sub: 'Solution architecture and hands-on delivery across the S/4HANA core: finance, procurement, sales, manufacturing, quality and logistics, with the integration, data and analytics platform around it.',
+    badges: ['Greenfield & Brownfield', 'FI/CO · MM · SD · PP', 'BTP & Integration Suite', 'Data Migration & Cutover'],
+    stats: [
+      { value: 'End-to-end', label: 'Discover → Implement → Go-live → Support' },
+      { value: '10+ modules', label: 'Finance, supply chain and manufacturing' },
+      { value: 'BTP + CPI', label: 'Integration, extensions and analytics' },
+      { value: 'Hypercare', label: 'Stabilisation and AMS after go-live' },
+    ],
+    groupsTitle: 'What We Deliver Across S/4HANA',
+    groupsIntro: 'One team covering the functional core, the technical platform and the data work that decides whether go-live is clean.',
+    groups: [
+      { title: 'Finance & Supply Chain', items: ['FI/CO: GL, AP/AR, asset accounting, controlling and product costing', 'MM & procurement: P2P, sourcing, supplier master data, Ariba integration', 'SD: order-to-cash, pricing, billing, export and domestic sales', 'EWM and TM: warehouse and transportation management', 'Batch management, QM and PM for regulated and asset-intensive operations'] },
+      { title: 'Manufacturing, Platform & Data', items: ['PP / PP-PI: discrete and process manufacturing, MTO and ETO', 'VC / AVC and CPQ for configurable products', 'SAP BTP Integration Suite (CPI), ABAP, Fiori and security/roles', 'Master Data Governance (MDG) and SAP Analytics Cloud (SAC)', 'Data migration: master data, open items, balances, mock loads and reconciliation'] },
+    ],
+    darkTitle: 'Implementation Models',
+    darkIntro: 'We start from the decision you actually need to make, then choose the path that fits it.',
+    darkCards: [
+      { title: 'Greenfield', body: 'A new S/4HANA environment built fit-to-standard, migrating only the master data and open transactions you need.' },
+      { title: 'Brownfield & Bluefield', body: 'System conversion or selective data transfer from ECC, with custom code remediation and data clean-up.' },
+      { title: 'Rollouts & Plant Integration', body: 'Template rollouts to new countries, companies and plants, including sites brought in through acquisition.' },
+    ],
+    steps: [
+      { n: '01', t: 'Discover & Assess', s: 'Goals, landscape, data, interfaces and fit-gap' },
+      { n: '02', t: 'Design', s: 'Target processes, integration and data approach' },
+      { n: '03', t: 'Build & Migrate', s: 'Configuration, extensions, mock data loads' },
+      { n: '04', t: 'Test & Cut Over', s: 'SIT, UAT, cutover rehearsal and final load' },
+      { n: '05', t: 'Go-Live & Support', s: 'Hypercare, stabilisation and AMS transition' },
+    ],
+    related: ['ecc-to-s4hana-migration', 'sap-avc-implementation', 'managed-services'],
+    cta: { heading: 'Planning an S/4HANA Programme?', sub: "Book a scoping call. We'll review your landscape, scope and data, and outline a realistic path to go-live.", label: 'Book an S/4HANA Scoping Call' },
   },
   {
     id: 'salesforce',
     path: '/salesforce',
     name: 'Salesforce',
-    tagline: 'Clouds, Agentforce and custom apps',
-    summary: 'Sales, Service, Experience and Data Cloud, Field Service, MuleSoft and custom application delivery.',
+    desc: 'Sales, Service, Revenue Cloud & custom apps',
+    accent: ACCENTS.sky,
+    eyebrow: 'Salesforce · Sales & Service Cloud · Revenue Cloud · MuleSoft',
+    h1: 'Salesforce Implementation & Enhancement',
+    sub: 'Delivery, enhancement and support across the Salesforce clouds, with the engineering depth to build custom applications and connect Salesforce to SAP.',
+    badges: ['Sales & Service Cloud', 'Revenue Cloud / CPQ', 'LWC · Apex · OmniStudio', 'Salesforce ↔ SAP'],
+    stats: [
+      { value: '5 clouds', label: 'Sales, Service, Experience, Marketing, Data' },
+      { value: 'Agentforce', label: 'AI agents on your CRM data' },
+      { value: 'SAP-aware', label: 'CRM-to-ERP integration built in' },
+      { value: 'Dedicated', label: 'Named resource model available' },
+    ],
+    groupsTitle: 'What We Deliver on Salesforce',
+    groupsIntro: 'From new cloud implementations to ongoing enhancement of an org you already run.',
+    groups: [
+      { title: 'Clouds & Platform', items: ['Sales Cloud and Service Cloud implementation and optimisation', 'Experience Cloud partner and customer portals', 'Marketing Cloud and Data Cloud', 'Field Service / ServiceMax for installed-base service', 'Agentforce and Einstein AI use cases'] },
+      { title: 'Engineering & Integration', items: ['Lightning Web Components, Apex and OmniStudio', 'Custom applications on the Salesforce platform', 'Revenue Cloud / CPQ: product rules, price books, approvals', 'MuleSoft and SAP BTP/CPI integration to S/4HANA and ECC', 'Enhancements, release management and org health checks'] },
+    ],
+    darkTitle: 'Salesforce and SAP, Working as One',
+    darkIntro: 'Most of our Salesforce work sits next to an SAP back end. We design both sides of the handoff.',
+    darkCards: [
+      { title: 'Opportunity to Order', body: 'Accounts, opportunities and quotes flow from Salesforce into SAP sales orders without re-keying.' },
+      { title: 'Pricing & Availability', body: 'Real-time pricing, credit and availability checks from S/4HANA surfaced inside Salesforce.' },
+      { title: 'Service & Installed Base', body: 'Equipment, contracts and service history shared between Service Cloud and SAP.' },
+    ],
+    steps: [
+      { n: '01', t: 'Discovery', s: 'Processes, org health, data and integrations' },
+      { n: '02', t: 'Design', s: 'Data model, automation and security design' },
+      { n: '03', t: 'Build', s: 'Configuration, LWC/Apex, integrations' },
+      { n: '04', t: 'Test & Enable', s: 'UAT, training and adoption' },
+      { n: '05', t: 'Enhance & Support', s: 'Releases and continuous improvement' },
+    ],
+    related: ['sap-cpq-implementation', 'ai-automation', 'managed-services'],
+    cta: { heading: 'Getting More From Salesforce?', sub: "Book a call. We'll review your org, integrations and roadmap, and suggest where to start.", label: 'Book a Salesforce Call' },
   },
   {
-    id: 'ai',
+    id: 'ai-automation',
     path: '/ai-automation',
     name: 'AI & Automation',
-    tagline: 'Assistants, agents and workflows',
-    summary: 'AI assistants and agents, document and knowledge automation, and AI for SAP and Salesforce.',
+    desc: 'Assistants, agents and enterprise automation',
+    accent: ACCENTS.violet,
+    eyebrow: 'AI Assistants · Agents · Document Automation · Enterprise Integration',
+    h1: 'AI & Automation for Enterprise Applications',
+    sub: 'Engineering-led AI and automation that plugs into SAP, Salesforce and your document estate, built to be supported after it ships.',
+    badges: ['Claude / OpenAI Workflows', 'SAP Joule & BTP AI Core', 'Agentforce', 'Python · Kafka · Microservices'],
+    stats: [
+      { value: 'Process-first', label: 'Start from a measurable workflow' },
+      { value: 'SAP + SFDC', label: 'AI inside the systems you run' },
+      { value: 'Supportable', label: 'Monitoring and handover built in' },
+      { value: 'Secure', label: 'Your data stays in your controls' },
+    ],
+    groupsTitle: 'What We Build',
+    groupsIntro: 'Practical AI and automation tied to a process you can measure, not a proof of concept that stops at the demo.',
+    groups: [
+      { title: 'AI Assistants & Agents', items: ['Assistants grounded in your policies, product data and SOPs', 'Agents that act in SAP and Salesforce through governed APIs', 'Enterprise search across documents, tickets and knowledge bases', 'SAP Joule, BTP AI Core and Salesforce Agentforce use cases', 'Claude and OpenAI workflows with evaluation and guardrails'] },
+      { title: 'Automation & Engineering', items: ['Document intake: invoices, orders, certificates and contracts', 'Support automation: ticket triage, routing and suggested fixes', 'Reconciliation platforms and exception handling', 'Python, Java, microservices and Kafka event pipelines', 'Integration with SAP BTP/CPI, MuleSoft and REST/OData APIs'] },
+    ],
+    darkTitle: 'AI in the Configure-to-Quote Landscape',
+    darkIntro: 'Our SAP configuration depth means we know where AI actually helps in quoting and product configuration.',
+    darkCards: [
+      { title: 'Quoting', body: 'Guided selling recommendations, discount guidance and proposal drafting inside SAP CPQ.' },
+      { title: 'Configuration', body: 'Conflict resolution help and similarity search across VC/AVC configuration history.' },
+      { title: 'Operations', body: 'Automated triage of integration failures and recurring support incidents.' },
+    ],
+    steps: [
+      { n: '01', t: 'Pick the Process', s: 'Baseline effort, errors and cycle time' },
+      { n: '02', t: 'Design', s: 'Data access, guardrails and evaluation' },
+      { n: '03', t: 'Build', s: 'Assistant, agent or automation pipeline' },
+      { n: '04', t: 'Pilot & Measure', s: 'Real users, real volume, tracked results' },
+      { n: '05', t: 'Scale & Support', s: 'Monitoring, retraining and handover' },
+    ],
+    related: ['sap-cpq-implementation', 'salesforce', 'managed-services'],
+    cta: { heading: 'Have a Process Worth Automating?', sub: "Book a call. We'll look at the workflow, the data and the systems involved, and tell you honestly whether AI will help.", label: 'Book an AI Discovery Call' },
   },
   {
-    id: 'ams',
+    id: 'managed-services',
     path: '/managed-services',
     name: 'Managed Services',
-    tagline: 'Hypercare, L2/L3 and AMC',
-    summary: 'Post-go-live stabilization, application support, integration monitoring and SLA-based AMC.',
-  },
-];
-
-export const PRACTICE_PAGES = {
-  sap: {
-    eyebrow: 'SAP Practice',
-    title: 'SAP S/4HANA, end to end.',
-    intro:
-      'Solution architecture and hands-on delivery across the S/4HANA core, the integration and data platform around it, and configure-price-quote for complex products.',
+    desc: 'Hypercare, L2/L3 support and AMC',
+    accent: ACCENTS.emerald,
+    eyebrow: 'Application Management · Hypercare · L2/L3 · Integration Monitoring',
+    h1: 'SAP & Salesforce Managed Services',
+    sub: 'Support structured around your scope, SLAs, criticality and coverage hours, from hypercare straight after go-live to a long-term annual maintenance contract.',
+    badges: ['Hypercare', 'L2 / L3 Support', 'Integration Monitoring', '8x5 to 24x7 Coverage'],
+    stats: [
+      { value: '8x5', label: 'Standard business-hours coverage' },
+      { value: 'Extended', label: 'Multi-shift and multi-time-zone' },
+      { value: '24x7', label: 'Critical process coverage option' },
+      { value: 'SLA-based', label: 'AMC aligned to criticality' },
+    ],
+    groupsTitle: 'What Our Support Covers',
+    groupsIntro: 'The same people who understand your configuration and integrations keep them running.',
     groups: [
-      {
-        title: 'S/4HANA',
-        items: ['FI/CO', 'MM', 'SD', 'PP / PP-PI', 'QM', 'EWM', 'PM', 'PS', 'TM', 'Batch Management'],
-      },
-      {
-        title: 'Platform, integration & analytics',
-        items: ['SAP BTP Integration Suite (CPI)', 'SAP Analytics Cloud (SAC)', 'Master Data Governance (MDG)', 'ABAP & Fiori'],
-      },
-      {
-        title: 'Configure, price & quote',
-        items: ['SAP CPQ', 'LO-VC / AVC', 'CPS'],
-      },
+      { title: 'Hypercare & Application Support', items: ['Post-go-live stabilisation, triage and daily governance', 'L2 functional support across SAP and Salesforce', 'L3 technical root-cause analysis and fixes', 'Enhancements and change requests', 'Release, transport and regression-test management'] },
+      { title: 'Integration & Operations', items: ['CPI / API failure monitoring and alerting', 'Interface reconciliation, retries and exception handling', 'Monitoring dashboards and SLA reporting', 'Problem management to reduce recurring incidents', 'Dedicated resource model with Hyderabad-based support'] },
     ],
-    highlights: [
-      { title: 'Implementation models', desc: 'Greenfield and brownfield implementations, template rollouts and upgrades.' },
-      { title: 'Data migration & cutover', desc: 'Master data, open transactions, inventory and balances, with mock loads, reconciliation and go-live controls.' },
-      { title: 'Manufacturing depth', desc: 'Complex products, Super BOM and routing, variant pricing and PP/SD integration for MTO and ETO.' },
-      { title: 'Integration', desc: 'API-led integration on BTP / CPI between S/4HANA, CRM, CPQ and non-SAP systems.' },
+    darkTitle: 'Coverage Options',
+    darkIntro: 'Choose the coverage your processes need; change it as your landscape grows.',
+    darkCards: [
+      { title: 'Standard 8x5', body: 'Business-hours coverage for most application landscapes, with agreed response and resolution targets.' },
+      { title: 'Extended Hours', body: 'Longer windows for multi-shift plants and teams working across time zones.' },
+      { title: 'Critical 24x7', body: 'Round-the-clock cover for business-critical processes, interfaces and month-end.' },
     ],
-    showL2C: true,
-  },
-  salesforce: {
-    eyebrow: 'Salesforce Practice',
-    title: 'Salesforce, built around your process.',
-    intro:
-      'Delivery, enhancement and support across the Salesforce clouds, with the engineering depth to build custom applications and connect Salesforce to SAP.',
-    groups: [
-      { title: 'Clouds', items: ['Sales Cloud', 'Service Cloud', 'Experience Cloud', 'Marketing Cloud', 'Data Cloud'] },
-      { title: 'Platform & integration', items: ['Field Service / ServiceMax', 'Agentforce', 'MuleSoft'] },
-      { title: 'Engineering', items: ['Lightning Web Components', 'Apex', 'OmniStudio', 'Custom applications'] },
+    steps: [
+      { n: '01', t: 'Transition', s: 'Knowledge transfer, runbooks, access' },
+      { n: '02', t: 'Stabilise', s: 'Hypercare and backlog clean-up' },
+      { n: '03', t: 'Run', s: 'SLA-based L2/L3 and monitoring' },
+      { n: '04', t: 'Improve', s: 'Problem management and automation' },
+      { n: '05', t: 'Evolve', s: 'Enhancements and release roadmap' },
     ],
-    highlights: [
-      { title: 'Enhancements', desc: 'Ongoing improvement of existing orgs: new features, fixes and technical debt reduction.' },
-      { title: 'Dedicated resource model', desc: 'A named team working as an extension of yours, on agreed scope and capacity.' },
-      { title: 'Salesforce to SAP', desc: 'Opportunity-to-order and customer data flows between Salesforce, CPQ and S/4HANA.' },
-    ],
-  },
-  ai: {
-    eyebrow: 'AI & Automation Practice',
-    title: 'AI that works inside your enterprise systems.',
-    intro:
-      'Engineering-led AI and automation that plugs into SAP, Salesforce and your document estate, built to be supported after it ships.',
-    groups: [
-      { title: 'AI', items: ['AI assistants and agents', 'Claude / OpenAI workflows', 'Enterprise search', 'SAP and Salesforce AI'] },
-      { title: 'Automation', items: ['Document and knowledge automation', 'Support automation', 'Reconciliation platforms'] },
-      { title: 'Engineering', items: ['Python', 'Java', 'Microservices', 'Kafka'] },
-    ],
-    highlights: [
-      { title: 'Start from a process', desc: 'We pick a measurable workflow first, such as document intake or support triage, before choosing models.' },
-      { title: 'Application modernization', desc: 'Integrations and automation that remove manual steps around your core applications.' },
-      { title: 'Supportable by design', desc: 'Logging, monitoring and handover so automation keeps working after go-live.' },
-    ],
-  },
-  ams: {
-    eyebrow: 'Managed Services',
-    title: 'Support after go-live, on your terms.',
-    intro:
-      'We structure support around agreed scope, SLA, criticality and coverage hours, from hypercare through to a long-term AMC.',
-    groups: [
-      { title: 'Hypercare', items: ['Immediate post-go-live stabilization', 'Issue triage', 'Business validation', 'Daily governance', 'Defect closure'] },
-      { title: 'L2 / L3 support', items: ['Functional support', 'Technical root cause', 'Integration issue handling', 'Enhancements', 'Release support'] },
-      { title: 'Integration monitoring', items: ['CPI / API failures', 'Interface reconciliation', 'Retry and exception handling', 'Monitoring dashboards', 'Recurring issue reduction'] },
-    ],
-    highlights: [
-      { title: '8x5 standard', desc: 'Business-hours coverage for most application landscapes.' },
-      { title: 'Extended hours', desc: 'Longer coverage windows for multi-shift plants and multiple time zones.' },
-      { title: 'Critical 24x7', desc: 'Round-the-clock cover for business-critical processes and interfaces.' },
-      { title: 'Dedicated resources', desc: 'Named consultants, with Hyderabad-based resource support.' },
-    ],
-    highlightsTitle: 'Coverage options',
-  },
-};
-
-export const WHY_US = [
-  { title: 'SAP enterprise delivery', desc: 'S/4HANA, ECC, CPQ, VC/AVC, CPI/BTP, data transition and integration.' },
-  { title: 'Manufacturing understanding', desc: 'Complex products, BOMs, pricing, PP/SD integration and shop-floor-adjacent processes.' },
-  { title: 'Pharma-relevant leadership', desc: 'Senior SAP leadership with CSV/GxP and pharma implementation experience.' },
-  { title: 'Salesforce capability', desc: 'Sales Cloud, Service Cloud, LWC, Apex and custom application enhancement.' },
-  { title: 'AI + automation engineering', desc: 'Python, integrations and enterprise automation to support modernization.' },
-  { title: 'Support coverage', desc: 'Hypercare, L2/L3, integration monitoring, release support and SLA-based AMC.' },
-];
-
-export const EXPERIENCE = [
-  { industry: 'Life sciences / healthcare', clients: ['Beckman Coulter', 'BDI Pharma'] },
-  { industry: 'Industrial manufacturing', clients: ['Honeywell', 'Sulzer', 'Tennant', 'NLMK', 'American Air Filter', 'Applied Materials'] },
-  { industry: 'Energy / engineering', clients: ['Baker Hughes', 'GE Aviation / Power Conversion / Oil & Gas'] },
-  { industry: 'Consumer / process industries', clients: ['Essity', 'Metsä'] },
-  { industry: 'Technology / electronics', clients: ['Fuji Xerox', 'Konica Minolta', 'Powell Electronics', 'Fireblocks'] },
-  { industry: 'Discrete / global enterprise', clients: ['Mitsubishi'] },
-];
-
-export const EXPERIENCE_NOTE =
-  'Selected experience of Connecting Cloud Technologies and its consulting team. Engagement models include direct delivery and SI / partner-led assignments. Where work was delivered through SIs or partners, it is not represented as a direct commercial customer relationship.';
-
-export const PHARMA_CAPABILITIES = [
-  { title: 'Validated SAP delivery', desc: 'CSV-compliant delivery with IQ/OQ/PQ, and every requirement traced to a test.' },
-  { title: 'Batch, lot and expiry control', desc: 'Batch management, shelf-life and FEFO rules enforced for each market.' },
-  { title: 'Export and regulated markets', desc: 'Export and tender order-to-cash with batch-level traceability for every shipment.' },
-  { title: 'Plant integration after acquisition', desc: 'Decide early what follows a group template and what stays local.' },
-  { title: 'Batch costing and finance', desc: 'Batch costing and multi-market finance from the first period close.' },
-  { title: 'Contract manufacturing', desc: 'Domestic, export and contract-manufacturing sales, each tested as its own scenario.' },
-];
-
-export const PHARMA_PROOF = [
-  {
-    client: 'Julphar, UAE',
-    tag: 'Validated SAP implementation',
-    what: 'Validated SAP for a multi-dosage maker, including sterile injectables: batch, quality and export sales. CSV-compliant with IQ/OQ/PQ.',
-    lesson: 'Plan validation from day one; trace every requirement to a test.',
-  },
-  {
-    client: 'Mylan / Matrix Laboratories',
-    tag: 'Pharma center of excellence',
-    what: 'Multi-plant order-to-cash after acquisition by a US parent, with batch-controlled dispatch to regulated markets.',
-    lesson: 'Decide early what follows a group template and what stays local.',
-  },
-  {
-    client: 'Merck Sharp & Dohme',
-    tag: 'Finance & controlling',
-    what: 'FI/CO implementation and support for a manufacturer supplying medicines to 140+ countries.',
-    lesson: 'Batch costing and multi-market finance from the first close.',
-  },
-  {
-    client: 'NATCO Pharma',
-    tag: 'Sales & distribution',
-    what: 'Domestic, export and contract-manufacturing sales, with batch and expiry control through dispatch.',
-    lesson: 'Test contract manufacturing as its own scenario.',
-  },
-  {
-    client: 'Hetero Drugs',
-    tag: 'Export order-to-cash',
-    what: 'Export and tender order-to-cash with batch-level traceability for every shipment.',
-    lesson: 'Prove traceability and system performance at export volume.',
-  },
-  {
-    client: 'BDI Pharma, USA',
-    tag: 'Distribution & cold chain',
-    what: 'Lot and expiry control, consignment and cold-chain distribution of plasma therapies, vaccines and oncology products.',
-    lesson: 'Enforce FEFO and shelf-life rules for each market.',
-  },
-  {
-    client: 'Beckman Coulter',
-    tag: 'Diagnostics quote-to-cash',
-    what: 'SAP quote-to-cash for a diagnostics and laboratory-instruments maker: configurable products, pricing and quote-to-order integration.',
-    lesson: 'Consistent product data and pricing from quote to order.',
+    related: ['sap-s4hana', 'salesforce', 'ai-automation'],
+    cta: { heading: 'Need Reliable Support After Go-Live?', sub: "Tell us about your landscape and coverage needs. We'll propose a support model and SLA that fit.", label: 'Discuss a Support Model' },
   },
 ];
 
-export const PHARMA_PROOF_NOTE =
-  'Delivered by members of our team, including through previous employers; not all are Connecting Cloud contracts.';
+// ─── Industries ─────────────────────────────────────────────────────────────
 
-export const APPROACH_PHASES = [
-  {
-    id: '01',
-    name: 'Discover',
-    focus: 'Business case & current state',
-    items: ['Confirm goals and constraints', 'Current landscape', 'Data, interfaces, reports', 'Quality and compliance touchpoints'],
-  },
-  {
-    id: '02',
-    name: 'Prepare',
-    focus: 'Mobilize the assessment',
-    items: ['Governance and owners', 'Access and documents', 'Workstream plan', 'Weighted decision criteria'],
-  },
-  {
-    id: '03',
-    name: 'Explore',
-    focus: 'Fit-to-standard / fit-gap',
-    items: ['Process fit against the target platform', 'Industry scenario walkthroughs', 'Customization and risk', 'Recommendation inputs'],
-  },
-  {
-    id: '04',
-    name: 'Realize',
-    focus: 'Build and validate',
-    items: ['Configure the approved solution', 'Data migration cycles', 'Interfaces and reports', 'SIT / UAT / validation scripts'],
-  },
-  {
-    id: '05',
-    name: 'Deploy',
-    focus: 'Cutover and go-live',
-    items: ['Training and readiness', 'Cutover rehearsal', 'Final data load', 'Go-live governance'],
-  },
-  {
-    id: '06',
-    name: 'Run',
-    focus: 'Hypercare and AMC',
-    items: ['Stabilization and defect closure', 'L2/L3 support', 'Release and enhancement model', 'SLA / support transition'],
-  },
-];
+export const INDUSTRY_NOTE =
+  'Organisations our consulting team has supported, including through SI / partner-led assignments and previous employers. Names indicate team experience, not a direct commercial relationship.';
 
-// Index after which the decision gate sits (between Explore and Realize).
-export const DECISION_GATE_AFTER = 2;
-
-export const SPRINT = {
-  questions: [
-    'How soon can we go live?',
-    'How much data must move, and how much can be archived?',
-    'What will implementation cost?',
-    'What AMC / support model fits after go-live?',
-    'Which option fits our manufacturing and compliance needs long term?',
-  ],
-  weeks: [
-    {
-      label: 'Week 1',
-      phase: 'Discover',
-      items: ['Goals, constraints and timeline', 'Current landscape, data, interfaces and reports', 'Quality and compliance touchpoints'],
-    },
-    {
-      label: 'Week 2',
-      phase: 'Prepare',
-      items: ['Owners and governance', 'Weighted decision criteria agreed with management', 'Workstream plan for the options'],
-    },
-    {
-      label: 'Week 3',
-      phase: 'Explore',
-      items: ['Fit-to-standard / fit-gap per option', 'Industry scenario walkthroughs', 'Customization, risk and cost inputs'],
-    },
-  ],
-  deliverables: ['Platform recommendation', 'Implementation roadmap', 'Timeline to go-live', 'Cost model incl. AMC', 'Data migration approach', 'Risk register'],
-};
-
-export const TEAM_LEADERSHIP = [
+export const INDUSTRIES = [
   {
-    initials: 'PY',
-    name: 'Prashant Yadav',
-    role: 'Engagement & SAP Solution Lead',
-    points: [
-      'Client-facing solution ownership',
-      'S/4HANA business process and solution leadership',
-      'MTO / ETO and complex manufacturing solution architecture',
-      'CPQ, VC/AVC, S/4 and end-to-end integration',
-      'Governance, delivery oversight and issue resolution',
+    id: 'industrial-manufacturing',
+    path: '/industries/industrial-manufacturing',
+    name: 'Industrial Manufacturing',
+    short: 'Configure-to-order, CPQ and VC/AVC',
+    accent: ACCENTS.blue,
+    h1: 'SAP for Industrial Manufacturers',
+    sub: 'For manufacturers of configurable and engineered products, the hardest problems sit between what sales can quote and what the plant can build. We connect CPQ, variant configuration and the S/4HANA core so that handoff holds.',
+    priorities: [
+      { title: 'Configure-to-order and engineer-to-order', desc: 'MTO/ETO processes, Super BOM and routing, and variant pricing in S/4HANA.' },
+      { title: 'Quote-to-cash', desc: 'SAP CPQ connected to VC/AVC, with approvals and pricing guardrails that protect margin.' },
+      { title: 'Production and supply chain', desc: 'PP, MM, EWM and QM aligned to the configured order flow.' },
+      { title: 'PLM and CRM integration', desc: 'BTP/CPI flows between CRM, CPQ, S/4HANA and engineering systems.' },
+      { title: 'Installed-base service', desc: 'Salesforce Service Cloud and Field Service for equipment and contracts.' },
+      { title: 'Multi-plant rollouts', desc: 'Template rollouts and data migration across plants and countries.' },
     ],
+    clients: ['Honeywell', 'Sulzer', 'Tennant', 'NLMK', 'American Air Filter', 'Applied Materials'],
+    related: ['sap-cpq-implementation', 'sap-avc-implementation', 'sap-vc-to-avc-migration'],
   },
   {
-    initials: 'PS',
-    name: 'Pallavi Sanghvi',
-    role: 'SAP Solution & Transformation Architect',
-    points: [
-      'SAP BTP/CPI integration and API-led solutions',
-      'Cross-functional process and solution design',
-      'Legacy-to-SAP transformation and system integration',
-      'Quote-to-Cash / Order-to-Cash transformation',
-      'SAP VC/AVC and landscape architecture',
+    id: 'life-sciences',
+    path: '/industries/pharma',
+    name: 'Life Sciences & Pharma',
+    short: 'Validated SAP, batch and quality',
+    accent: ACCENTS.teal,
+    h1: 'SAP for Life Sciences & Pharma',
+    sub: 'For pharma, diagnostics and healthcare manufacturers, an ERP programme is also a validation, data-integrity and audit programme. Our team has delivered SAP where batch, quality and export compliance come first.',
+    priorities: [
+      { title: 'Validated SAP delivery', desc: 'CSV-compliant delivery with IQ/OQ/PQ, and every requirement traced to a test.' },
+      { title: 'Batch, lot and expiry control', desc: 'Batch management, shelf-life and FEFO rules enforced for each market.' },
+      { title: 'Export and regulated markets', desc: 'Export and tender order-to-cash with batch-level traceability for every shipment.' },
+      { title: 'Plant integration after acquisition', desc: 'Decide early what follows a group template and what stays local.' },
+      { title: 'Batch costing and finance', desc: 'Batch costing and multi-market finance from the first period close.' },
+      { title: 'Diagnostics quote-to-cash', desc: 'Configurable instruments, pricing and quote-to-order integration.' },
     ],
+    clients: ['Julphar', 'Mylan / Matrix Laboratories', 'Merck Sharp & Dohme', 'NATCO Pharma', 'Hetero Drugs', 'BDI Pharma', 'Beckman Coulter'],
+    related: ['sap-s4hana', 'ecc-to-s4hana-migration', 'managed-services'],
   },
   {
-    initials: 'ST',
-    name: 'Satish Kumar Tirupati',
-    role: 'Senior SAP Program Advisor',
-    points: [
-      '34 years overall, 24 years SAP',
-      'S/4 greenfield and brownfield leadership',
-      'Pharma CSV/GxP and validation governance',
-      'Migration, cutover and SI management',
+    id: 'energy-engineering',
+    path: '/industries/energy-engineering',
+    name: 'Energy & Engineering',
+    short: 'Engineered products, projects and service',
+    accent: ACCENTS.orange,
+    h1: 'SAP for Energy & Engineering',
+    sub: 'Energy and engineering businesses sell engineered equipment through long, project-based cycles and support it for decades. The ERP has to carry configuration, project cost and service history in one thread.',
+    priorities: [
+      { title: 'Engineer-to-order', desc: 'VC/AVC models, Super BOM and routing for engineered equipment.' },
+      { title: 'Project systems', desc: 'SAP PS for WBS, project costing and milestone billing.' },
+      { title: 'Asset and plant maintenance', desc: 'SAP PM for maintenance planning, work orders and spares.' },
+      { title: 'Field service', desc: 'Field Service / ServiceMax connected to SAP for service contracts and history.' },
+      { title: 'Quote-to-cash for engineered products', desc: 'SAP CPQ for complex quotes with technical and commercial approvals.' },
+      { title: 'ECC to S/4HANA', desc: 'Brownfield, bluefield or greenfield paths with configuration migrated alongside.' },
     ],
+    clients: ['Baker Hughes', 'GE Aviation', 'GE Power Conversion', 'GE Oil & Gas'],
+    related: ['ecc-to-s4hana-migration', 'sap-avc-implementation', 'salesforce'],
   },
   {
-    initials: 'AA',
-    name: 'Anand Anbarasan',
-    role: 'SAP SD / CS / CPQ & AMS Lead',
-    points: [
-      '18+ years SAP SD, CS, PS, EWM',
-      '5 end-to-end implementations, 3 rollouts, 2 upgrades',
-      'Production support and incident governance',
-      'CPI / C4C / S/4 process integration',
+    id: 'consumer-process',
+    path: '/industries/consumer-process',
+    name: 'Consumer & Process Industries',
+    short: 'Process manufacturing, batch and logistics',
+    accent: ACCENTS.emerald,
+    h1: 'SAP for Consumer & Process Industries',
+    sub: 'Process manufacturers run on recipes, batches and tight margins, with high volumes moving through warehouses and transport networks. The system has to keep pace with the plant.',
+    priorities: [
+      { title: 'Process manufacturing', desc: 'PP-PI recipes, process orders and resource planning.' },
+      { title: 'Batch management and quality', desc: 'Batch traceability, QM inspections and certificates.' },
+      { title: 'Warehouse and transport', desc: 'EWM and TM for high-volume distribution.' },
+      { title: 'Order-to-cash and pricing', desc: 'SD pricing, rebates and customer-specific terms.' },
+      { title: 'Costing and margin', desc: 'Product costing, CO-PA and margin analysis in S/4HANA Finance.' },
+      { title: 'Master data governance', desc: 'MDG for materials, customers and suppliers across plants.' },
     ],
+    clients: ['Essity', 'Metsä'],
+    related: ['sap-s4hana', 'managed-services', 'ai-automation'],
+  },
+  {
+    id: 'technology-electronics',
+    path: '/industries/technology-electronics',
+    name: 'Technology & Electronics',
+    short: 'Quote-to-cash, CRM and service',
+    accent: ACCENTS.indigo,
+    h1: 'SAP & Salesforce for Technology Companies',
+    sub: 'Technology and electronics companies sell configurable products, services and contracts through direct and partner channels. Quotes, contracts, orders and service need to stay in sync across CRM and ERP.',
+    priorities: [
+      { title: 'Configure, price, quote', desc: 'SAP CPQ or Salesforce Revenue Cloud for products, services and bundles.' },
+      { title: 'Partner and customer portals', desc: 'Experience Cloud and headless CPQ for channel selling.' },
+      { title: 'CRM-to-ERP integration', desc: 'Opportunity-to-order and billing flows across Salesforce and SAP.' },
+      { title: 'Service contracts', desc: 'Contracts, entitlements and field service for installed devices.' },
+      { title: 'Incentive compensation', desc: 'SAP Commissions connected to CPQ for quote-to-pay.' },
+      { title: 'AI & automation', desc: 'Support triage, document automation and assistants on product knowledge.' },
+    ],
+    clients: ['Fuji Xerox', 'Konica Minolta', 'Powell Electronics', 'Fireblocks'],
+    related: ['sap-cpq-implementation', 'salesforce', 'sap-commissions-implementation'],
+  },
+  {
+    id: 'global-enterprise',
+    path: '/industries/global-enterprise',
+    name: 'Global & Discrete Enterprises',
+    short: 'Multi-country templates and rollouts',
+    accent: ACCENTS.sky,
+    h1: 'SAP for Global & Discrete Enterprises',
+    sub: 'Global enterprises need one core template that works across countries, legal entities and plants, with room for local requirements and support that follows the sun.',
+    priorities: [
+      { title: 'Global template design', desc: 'One core process model with clear rules for local variation.' },
+      { title: 'Country and plant rollouts', desc: 'Localisation, legal entities and repeatable rollout waves.' },
+      { title: 'Data migration and cutover', desc: 'Mock loads, reconciliation and go-live controls per wave.' },
+      { title: 'Integration at scale', desc: 'BTP/CPI flows across regional and group systems.' },
+      { title: 'Finance across entities', desc: 'Intercompany, multi-currency and group reporting in S/4HANA.' },
+      { title: 'Follow-the-sun support', desc: 'Extended and 24x7 AMS coverage across time zones.' },
+    ],
+    clients: ['Mitsubishi'],
+    related: ['sap-s4hana', 'ecc-to-s4hana-migration', 'managed-services'],
   },
 ];
 
-export const TEAM_PODS = [
-  { initials: 'VK', name: 'Vikas Kumar', role: 'SAP FI/CO Lead', desc: 'S/4 Finance, GL/AP/AR/AA, CO, FI-MM/SD integration, cutover and support.' },
-  { initials: 'SP', name: 'Shubham Patil', role: 'SAP MM / Ariba Lead', desc: 'P2P, sourcing, supplier lifecycle, master data, Ariba and MM support.' },
-  { initials: 'AH', name: 'Amol Hatkar', role: 'SAP PP / PP-PI / QM Lead', desc: 'PP, VC/AVC, Super BOM and routing, variant pricing, QM alignment and manufacturing support.' },
-  { initials: 'YS', name: 'Yashwant Singh', role: 'SAP Technical / BTP Lead', desc: 'SAP BTP, Integration Suite/CPI, ABAP, Fiori, SAC, security, roles and technical governance.' },
-  { initials: 'SG', name: 'Shailender Gupta', role: 'Salesforce Delivery Lead', desc: 'Sales Cloud, Service Cloud, LWC, Apex, enhancements and dedicated resource model.' },
-  { initials: 'AP', name: 'Abhinav Porwal', role: 'AI & Automation Lead', desc: 'Python, Java, microservices, Kafka, reconciliation platforms, Claude/OpenAI and automation engineering.' },
-];
-
-export const TEAM_SHARED_ROLES = [
-  { role: 'Data Migration & Cutover Leadership', owners: 'Satish Kumar Tirupati + Anand Anbarasan', desc: 'Master data, open transactions, inventory, balances, mock loads, reconciliation and go-live controls.' },
-  { role: 'Managed Services / AMS', owners: 'Anand Anbarasan', desc: 'Hypercare, L2/L3 support, releases, incidents, enhancements and AMC aligned to SLAs.' },
-];
-
-export const L2C_STAGES = [
-  {
-    id: 'lead',
-    title: 'Lead & Opportunity',
-    platform: 'Salesforce / SAP Sales Cloud',
-    description: 'Capture and qualify opportunities so account, product and pricing context carries forward into the quote.',
-    deliverables: ['Account and opportunity model', 'Guided selling inputs', 'CRM to CPQ hand-off'],
-  },
-  {
-    id: 'quote',
-    title: 'Configure, Price, Quote',
-    platform: 'SAP CPQ',
-    description: 'Turn complex product rules into valid quotes, with pricing guardrails and approvals that protect margin.',
-    deliverables: ['Product and pricing models', 'Approval workflows', 'Quote document generation'],
-  },
-  {
-    id: 'order',
-    title: 'Order & Fulfillment',
-    platform: 'SAP S/4HANA with VC / AVC',
-    description: 'Accepted quotes become sales orders in S/4HANA, with configuration resolved into BOMs and routings for production.',
-    deliverables: ['Sales order integration', 'Super BOM and routing resolution', 'Credit and availability checks'],
-  },
-  {
-    id: 'cash',
-    title: 'Billing & Revenue',
-    platform: 'SAP S/4HANA Finance',
-    description: 'Invoicing, collections and revenue recognition connected back to the original order and quote.',
-    deliverables: ['Billing integration', 'Revenue recognition', 'Cash application'],
-  },
-];
-
-export const SAP_SPECIALIST_SERVICES = [
-  { path: '/sap-cpq-implementation', name: 'SAP CPQ Implementation', desc: 'Quote 1.0 & 2.0, scripting, integrations' },
-  { path: '/sap-avc-implementation', name: 'SAP VC & AVC Implementation', desc: 'KB design, BOM, CPS on BTP' },
-  { path: '/sap-commissions-implementation', name: 'SAP Commissions', desc: 'ICM, territory, quota management' },
-  { path: '/sap-cpq-quote-2-migration', name: 'CPQ Quote 1.0 → 2.0', desc: 'Scripts, Responsive UI, Business Partners' },
-  { path: '/sap-vc-to-avc-migration', name: 'VC → AVC Migration', desc: 'KB assessment, parallel validation, cutover' },
-  { path: '/ecc-to-s4hana-migration', name: 'ECC → S/4HANA Migration', desc: 'Brownfield, bluefield, greenfield' },
+// Life sciences programmes delivered by team members, shown on the pharma page.
+export const LIFE_SCIENCES_PROGRAMMES = [
+  { client: 'Julphar, UAE', tag: 'Validated SAP implementation', what: 'Validated SAP for a multi-dosage maker, including sterile injectables: batch, quality and export sales. CSV-compliant with IQ/OQ/PQ.' },
+  { client: 'Mylan / Matrix Laboratories', tag: 'Pharma centre of excellence', what: 'Multi-plant order-to-cash after acquisition by a US parent, with batch-controlled dispatch to regulated markets.' },
+  { client: 'Merck Sharp & Dohme', tag: 'Finance & controlling', what: 'FI/CO implementation and support for a manufacturer supplying medicines to 140+ countries.' },
+  { client: 'NATCO Pharma', tag: 'Sales & distribution', what: 'Domestic, export and contract-manufacturing sales, with batch and expiry control through dispatch.' },
+  { client: 'Hetero Drugs', tag: 'Export order-to-cash', what: 'Export and tender order-to-cash with batch-level traceability for every shipment.' },
+  { client: 'BDI Pharma, USA', tag: 'Distribution & cold chain', what: 'Lot and expiry control, consignment and cold-chain distribution of plasma therapies, vaccines and oncology products.' },
+  { client: 'Beckman Coulter', tag: 'Diagnostics quote-to-cash', what: 'SAP quote-to-cash for a diagnostics and laboratory-instruments maker: configurable products, pricing and quote-to-order integration.' },
 ];

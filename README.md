@@ -15,9 +15,8 @@ Copy `.env.example` to `.env` and fill in:
 
 | Variable | Purpose | If unset |
 |---|---|---|
-| `VITE_BRIEFING_SCRIPT_URL` | Google Apps Script web app that stores contact form submissions in a sheet and emails info@connectingcloud.co (setup below) | Form opens the visitor's email app addressed to info@connectingcloud.co |
-| `VITE_BOOKING_URL` | Calendly / Cal.com link for "Book a working session" buttons | Buttons go to `/contact` with the interest preselected |
-| `VITE_PLAUSIBLE_DOMAIN` | Plausible analytics (cookie-free). Custom events: `Book Click`, `Sprint Click`, `Contact Submit` | No analytics |
+| `VITE_BRIEFING_SCRIPT_URL` | Google Apps Script web app that stores contact form submissions in a sheet and emails info@connectingcloud.co (setup below) | Form shows an error asking the visitor to try again |
+| `VITE_PLAUSIBLE_DOMAIN` | Plausible analytics (cookie-free) | No analytics |
 
 ### Contact form: Google Sheet + email via Apps Script
 
@@ -64,7 +63,7 @@ function doPost(e) {
 
 3. **Deploy > New deployment > Web app**, execute as **Me**, access **Anyone**. Copy the URL ending in `/exec` into `VITE_BRIEFING_SCRIPT_URL`.
 
-The form sends `name`, `organization`, `email` and `message`. The visitor's role and area of interest are prepended to `message`, and are also sent as `role` and `interest` if you want separate columns.
+The form sends `name`, `organization`, `email` and `message`.
 
 ## Deploy
 
@@ -74,12 +73,10 @@ npm run deploy
 
 Builds with the values in `.env` and publishes `dist/` to the `gh-pages` branch, which GitHub Pages serves.
 
-The build writes a static `index.html` for every route (with that page's title, description and canonical URL), plus `404.html`, `sitemap.xml` and `robots.txt`. See `vite.config.js`. Old hash URLs from the previous site (`/#/cases`, `/#/sap-cpq-implementation`, …) redirect to the new paths in `src/main.jsx`.
+The build writes a static `index.html` for every route (with that page's title, description and canonical URL), plus `404.html`, `sitemap.xml` and `robots.txt`. See `vite.config.js`. Old hash URLs (`/#/cases`, `/#/sap-cpq-implementation`, …) redirect to the same pages at real paths (`src/main.jsx`).
 
 ## Where things live
 
-- `src/data/content.js`: services, pharma proof points, team, approach, sprint content
-- `src/data/routes.js`: page titles and descriptions (used at runtime and at build time)
-- `src/data/articles.jsx`: Insights articles
-- `src/pages/`: one component per page (`ServicePages.jsx` holds the six SAP specialist service pages); `src/App.jsx` maps paths to pages
-- `src/lib/router.js`: minimal path router; `src/components/Link.jsx` for internal links
+- `src/App.jsx`: the site: navigation, pages, sections and the contact form
+- `src/data/content.js`: capability pages (SAP S/4HANA, Salesforce, AI & Automation, Managed Services) and industry pages
+- `src/data/routes.js`: every page's URL, title, description and keywords (used at runtime and at build time), plus redirects for retired URLs

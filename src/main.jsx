@@ -4,20 +4,11 @@ import './index.css'
 import App from './App.jsx'
 import { PLAUSIBLE_DOMAIN } from './lib/config'
 
-// The previous site used hash routes (/#/cases). Map them to the new paths.
-const LEGACY_HASH_ROUTES = {
-  '/methodology': '/approach',
-  '/cases': '/sap',
-  '/l2c': '/sap',
-  '/services': '/sap',
-  '/architecture/avc': '/sap',
-  '/architecture/cpq': '/sap',
-  '/architecture/btp': '/sap',
-  '/architecture/sf': '/salesforce',
-}
+// Earlier versions of the site used hash routes (/#/cases); the same pages
+// now live at real paths.
 if (window.location.hash.startsWith('#/')) {
   const legacy = window.location.hash.slice(1).replace(/\/+$/, '') || '/'
-  window.history.replaceState({}, '', LEGACY_HASH_ROUTES[legacy] || legacy)
+  window.history.replaceState({}, '', legacy)
 }
 
 if (PLAUSIBLE_DOMAIN) {
