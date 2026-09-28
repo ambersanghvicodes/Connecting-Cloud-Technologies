@@ -12,10 +12,24 @@ import Insights, { Article } from './pages/Insights';
 import Contact from './pages/Contact';
 import Privacy from './pages/Privacy';
 import NotFound from './pages/NotFound';
+import {
+  EccToS4HanaMigration,
+  SapAvcImplementation,
+  SapCommissionsImplementation,
+  SapCpqImplementation,
+  SapCpqQuote2Migration,
+  SapVcToAvcMigration,
+} from './pages/ServicePages';
 
 const ROUTES = {
   '/': Home,
   '/sap': () => <Practice id="sap" />,
+  '/sap-cpq-implementation': SapCpqImplementation,
+  '/sap-avc-implementation': SapAvcImplementation,
+  '/sap-commissions-implementation': SapCommissionsImplementation,
+  '/sap-vc-to-avc-migration': SapVcToAvcMigration,
+  '/sap-cpq-quote-2-migration': SapCpqQuote2Migration,
+  '/ecc-to-s4hana-migration': EccToS4HanaMigration,
   '/salesforce': () => <Practice id="salesforce" />,
   '/ai-automation': () => <Practice id="ai" />,
   '/managed-services': () => <Practice id="ams" />,

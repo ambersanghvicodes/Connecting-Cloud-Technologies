@@ -43,6 +43,6 @@ export function useDocumentMeta({ title, description }) {
     document.querySelector('meta[name="description"]')?.setAttribute('content', description);
     document.querySelector('meta[property="og:title"]')?.setAttribute('content', title);
     document.querySelector('meta[property="og:description"]')?.setAttribute('content', description);
-    document.querySelector('link[rel="canonical"]')?.setAttribute('href', `https://connectingcloud.co${window.location.pathname}`);
+    document.querySelector('link[rel="canonical"]')?.setAttribute('href', `https://www.connectingcloud.co${window.location.pathname}`);
   }, [title, description]);
 }

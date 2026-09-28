@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { ChevronDown, Menu, X } from 'lucide-react';
 import Link from './Link';
 import { usePath } from '../lib/router';
-import { PRACTICES } from '../data/content';
+import { PRACTICES, SAP_SPECIALIST_SERVICES } from '../data/content';
 import Logo from './Logo';
 
 const LINKS = [
@@ -38,7 +38,9 @@ export default function Navigation() {
   }, [mobileOpen]);
 
   const isActive = (to) => path === to || path.startsWith(`${to}/`);
-  const servicesActive = PRACTICES.some((p) => isActive(p.path));
+  const servicesActive = [...PRACTICES, ...SAP_SPECIALIST_SERVICES].some((p) => isActive(p.path));
+  // Specialist service pages open on a dark hero, so keep the bar solid there.
+  const solid = scrolled || mobileOpen || SAP_SPECIALIST_SERVICES.some((s) => s.path === path);
   const linkClass = (active) =>
     `px-3 xl:px-4 py-2 rounded-full text-[11px] font-black uppercase tracking-widest transition-all ${
       active ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-blue-600 hover:bg-slate-50'
@@ -46,7 +48,7 @@ export default function Navigation() {
 
   return (
     <>
-      <nav className={`fixed w-full z-[100] transition-all duration-300 ${scrolled || mobileOpen ? 'bg-white/95 backdrop-blur-xl shadow-sm py-3' : 'bg-transparent py-5'}`}>
+      <nav className={`fixed w-full z-[100] transition-all duration-300 ${solid ? 'bg-white/95 backdrop-blur-xl shadow-sm py-3' : 'bg-transparent py-5'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex justify-between items-center gap-4">
           <Link to="/" className="flex items-center gap-3" aria-label="Connecting Cloud Technologies home">
             <Logo className="h-9 w-9" />
@@ -67,13 +69,25 @@ export default function Navigation() {
                 Services <ChevronDown size={14} className={`transition-transform ${servicesOpen ? 'rotate-180' : ''}`} />
               </button>
               <div className={`absolute top-full left-0 pt-2 transition-all duration-200 ${servicesOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
-                <div className="w-80 bg-white rounded-3xl shadow-2xl border border-slate-100 p-3 grid gap-1">
-                  {PRACTICES.map((p) => (
-                    <Link key={p.id} to={p.path} className={`block p-3 rounded-2xl hover:bg-blue-50 ${isActive(p.path) ? 'bg-blue-50' : ''}`}>
-                      <span className="block text-xs font-black uppercase tracking-wider text-slate-900">{p.name}</span>
-                      <span className="block text-xs text-slate-500 font-medium">{p.tagline}</span>
-                    </Link>
-                  ))}
+                <div className="w-[640px] bg-white rounded-3xl shadow-2xl border border-slate-100 p-3 grid grid-cols-2 gap-3">
+                  <div className="grid gap-1 content-start">
+                    <p className="px-3 pt-2 text-[10px] font-black uppercase tracking-widest text-slate-400">Practices</p>
+                    {PRACTICES.map((p) => (
+                      <Link key={p.id} to={p.path} className={`block p-3 rounded-2xl hover:bg-blue-50 ${isActive(p.path) ? 'bg-blue-50' : ''}`}>
+                        <span className="block text-xs font-black uppercase tracking-wider text-slate-900">{p.name}</span>
+                        <span className="block text-xs text-slate-500 font-medium">{p.tagline}</span>
+                      </Link>
+                    ))}
+                  </div>
+                  <div className="grid gap-1 content-start border-l border-slate-100 pl-3">
+                    <p className="px-3 pt-2 text-[10px] font-black uppercase tracking-widest text-slate-400">SAP specialist services</p>
+                    {SAP_SPECIALIST_SERVICES.map((s) => (
+                      <Link key={s.path} to={s.path} className={`block px-3 py-2 rounded-2xl hover:bg-blue-50 ${isActive(s.path) ? 'bg-blue-50' : ''}`}>
+                        <span className="block text-xs font-bold text-slate-900">{s.name}</span>
+                        <span className="block text-[11px] text-slate-500 font-medium">{s.desc}</span>
+                      </Link>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -116,6 +130,12 @@ export default function Navigation() {
           {PRACTICES.map((p) => (
             <Link key={p.id} to={p.path} className="block text-2xl font-black text-slate-900 mb-4 hover:text-blue-600">
               {p.name}
+            </Link>
+          ))}
+          <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mt-6 mb-3">SAP specialist services</p>
+          {SAP_SPECIALIST_SERVICES.map((s) => (
+            <Link key={s.path} to={s.path} className="block text-lg font-bold text-slate-700 mb-2 hover:text-blue-600">
+              {s.name}
             </Link>
           ))}
           <div className="border-t border-slate-100 my-6" />

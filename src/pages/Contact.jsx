@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import emailjs from '@emailjs/browser';
 import { CalendarDays, CheckCircle2, Mail, Phone } from 'lucide-react';
 import { FaLinkedinIn } from 'react-icons/fa';
 import Link from '../components/Link';
-import { BOOKING_URL, CONTACT_EMAIL, CONTACT_PHONE, EMAILJS, EMAILJS_CONFIGURED, LINKEDIN_URL, track } from '../lib/config';
-import { buildEnquiryMailto } from '../lib/mailto';
+import { BOOKING_URL, BRIEFING_SCRIPT_URL, CONTACT_EMAIL, CONTACT_PHONE, LINKEDIN_URL, track } from '../lib/config';
+import { buildBriefingFormData, buildEnquiryMailto } from '../lib/enquiry';
 import { Container, PageHeader } from '../components/ui';
 
 const INTERESTS = [
@@ -13,6 +12,7 @@ const INTERESTS = [
   'SAP S/4HANA implementation or rollout',
   'SAP CPQ / VC / AVC',
   'SAP BTP / integration',
+  'SAP Commissions',
   'Salesforce',
   'AI & automation',
   'Managed services / AMC',
@@ -37,7 +37,7 @@ export default function Contact() {
     const data = Object.fromEntries(new FormData(form));
     if (data.company_website) return; // honeypot: bots fill hidden fields
 
-    if (!EMAILJS_CONFIGURED) {
+    if (!BRIEFING_SCRIPT_URL) {
       window.location.href = buildEnquiryMailto(CONTACT_EMAIL, data);
       track('Contact Submit', { interest: data.interest, method: 'mailto' });
       setStatus('mailto');
@@ -46,12 +46,13 @@ export default function Contact() {
 
     setStatus('sending');
     try {
-      await emailjs.sendForm(EMAILJS.serviceId, EMAILJS.templateId, form, { publicKey: EMAILJS.publicKey });
-      track('Contact Submit', { interest: data.interest, method: 'emailjs' });
+      // Apps Script doesn't send CORS headers, so the response is opaque; only network failures are detectable.
+      await fetch(BRIEFING_SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: buildBriefingFormData(data) });
+      track('Contact Submit', { interest: data.interest, method: 'sheet' });
       form.reset();
       setStatus('sent');
     } catch (err) {
-      console.error('EmailJS error', err);
+      console.error('Briefing submit error', err);
       setStatus('error');
     }
   };

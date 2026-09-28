@@ -353,3 +353,12 @@ export const L2C_STAGES = [
     deliverables: ['Billing integration', 'Revenue recognition', 'Cash application'],
   },
 ];
+
+export const SAP_SPECIALIST_SERVICES = [
+  { path: '/sap-cpq-implementation', name: 'SAP CPQ Implementation', desc: 'Quote 1.0 & 2.0, scripting, integrations' },
+  { path: '/sap-avc-implementation', name: 'SAP VC & AVC Implementation', desc: 'KB design, BOM, CPS on BTP' },
+  { path: '/sap-commissions-implementation', name: 'SAP Commissions', desc: 'ICM, territory, quota management' },
+  { path: '/sap-cpq-quote-2-migration', name: 'CPQ Quote 1.0 → 2.0', desc: 'Scripts, Responsive UI, Business Partners' },
+  { path: '/sap-vc-to-avc-migration', name: 'VC → AVC Migration', desc: 'KB assessment, parallel validation, cutover' },
+  { path: '/ecc-to-s4hana-migration', name: 'ECC → S/4HANA Migration', desc: 'Brownfield, bluefield, greenfield' },
+];

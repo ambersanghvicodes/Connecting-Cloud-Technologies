@@ -14,6 +14,30 @@ export const ROUTE_META = {
     description:
       'S/4HANA implementation and rollouts across FI/CO, MM, SD, PP/PP-PI, QM and EWM; BTP Integration Suite, MDG, SAC; SAP CPQ and VC/AVC; data migration and cutover.',
   },
+  '/sap-cpq-implementation': {
+    title: 'SAP CPQ Implementation Services | Connecting Cloud',
+    description: 'End-to-end SAP CPQ implementation: guided selling, IronPython scripting, Responsive UI, pricing engine, and CRM/ERP integration. Quote 1.0 and 2.0.',
+  },
+  '/sap-avc-implementation': {
+    title: 'SAP Variant Configuration & AVC Implementation | Connecting Cloud',
+    description: 'SAP VC and Advanced Variant Configuration (AVC) implementation: knowledge base design, BOM explosion, CPS on BTP and CPQ integration.',
+  },
+  '/sap-commissions-implementation': {
+    title: 'SAP Commissions Implementation Services | Connecting Cloud',
+    description: 'SAP Commissions (formerly Callidus) implementation: commission plan design, territory and quota management, and CPQ-to-Commissions integration.',
+  },
+  '/sap-vc-to-avc-migration': {
+    title: 'SAP VC to AVC Migration | Connecting Cloud',
+    description: 'SAP Variant Configuration to Advanced Variant Configuration migration: knowledge base assessment, parallel validation, CPS on BTP setup and cutover.',
+  },
+  '/sap-cpq-quote-2-migration': {
+    title: 'SAP CPQ Quote 1.0 to Quote 2.0 Migration | Connecting Cloud',
+    description: 'SAP CPQ Quote 1.0 to 2.0 migration: IronPython script adaptation, Responsive UI rebuild, Business Partner migration and integration retesting.',
+  },
+  '/ecc-to-s4hana-migration': {
+    title: 'SAP ECC to S/4HANA Migration | Connecting Cloud',
+    description: 'SAP ECC to S/4HANA migration for configure-to-order businesses: brownfield, bluefield and greenfield paths, with VC-to-AVC migration in parallel.',
+  },
   '/salesforce': {
     title: 'Salesforce Services | Connecting Cloud',
     description:

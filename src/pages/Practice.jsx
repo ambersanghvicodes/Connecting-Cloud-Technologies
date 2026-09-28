@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import Link from '../components/Link';
-import { L2C_STAGES, PRACTICE_PAGES, PRACTICES } from '../data/content';
+import { L2C_STAGES, PRACTICE_PAGES, PRACTICES, SAP_SPECIALIST_SERVICES } from '../data/content';
 import { BookButton, CheckItem, Container, CtaBand, PageHeader, SectionHeader } from '../components/ui';
 
 export default function Practice({ id }) {
@@ -46,6 +46,7 @@ export default function Practice({ id }) {
       </section>
 
       {page.showL2C ? <QuoteToCash /> : null}
+      {id === 'sap' ? <SpecialistServices /> : null}
 
       <section className="py-16 bg-slate-50 border-y border-slate-200">
         <Container>
@@ -114,6 +115,27 @@ function QuoteToCash() {
               ))}
             </ul>
           </div>
+        </div>
+      </Container>
+    </section>
+  );
+}
+
+function SpecialistServices() {
+  return (
+    <section className="py-16 md:py-20 bg-white border-t border-slate-200">
+      <Container>
+        <SectionHeader eyebrow="Specialist services" title="Implementations and migrations we run end to end." />
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {SAP_SPECIALIST_SERVICES.map((s) => (
+            <Link key={s.path} to={s.path} className="group flex items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-5 hover:border-blue-300 hover:bg-white">
+              <span>
+                <span className="block font-black text-slate-900">{s.name}</span>
+                <span className="block text-sm text-slate-500 font-medium">{s.desc}</span>
+              </span>
+              <ArrowRight size={18} className="flex-shrink-0 text-slate-400 group-hover:text-blue-600" />
+            </Link>
+          ))}
         </div>
       </Container>
     </section>

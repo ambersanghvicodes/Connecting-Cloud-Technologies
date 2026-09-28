@@ -5,7 +5,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { ARTICLE_META, ROUTE_META } from './src/data/routes.js'
 
-const SITE_URL = 'https://connectingcloud.co'
+const SITE_URL = 'https://www.connectingcloud.co'
 
 const escape = (s) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;')
 
